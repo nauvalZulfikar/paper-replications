@@ -96,6 +96,9 @@ FIELDS_JS = ",\n  ".join(
 CHIPS = ('<span class="chip on" data-l="all">Semua</span>'
          + "".join(f'<span class="chip" data-l="{i}">{tag}</span>'
                    for i, (fk, tag, *_ ) in enumerate(FIELDS)))
+TIERCHIPS = ('<span class="tchip on" data-t="all">Semua</span>'
+             + "".join(f'<span class="tchip" data-t="{t}">{t}</span>'
+                       for t in TIER_ORDER))
 
 HTML = f'''<!doctype html>
 <html lang="id">
@@ -125,10 +128,12 @@ HTML = f'''<!doctype html>
   #q{{flex:1;min-width:200px;background:var(--bg2);border:1px solid var(--line);color:var(--tx);padding:9px 13px;border-radius:10px;font-size:14px;outline:none}}
   #q:focus{{border-color:var(--acc)}}
   .chips{{display:flex;gap:6px;flex-wrap:wrap}}
-  .chip{{cursor:pointer;user-select:none;border:1px solid var(--line);background:var(--bg2);color:var(--mut);padding:6px 11px;border-radius:999px;font-size:12.5px;font-weight:600;transition:.12s}}
-  .chip:hover{{color:var(--tx)}}
-  .chip.on{{background:var(--tx);color:#0b0e14;border-color:var(--tx)}}
+  .chip,.tchip{{cursor:pointer;user-select:none;border:1px solid var(--line);background:var(--bg2);color:var(--mut);padding:6px 11px;border-radius:999px;font-size:12.5px;font-weight:600;transition:.12s}}
+  .chip:hover,.tchip:hover{{color:var(--tx)}}
+  .chip.on,.tchip.on{{background:var(--tx);color:#0b0e14;border-color:var(--tx)}}
   .count{{color:var(--mut);font-size:12.5px;margin-left:auto}}
+  .tierrow{{margin-top:9px;gap:8px}}
+  .tierlbl{{color:var(--mut);font-size:11.5px;font-weight:800;letter-spacing:.4px;align-self:center}}
   .level{{margin:40px 0 0}}
   .lvhead{{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:10px;border-bottom:1px solid var(--line)}}
   .lvtag{{font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;color:#0b0e14}}
@@ -209,6 +214,10 @@ HTML = f'''<!doctype html>
     <div class="chips" id="chips">{CHIPS}</div>
     <span class="count" id="count"></span>
   </div>
+  <div class="wrap tierrow">
+    <span class="tierlbl">TIER</span>
+    <div class="chips" id="tierchips">{TIERCHIPS}</div>
+  </div>
 </div>
 
 <main class="wrap" id="main"></main>
@@ -229,7 +238,7 @@ const P = [
 ];
 const main=document.getElementById('main'), empty=document.getElementById('empty'),
       countEl=document.getElementById('count'), qEl=document.getElementById('q');
-let curDom='all', curQ='';
+let curDom='all', curTier='all', curQ='';
 const U = {{
 {",".join(chr(10) + u for u in U_lines)}
 }};
@@ -239,11 +248,13 @@ function render(){{
   let shown=0;
   for(let d=0; d<NDOM; d++){{
     if(curDom!=='all' && String(d)!==curDom) continue;
-    const rows=P.filter(p=>p[1]===d).filter(p=>{{
-      if(!curQ) return true;
-      const h=(p[2]+" "+p[3]+" "+p[4]+" "+p[5]+" "+(p[7]||"")).toLowerCase();
-      return h.includes(curQ);
-    }});
+    const rows=P.filter(p=>p[1]===d)
+      .filter(p=>curTier==='all'||p[5]===curTier)
+      .filter(p=>{{
+        if(!curQ) return true;
+        const h=(p[2]+" "+p[3]+" "+p[4]+" "+p[5]+" "+(p[7]||"")).toLowerCase();
+        return h.includes(curQ);
+      }});
     if(!rows.length) continue;
     shown+=rows.length;
     const L=DOMAINS[d];
@@ -280,6 +291,11 @@ document.getElementById('chips').addEventListener('click',e=>{{
   const c=e.target.closest('.chip'); if(!c) return;
   document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
   c.classList.add('on'); curDom=c.dataset.l; render();
+}});
+document.getElementById('tierchips').addEventListener('click',e=>{{
+  const c=e.target.closest('.tchip'); if(!c) return;
+  document.querySelectorAll('.tchip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on'); curTier=c.dataset.t; render();
 }});
 qEl.addEventListener('input',()=>{{curQ=qEl.value.trim().toLowerCase(); render();}});
 

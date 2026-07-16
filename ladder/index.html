@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Replication Ladder — 400 papers (DS · LLM · CV · RL)</title>
+<link rel="icon" href="data:,">
+<style>
+  :root{
+    --bg:#0b0e14; --bg2:#11151f; --card:#151a26; --line:#232a3a;
+    --tx:#e6e9f0; --mut:#8b93a7; --acc:#4fd1c5; --acc2:#f6c177;
+    --dDS:#f6c177; --dLLM:#4fd1c5; --dCV:#63b3ff; --dRL:#a78bfa;
+  }
+  *{box-sizing:border-box} html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--tx);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  header{padding:52px 0 28px;border-bottom:1px solid var(--line);background:radial-gradient(1200px 400px at 50% -120px,rgba(79,209,197,.10),transparent)}
+  h1{margin:0 0 8px;font-size:30px;letter-spacing:-.4px}
+  h1 .g{background:linear-gradient(90deg,var(--acc),var(--dCV),var(--dRL));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--mut);max-width:720px;font-size:15px}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;color:var(--mut);font-size:13px}
+  .meta b{color:var(--tx)}
+  .controls{position:sticky;top:0;z-index:20;background:rgba(11,14,20,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 0}
+  .controls .wrap{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  #q{flex:1;min-width:200px;background:var(--bg2);border:1px solid var(--line);color:var(--tx);padding:9px 13px;border-radius:10px;font-size:14px;outline:none}
+  #q:focus{border-color:var(--acc)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{cursor:pointer;user-select:none;border:1px solid var(--line);background:var(--bg2);color:var(--mut);padding:6px 11px;border-radius:999px;font-size:12.5px;font-weight:600;transition:.12s}
+  .chip:hover{color:var(--tx)}
+  .chip.on{background:var(--tx);color:#0b0e14;border-color:var(--tx)}
+  .count{color:var(--mut);font-size:12.5px;margin-left:auto}
+  .level{margin:40px 0 0}
+  .lvhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .lvtag{font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;color:#0b0e14}
+  .lvhead h2{margin:0;font-size:19px;letter-spacing:-.2px}
+  .lvhead .d{color:var(--mut);font-size:13.5px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 15px;display:flex;flex-direction:column;gap:6px;transition:.12s}
+  .card:hover{border-color:#33405a;transform:translateY(-1px)}
+  .card .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .num{font-variant-numeric:tabular-nums;color:var(--mut);font-size:12px;font-weight:700;min-width:38px}
+  .nm{font-weight:700;font-size:14.5px}
+  .star{color:var(--acc2)}
+  .badge{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:5px;letter-spacing:.3px}
+  .b-Intro{background:rgba(139,147,167,.20);color:#c3c9d6}
+  .b-Core{background:rgba(79,209,197,.16);color:#6fe3d7}
+  .b-Advanced{background:rgba(99,179,255,.16);color:#8ec6ff}
+  .b-Frontier{background:rgba(244,114,182,.16);color:#f9a8d4}
+  .title{color:var(--mut);font-style:italic;font-size:12.5px}
+  .desc{font-size:13.5px;color:#cfd4e0}
+  .foot{margin-top:auto;display:flex;align-items:center;gap:8px;padding-top:5px;flex-wrap:wrap}
+  .card a.read{font-size:12.5px;font-weight:700;color:var(--acc);text-decoration:none}
+  .card a.read:hover{text-decoration:underline}
+  .acc{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.2px}
+  .a-free{background:rgba(79,209,197,.16);color:#6fe3d7}
+  .a-paywall{background:rgba(246,193,119,.16);color:#f6c177}
+  .empty{color:var(--mut);text-align:center;padding:60px 0;display:none}
+  footer{margin:56px 0 40px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--line);padding-top:20px}
+  footer code{background:var(--bg2);padding:1px 6px;border-radius:5px;color:#cfd4e0}
+  .menu-btn{position:fixed;top:11px;left:14px;z-index:60;background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:9px;padding:7px 11px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px}
+  .menu-btn:hover{border-color:#33405a}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.18s;z-index:70}
+  .scrim.open{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;left:0;bottom:0;width:270px;max-width:84vw;background:var(--bg2);border-right:1px solid var(--line);z-index:80;transform:translateX(-100%);transition:transform .2s ease;overflow-y:auto;padding:16px 0}
+  .drawer.open{transform:none}
+  .drawer .dh{display:flex;align-items:center;justify-content:space-between;padding:0 16px 10px;border-bottom:1px solid var(--line);margin-bottom:8px}
+  .drawer .dh b{font-size:14px}
+  .drawer .dh .x{cursor:pointer;color:var(--mut);font-size:20px;line-height:1;background:none;border:none}
+  .drawer .di{padding:9px 16px;cursor:pointer;border-left:3px solid transparent}
+  .drawer .di:hover{background:rgba(255,255,255,.04)}
+  .drawer .di.on{background:rgba(255,255,255,.06)}
+  .drawer .di .row1{display:flex;align-items:center;gap:9px}
+  .drawer .dot{width:9px;height:9px;border-radius:50%;flex:0 0 9px}
+  .drawer .di .lv{font-size:11px;font-weight:800;letter-spacing:.4px;color:var(--mut);min-width:26px}
+  .drawer .di .nm{font-size:13.5px;font-weight:600}
+  .tierkey{display:flex;gap:6px;flex-wrap:wrap;margin:14px 16px 4px;padding-top:12px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<button class="menu-btn" id="menuBtn" aria-label="Menu">☰ Bidang</button>
+<div class="scrim" id="scrim"></div>
+<nav class="drawer" id="drawer" aria-label="Quick access bidang">
+  <div class="dh"><b>Quick access</b><button class="x" id="drawerX" aria-label="Tutup">×</button></div>
+  <div id="drawerList"></div>
+</nav>
+<header>
+  <div class="wrap">
+    <h1><span class="g">AI Replication</span> Ladder</h1>
+    <div class="sub">400 paper landmark di <b>Data Science, LLM, Computer Vision &amp; Reinforcement Learning</b> — <b>100 paper per bidang</b>, disusun dari paling gampang ke paling susah lewat 4 tier. Replikasi tiap paper pakai kode sendiri buat portfolio. Klik <b>Baca →</b> langsung ke papernya.</div>
+    <div class="meta">
+      <span><b>400</b> papers</span><span><b>4</b> bidang × 100</span>
+      <span>Tier: <span class="badge b-Intro">Intro</span> <span class="badge b-Core">Core</span> <span class="badge b-Advanced">Advanced</span> <span class="badge b-Frontier">Frontier</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="wrap">
+    <input id="q" placeholder="Cari judul / penulis / metode…" autocomplete="off">
+    <div class="chips" id="chips">
+      <span class="chip on" data-l="all">Semua</span>
+      <span class="chip" data-l="0">DS</span>
+      <span class="chip" data-l="1">LLM</span>
+      <span class="chip" data-l="2">CV</span>
+      <span class="chip" data-l="3">RL</span>
+    </div>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<main class="wrap" id="main"></main>
+<div class="empty" id="empty">Nggak ada paper yang cocok.</div>
+
+<footer class="wrap">
+  <p>Semua link <b>Baca →</b> nunjuk <b>langsung ke papernya</b> (arXiv/ACL/proceedings/author PDF), bukan halaman pencarian. <span class="acc a-free">PDF gratis</span> = full-text kebuka · <span class="acc a-paywall">paywall</span> = link resmi (mungkin bayar; cari mirror). ★ = flagship paling ikonik per bidang. Urutan tiap bidang: <b>Intro → Core → Advanced → Frontier</b>.</p>
+  <p>Repo: <code>~/coding-projects/ai-ladder-lab</code> · regen: <code>python3 build.py</code></p>
+</footer>
+
+<script>
+const DOMAINS = {
+  0:{tag:"DS",color:"var(--dDS)",name:"Data Science / ML Klasik",d:"Statistik → ensemble → boosting → causal → deep-tabular. 100 paper, gampang ke susah."},
+  1:{tag:"LLM",color:"var(--dLLM)",name:"Large Language Models",d:"word2vec → Transformer → BERT/GPT → scaling → RLHF → MoE/Mamba. 100 paper."},
+  2:{tag:"CV",color:"var(--dCV)",name:"Computer Vision",d:"SIFT/CNN → ResNet/deteksi → GAN/ViT → diffusion/SAM/3DGS. 100 paper."},
+  3:{tag:"RL",color:"var(--dRL)",name:"Reinforcement Learning",d:"MDP/Q-learning → DQN → PPO/SAC → AlphaZero/MuZero/offline. 100 paper."}
+};
+const NDOM = 4;
+const P = [
+
+["ds1",0,"F. J. Anscombe (1973)","Graphs in Statistical Analysis","Bikin ulang Anscombe's quartet: 4 dataset stat sama persis tapi bentuknya beda","Intro",0],
+["ds2",0,"Francis Galton (1886)","Regression Towards Mediocrity in Hereditary Stature","Replikate regresi tinggi ortu ke anak, asal-usul 'regression to the mean'","Intro",0],
+["ds3",0,"Francis Galton (1888)","Co-relations and Their Measurement, Chiefly from Anthropometric Data","Hitung koefisien korelasi dari nol pakai data antropometri Galton","Intro",0],
+["ds4",0,"Charles Spearman (1904)","The Proof and Measurement of Association Between Two Things","Bangun rank correlation (Spearman) buat data berperingkat","Intro",0],
+["ds5",0,"Brian Hayes (2013)","First Links in the Markov Chain","Simulasi Markov chain sederhana, rantai keadaan + teks","Intro",0],
+["ds6",0,"Student (W. S. Gosset) (1908)","The Probable Error of a Mean","Reimplement uji-t & distribusi t buat sampel kecil","Intro",0],
+["ds7",0,"Karl Pearson (1901)","On Lines and Planes of Closest Fit to Systems of Points in Space","Coding PCA versi asli: cari garis/bidang paling pas ke titik data","Intro",0],
+["ds8",0,"R. A. Fisher (1936)","The Use of Multiple Measurements in Taxonomic Problems","LDA + dataset iris klasik buat klasifikasi bunga","Intro",0],
+["ds9",0,"Evelyn Fix & J. L. Hodges (1951)","Discriminatory Analysis, Nonparametric Discrimination: Consistency Properties","Asal-usul kNN: aturan tetangga terdekat nonparametrik","Intro",0],
+["ds10",0,"T. M. Cover & P. E. Hart (1967)","Nearest Neighbor Pattern Classification","Coding 1-NN & buktikan error-nya dibatasi 2x Bayes","Intro",0],
+["ds11",0,"D. R. Cox (1958)","The Regression Analysis of Binary Sequences","Regresi logistik buat data biner 0/1","Intro",0],
+["ds12",0,"J. B. MacQueen (1967)","Some Methods for Classification and Analysis of Multivariate Observations","Implement k-means clustering dari paper aslinya","Intro",0],
+["ds13",0,"Joe H. Ward (1963)","Hierarchical Grouping to Optimize an Objective Function","Hierarchical clustering metode Ward (minimasi varians)","Intro",0],
+["ds14",0,"S. P. Lloyd (1982)","Least Squares Quantization in PCM","Algoritma Lloyd (k-means) buat kuantisasi least-squares","Intro",0],
+["ds15",0,"J. R. Quinlan (1986)","Induction of Decision Trees","Bangun decision tree ID3 pakai information gain","Intro",0],
+["ds16",0,"C. C. Holt (1957)","Forecasting Seasonals and Trends by Exponentially Weighted Moving Averages","Exponential smoothing dengan trend + musiman (Holt)","Intro",0],
+["ds17",0,"Peter R. Winters (1960)","Forecasting Sales by Exponentially Weighted Moving Averages","Holt-Winters: smoothing musiman buat forecast penjualan","Intro",0],
+["ds18",0,"G. Udny Yule (1927)","On a Method of Investigating Periodicities in Disturbed Series, with Special Reference to Wolfer's Sunspot Numbers","Model autoregresif (AR) pertama dari data sunspot","Intro",0],
+["ds19",0,"J. A. Hanley & B. J. McNeil (1982)","The Meaning and Use of the Area Under a Receiver Operating Characteristic (ROC) Curve","Hitung AUC dari kurva ROC + maknanya buat klasifikasi","Intro",0],
+["ds20",0,"Tom Fawcett (2006)","An Introduction to ROC Analysis","Gambar kurva ROC & hitung AUC langkah demi langkah","Intro",0],
+["ds21",0,"Bradley Efron (1979)","Bootstrap Methods: Another Look at the Jackknife","Bootstrap: resampling buat estimasi standard error","Intro",0],
+["ds22",0,"B. Efron & G. Gong (1983)","A Leisurely Look at the Bootstrap, the Jackknife, and Cross-Validation","Bandingin bootstrap, jackknife, dan cross-validation","Intro",0],
+["ds23",0,"M. Stone (1974)","Cross-Validatory Choice and Assessment of Statistical Predictions","Cross-validation buat pilih & nilai model prediksi","Intro",0],
+["ds24",0,"Ron Kohavi (1995)","A Study of Cross-Validation and Bootstrap for Accuracy Estimation and Model Selection","Uji empiris CV vs bootstrap, kenapa 10-fold menang","Intro",0],
+["ds25",0,"S. Geman, E. Bienenstock & R. Doursat (1992)","Neural Networks and the Bias/Variance Dilemma","Trade-off bias-variance, kunci overfitting vs underfitting","Intro",0],
+["ds26",0,"J. Neyman & E. S. Pearson (1933)","On the Problem of the Most Efficient Tests of Statistical Hypotheses","Teori uji hipotesis: lemma Neyman-Pearson dari nol","Intro",0],
+["ds27",0,"Hoerl & Kennard (1970)","Ridge Regression: Biased Estimation for Nonorthogonal Problems","Awal mula regularisasi: nambah bias dikit malah bikin estimasi lebih stabil","Core",0],
+["ds28",0,"Tibshirani (1996)","Regression Shrinkage and Selection via the Lasso","L1 penalty yang mendorong koefisien jadi nol — seleksi fitur otomatis","Core",1],
+["ds29",0,"Breiman (1996)","Bagging Predictors","Bootstrap + averaging buat nurunin variance, fondasi semua ensemble","Core",0],
+["ds30",0,"Breiman (2001)","Random Forests","Banyak pohon acak digabung, benchmark klasik yang wajib bisa direplikasi","Core",1],
+["ds31",0,"Domingos & Pazzani (1997)","On the Optimality of the Simple Bayesian Classifier under Zero-One Loss","Kenapa Naive Bayes tetap jago walau asumsi independensinya ngawur","Core",0],
+["ds32",0,"Chawla et al. (2002)","SMOTE: Synthetic Minority Over-sampling Technique","Bikin sampel sintetis kelas minoritas biar data imbalance ga bias","Core",0],
+["ds33",0,"Zou & Hastie (2005)","Regularization and Variable Selection via the Elastic Net","Gabung ridge + lasso, oke buat fitur banyak yang saling korelasi","Core",0],
+["ds34",0,"Guyon & Elisseeff (2003)","An Introduction to Variable and Feature Selection","Panduan lengkap milih fitur relevan, wajib baca sebelum modeling","Core",0],
+["ds35",0,"Wolpert (1992)","Stacked Generalization","Numpuk model pakai meta-learner, ide dasar stacking","Core",0],
+["ds36",0,"Ester et al. (1996)","A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise","DBSCAN: clustering berbasis densitas, nemu cluster bentuk aneh + noise","Core",0],
+["ds37",0,"Platt (1999)","Probabilistic Outputs for Support Vector Machines and Comparisons to Regularized Likelihood Methods","Ubah skor SVM jadi probabilitas kalibrasi lewat sigmoid fitting","Core",0],
+["ds38",0,"Niculescu-Mizil & Caruana (2005)","Predicting Good Probabilities With Supervised Learning","Bandingin metode kalibrasi probabilitas antar model supervised","Core",0],
+["ds39",0,"Freund & Schapire (1997)","A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting","AdaBoost: gabung weak learner jadi kuat, teori + algoritma boosting","Core",0],
+["ds40",0,"Boser, Guyon & Vapnik (1992)","A Training Algorithm for Optimal Margin Classifiers","Asal usul kernel trick + margin maksimum, cikal bakal SVM","Core",0],
+["ds41",0,"Cortes & Vapnik (1995)","Support-Vector Networks","Paper SVM resmi: soft margin + kernel buat klasifikasi non-linear","Core",0],
+["ds42",0,"Bottou (2010)","Large-Scale Machine Learning with Stochastic Gradient Descent","Kenapa SGD menang di data gede — trade-off optimasi vs generalisasi","Core",0],
+["ds43",0,"Ruder (2016)","An Overview of Gradient Descent Optimization Algorithms","Rangkuman rapi semua varian gradient descent (momentum, Adam, dll)","Core",0],
+["ds44",0,"Sutskever et al. (2013)","On the Importance of Initialization and Momentum in Deep Learning","Peran momentum + inisialisasi biar training net dalam jalan","Core",0],
+["ds45",0,"Kingma & Ba (2014)","Adam: A Method for Stochastic Optimization","Optimizer paling laku: adaptif per-parameter, momentum + RMSprop","Core",1],
+["ds46",0,"Friedman (2001)","Greedy Function Approximation: A Gradient Boosting Machine","Boosting sebagai gradient descent di function space, mesin GBM","Core",0],
+["ds47",0,"Friedman, Hastie & Tibshirani (2000)","Additive Logistic Regression: A Statistical View of Boosting","Pandangan statistik boosting — jembatan menuju gradient boosting","Core",0],
+["ds48",0,"Reynolds (2009)","Gaussian Mixture Models","Model campuran Gaussian dilatih pakai EM — dasar clustering probabilistik","Core",0],
+["ds49",0,"Ng, Jordan & Weiss (2002)","On Spectral Clustering: Analysis and an Algorithm","Clustering pakai eigenvector matriks similarity, ampuh buat data ga cembung","Core",0],
+["ds50",0,"Evgeniou, Pontil & Poggio (2000)","Regularization Networks and Support Vector Machines","Teori: RBF, regularisasi, dan SVM ternyata satu kerangka","Core",0],
+["ds51",0,"von Luxburg (2007)","A Tutorial on Spectral Clustering","Tutorial mendalam spectral clustering + teori graph Laplacian","Core",0],
+["ds52",0,"Ribeiro et al. (2016)","Why Should I Trust You? Explaining the Predictions of Any Classifier","Jelasin prediksi model apa pun lewat model lokal sederhana — dasar XAI","Advanced",0],
+["ds53",0,"Sarwar et al. (2001)","Item-Based Collaborative Filtering Recommendation Algorithms","Fondasi recsys: rekomendasi dari kemiripan antar-item, bukan antar-user","Advanced",0],
+["ds54",0,"Koren et al. (2009)","Matrix Factorization Techniques for Recommender Systems","Matrix factorization juara Netflix Prize — inti recommender modern","Advanced",0],
+["ds55",0,"Lundberg & Lee (2017)","A Unified Approach to Interpreting Model Predictions","Nilai Shapley buat atribusi fitur yang adil & konsisten (SHAP)","Advanced",0],
+["ds56",0,"Liu et al. (2008)","Isolation Forest","Deteksi anomali cepat: outlier gampang 'diisolasi' di pohon random","Advanced",0],
+["ds57",0,"Chandola et al. (2009)","Anomaly Detection: A Survey","Peta lengkap teknik deteksi anomali, wajib baca sebelum bikin detector","Advanced",0],
+["ds58",0,"Chen & Guestrin (2016)","XGBoost: A Scalable Tree Boosting System","Gradient boosting yang ngangkat ribuan kompetisi Kaggle, super scalable","Advanced",1],
+["ds59",0,"Ke et al. (2017)","LightGBM: A Highly Efficient Gradient Boosting Decision Tree","Boosting super ngebut pakai GOSS+EFB, hemat memori di data gede","Advanced",0],
+["ds60",0,"Prokhorenkova et al. (2018)","CatBoost: unbiased boosting with categorical features","Boosting anti-bias buat fitur kategorikal, minim tuning","Advanced",0],
+["ds61",0,"van der Maaten & Hinton (2008)","Visualizing Data using t-SNE","Visualisasi data dimensi tinggi jadi 2D yang enak dilihat","Advanced",0],
+["ds62",0,"McInnes et al. (2018)","UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction","Reduksi dimensi lebih cepat & jaga struktur global lebih dari t-SNE","Advanced",0],
+["ds63",0,"Rendle et al. (2009)","BPR: Bayesian Personalized Ranking from Implicit Feedback","Optimasi ranking personal dari implicit feedback, dasar recsys ranking","Advanced",0],
+["ds64",0,"Cox (1972)","Regression Models and Life-Tables","Model survival paling ikonik: hazard proporsional buat data tersensor","Advanced",0],
+["ds65",0,"Rosenbaum & Rubin (1983)","The Central Role of the Propensity Score in Observational Studies for Causal Effects","Skor propensity buat imbangin observasi, jantung causal inference","Advanced",0],
+["ds66",0,"Card & Krueger (1994)","Minimum Wages and Employment: A Case Study of the Fast Food Industry in New Jersey and Pennsylvania","Studi upah minimum yang mempopulerkan difference-in-differences","Advanced",0],
+["ds67",0,"Imbens & Lemieux (2008)","Regression Discontinuity Designs: A Guide to Practice","Panduan praktik RDD buat efek kausal di ambang batas cutoff","Advanced",0],
+["ds68",0,"Angrist et al. (1996)","Identification of Causal Effects Using Instrumental Variables","Kerangka instrumental variable + LATE saat compliance ga sempurna","Advanced",0],
+["ds69",0,"Andrieu et al. (2003)","An Introduction to MCMC for Machine Learning","Pengantar ramah MCMC buat ML — Metropolis, Gibbs, dll","Advanced",0],
+["ds70",0,"Hastings (1970)","Monte Carlo Sampling Methods Using Markov Chains and Their Applications","Generalisasi algoritma Metropolis, fondasi semua MCMC modern","Advanced",0],
+["ds71",0,"Geman & Geman (1984)","Stochastic Relaxation, Gibbs Distributions, and the Bayesian Restoration of Images","Asal-usul Gibbs sampling lewat restorasi citra Bayesian","Advanced",0],
+["ds72",0,"Rasmussen & Williams (2006)","Gaussian Processes for Machine Learning","Kitab suci Gaussian process — regresi non-parametrik + ketidakpastian","Advanced",0],
+["ds73",0,"Blei et al. (2017)","Variational Inference: A Review for Statisticians","Review variational inference: approx posterior lewat optimasi","Advanced",0],
+["ds74",0,"Hoffman et al. (2013)","Stochastic Variational Inference","Variational inference skalabel pakai stochastic optimization, tembus jutaan dokumen","Advanced",0],
+["ds75",0,"Neal (2011)","MCMC using Hamiltonian dynamics","Pakai dinamika Hamiltonian biar sampling ga jalan acak lambat","Advanced",0],
+["ds76",0,"Hoffman & Gelman (2014)","The No-U-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian Monte Carlo","HMC auto-tuning, ga perlu set langkah — mesin di balik Stan/PyMC","Advanced",0],
+["ds77",0,"Hensman et al. (2013)","Gaussian Processes for Big Data","GP tembus jutaan titik via inducing points + variational inference","Advanced",0],
+["ds78",0,"Guo et al. (2017)","On Calibration of Modern Neural Networks","Model deep sering overconfident; temperature scaling bikin probabilitas jujur","Frontier",0],
+["ds79",0,"Angelopoulos & Bates (2021)","A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification","Pintu masuk conformal: interval prediksi bergaransi tanpa asumsi distribusi","Frontier",0],
+["ds80",0,"Taylor & Letham (2018)","Forecasting at Scale","Prophet: forecast bisnis musiman gampang dipakai analis non-ahli","Frontier",0],
+["ds81",0,"Gal & Ghahramani (2016)","Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning","MC Dropout: ambil ketidakpastian Bayesian cuma dari dropout pas inferensi","Frontier",0],
+["ds82",0,"Lakshminarayanan et al. (2017)","Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles","Ensemble deep = estimasi uncertainty simpel yang kalahin metode Bayesian ribet","Frontier",0],
+["ds83",0,"Arik & Pfister (2019)","TabNet: Attentive Interpretable Tabular Learning","Deep learning buat data tabel pakai attention, tetap interpretable","Frontier",0],
+["ds84",0,"Hardt et al. (2016)","Equality of Opportunity in Supervised Learning","Definisi fairness equalized odds + cara post-processing bikin model adil","Frontier",0],
+["ds85",0,"Romano et al. (2019)","Conformalized Quantile Regression","Gabung quantile regression + conformal buat interval adaptif lebar-sempit","Frontier",0],
+["ds86",0,"Salinas et al. (2017)","DeepAR: Probabilistic Forecasting with Autoregressive Recurrent Networks","RNN autoregresif forecast ribuan time series sekaligus, output probabilistik","Frontier",0],
+["ds87",0,"Gorishniy et al. (2021)","Revisiting Deep Learning Models for Tabular Data","FT-Transformer: baseline transformer tabular yang jujur lawan GBDT","Frontier",0],
+["ds88",0,"Popov et al. (2019)","Neural Oblivious Decision Ensembles for Deep Learning on Tabular Data","NODE: decision tree dibikin differentiable jadi bisa dilatih end-to-end","Frontier",0],
+["ds89",0,"Tarvainen & Valpola (2017)","Mean teachers are better role models: Weight-averaged consistency targets improve semi-supervised deep learning results","Mean Teacher: guru rata-rata bobot jadi target konsistensi semi-supervised","Frontier",0],
+["ds90",0,"Berthelot et al. (2019)","MixMatch: A Holistic Approach to Semi-Supervised Learning","Gabung mixup + pseudo-label + augmentasi jadi resep SSL kuat","Frontier",0],
+["ds91",0,"Sohn et al. (2020)","FixMatch: Simplifying Semi-Supervised Learning with Consistency and Confidence","SSL super simpel: pseudo-label percaya-diri + augmentasi kuat, hasil SOTA","Frontier",0],
+["ds92",0,"Ganin et al. (2015)","Domain-Adversarial Training of Neural Networks","DANN: gradient reversal bikin fitur invarian antar domain","Frontier",0],
+["ds93",0,"Sener & Savarese (2017)","Active Learning for Convolutional Neural Networks: A Core-Set Approach","Active learning sebagai core-set: pilih batch sampel paling representatif","Frontier",0],
+["ds94",0,"Gal et al. (2017)","Deep Bayesian Active Learning with Image Data","Pakai ketidakpastian Bayesian buat pilih data yang wajib dilabeli","Frontier",0],
+["ds95",0,"Oreshkin et al. (2019)","N-BEATS: Neural basis expansion analysis for interpretable time series forecasting","Blok basis-expansion murni deep, interpretable, kalahin statistik klasik","Frontier",0],
+["ds96",0,"Lim et al. (2019)","Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting","TFT: attention multi-horizon plus interpretasi fitur mana yang penting","Frontier",0],
+["ds97",0,"Sagawa et al. (2019)","Distributionally Robust Neural Networks for Group Shifts: On the Importance of Regularization for Worst-Case Generalization","Group DRO: optimasi worst-case grup biar tahan distribution shift","Frontier",0],
+["ds98",0,"Blundell et al. (2015)","Weight Uncertainty in Neural Networks","Bayes by Backprop: latih distribusi atas bobot, bukan angka mati","Frontier",0],
+["ds99",0,"Wager & Athey (2018)","Estimation and Inference of Heterogeneous Treatment Effects using Random Forests","Causal forest: efek treatment per individu plus interval kepercayaan valid","Frontier",0],
+["ds100",0,"Liu et al. (2018)","DARTS: Differentiable Architecture Search","NAS jadi optimasi gradient, cari arsitektur tanpa RL mahal","Frontier",0],
+["llm1",1,"Spärck Jones (1972)","A Statistical Interpretation of Term Specificity and Its Application in Retrieval","Asal-usul IDF: kata langka lebih penting. Dasar TF-IDF, gampang dicerna.","Intro",0],
+["llm2",1,"Salton & Buckley (1988)","Term-weighting approaches in automatic text retrieval","Resep TF-IDF klasik buat bobot kata di IR, bacaan wajib pemula.","Intro",0],
+["llm3",1,"Mikolov et al. (2013)","Efficient Estimation of Word Representations in Vector Space","Lahirnya word2vec (CBOW & skip-gram), embedding kata yang legendaris.","Intro",0],
+["llm4",1,"Mikolov et al. (2013)","Distributed Representations of Words and Phrases and their Compositionality","Trik negative sampling bikin word2vec cepat; king-man+woman=queen.","Intro",0],
+["llm5",1,"Pennington et al. (2014)","GloVe: Global Vectors for Word Representation","Embedding dari matriks co-occurrence global, saingan word2vec.","Intro",0],
+["llm6",1,"Joulin et al. (2016)","Bag of Tricks for Efficient Text Classification","fastText: klasifikasi teks super cepat, baseline sederhana yang kuat.","Intro",0],
+["llm7",1,"Bojanowski et al. (2017)","Enriching Word Vectors with Subword Information","fastText subword: embedding paham n-gram huruf, tahan kata OOV.","Intro",0],
+["llm8",1,"Kim (2014)","Convolutional Neural Networks for Sentence Classification","CNN buat teks: simpel, cepat, hasil klasifikasi kalimat oke banget.","Intro",0],
+["llm9",1,"Le & Mikolov (2014)","Distributed Representations of Sentences and Documents","doc2vec: satu vektor buat kalimat/dokumen, lanjutan natural word2vec.","Intro",0],
+["llm10",1,"Zhang et al. (2015)","Character-level Convolutional Networks for Text Classification","CNN level karakter, teks mentah tanpa kata pun bisa diklasifikasi.","Intro",0],
+["llm11",1,"Brown et al. (1992)","Class-Based n-gram Models of Natural Language","n-gram berbasis kelas kata + Brown clustering, cikal-bakal embedding.","Intro",0],
+["llm12",1,"Chen & Goodman (1996)","An Empirical Study of Smoothing Techniques for Language Modeling","Panduan smoothing n-gram; kenapa perlu Kneser-Ney dijelasin jelas.","Intro",0],
+["llm13",1,"Ratnaparkhi (1996)","A Maximum Entropy Model for Part-Of-Speech Tagging","POS tagging klasik pakai maxent, pintu masuk sequence labeling.","Intro",0],
+["llm14",1,"Toutanova et al. (2003)","Feature-Rich Part-of-Speech Tagging with a Cyclic Dependency Network","Stanford tagger; fitur kaya bikin akurasi POS nyaris 97%.","Intro",0],
+["llm15",1,"Bengio et al. (2003)","A Neural Probabilistic Language Model","LM neural pertama; ganti n-gram tabel jadi embedding + jaringan.","Intro",0],
+["llm16",1,"Mikolov et al. (2010)","Recurrent neural network based language model","RNN buat language model, konteks panjang tanpa batas jendela n-gram.","Intro",0],
+["llm17",1,"Hochreiter & Schmidhuber (1997)","Long Short-Term Memory","LSTM: gerbang lupa/ingat atasi vanishing gradient, fondasi RNN modern.","Intro",0],
+["llm18",1,"Cho et al. (2014)","Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation","Perkenalkan GRU + arsitektur encoder-decoder buat terjemahan.","Intro",0],
+["llm19",1,"Sutskever et al. (2014)","Sequence to Sequence Learning with Neural Networks","seq2seq murni LSTM; template dasar semua model generatif teks.","Intro",0],
+["llm20",1,"Bahdanau et al. (2014)","Neural Machine Translation by Jointly Learning to Align and Translate","Attention lahir di sini; decoder bisa lirik kata sumber relevan.","Intro",0],
+["llm21",1,"Luong et al. (2015)","Effective Approaches to Attention-based Neural Machine Translation","Attention global vs lokal, versi rapi & praktis dari Bahdanau.","Intro",0],
+["llm22",1,"Huang et al. (2015)","Bidirectional LSTM-CRF Models for Sequence Tagging","BiLSTM-CRF, resep standar POS/NER yang gampang direplikasi.","Intro",0],
+["llm23",1,"Lample et al. (2016)","Neural Architectures for Named Entity Recognition","NER neural tanpa fitur manual, char+word BiLSTM-CRF jadi rujukan.","Intro",0],
+["llm24",1,"Ma & Hovy (2016)","End-to-end Sequence Labeling via Bi-directional LSTM-CNNs-CRF","BiLSTM-CNN-CRF end-to-end, sequence labeling tanpa preprocessing ribet.","Intro",0],
+["llm25",1,"Collobert et al. (2011)","Natural Language Processing (Almost) from Scratch","Satu jaringan buat banyak tugas NLP, awal era neural NLP serba-guna.","Intro",0],
+["llm26",1,"Blei et al. (2003)","Latent Dirichlet Allocation","LDA topic model; temukan tema tersembunyi dokumen, matematikanya nendang.","Intro",0],
+["llm27",1,"Hendrycks & Gimpel (2016)","Gaussian Error Linear Units (GELUs)","Fungsi aktivasi GELU, standar di Transformer & BERT","Core",0],
+["llm28",1,"Ba, Kiros & Hinton (2016)","Layer Normalization","Normalisasi per-layer, komponen wajib tiap block Transformer","Core",0],
+["llm29",1,"Sennrich, Haddow & Birch (2016)","Neural Machine Translation of Rare Words with Subword Units","Asal-usul subword BPE buat handle kata langka","Core",0],
+["llm30",1,"Hinton, Vinyals & Dean (2015)","Distilling the Knowledge in a Neural Network","Konsep dasar knowledge distillation, fondasi DistilBERT dkk","Core",0],
+["llm31",1,"Dai & Le (2015)","Semi-supervised Sequence Learning","Cikal bakal pretrain-lalu-finetune buat NLP","Core",0],
+["llm32",1,"Schuster & Nakajima (2012)","Japanese and Korean Voice Search","Tokenizer WordPiece yang dipakai BERT","Core",0],
+["llm33",1,"Kudo & Richardson (2018)","SentencePiece: A simple and language independent subword tokenizer and detokenizer for Neural Text Processing","Tokenizer language-agnostic, gampang dipakai lintas bahasa","Core",0],
+["llm34",1,"Kudo (2018)","Subword Regularization: Improving Neural Network Translation Models with Multiple Subword Candidates","Unigram LM tokenizer + regularisasi segmentasi subword","Core",0],
+["llm35",1,"Wang, Cho & Gu (2019)","Neural Machine Translation with Byte-Level Subwords","Byte-level BPE, vocab kecil tanpa OOV ala GPT-2","Core",0],
+["llm36",1,"Howard & Ruder (2018)","Universal Language Model Fine-tuning for Text Classification","Resep transfer learning + fine-tuning bertahap buat teks","Core",0],
+["llm37",1,"Peters et al. (2018)","Deep contextualized word representations","Embedding kontekstual dari LM, kata beda makna beda vektor","Core",0],
+["llm38",1,"Radford et al. (2018)","Improving Language Understanding by Generative Pre-Training","Generative pretraining Transformer decoder pertama","Core",0],
+["llm39",1,"Vaswani et al. (2017)","Attention Is All You Need","The Transformer, induk semua LM modern","Core",1],
+["llm40",1,"Shaw, Uszkoreit & Vaswani (2018)","Self-Attention with Relative Position Representations","Positional encoding relatif, alternatif sinusoidal","Core",0],
+["llm41",1,"Devlin et al. (2019)","BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding","Encoder bidirectional, masked LM yang ngubah NLP","Core",0],
+["llm42",1,"Radford et al. (2019)","Language Models are Unsupervised Multitask Learners","LM gede zero-shot multitask, byte-level BPE","Core",0],
+["llm43",1,"Sanh et al. (2019)","DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter","BERT didistilasi, 40% lebih kecil tetep ngebut","Core",0],
+["llm44",1,"Liu et al. (2019)","RoBERTa: A Robustly Optimized BERT Pretraining Approach","BERT dilatih lebih optimal, tuning resep pretraining","Core",0],
+["llm45",1,"Reimers & Gurevych (2019)","Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks","BERT buat embedding kalimat, cepat buat similarity","Core",0],
+["llm46",1,"Lewis et al. (2019)","BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension","Seq2seq denoising, encoder-decoder buat generasi","Core",0],
+["llm47",1,"Lan et al. (2019)","ALBERT: A Lite BERT for Self-supervised Learning of Language Representations","BERT hemat parameter via sharing & faktorisasi embedding","Core",0],
+["llm48",1,"Sun et al. (2019)","Patient Knowledge Distillation for BERT Model Compression","Distilasi BERT belajar dari layer-layer tengah guru","Core",0],
+["llm49",1,"Jiao et al. (2019)","TinyBERT: Distilling BERT for Natural Language Understanding","Distilasi BERT dua tahap, kecil banget buat mobile","Core",0],
+["llm50",1,"Clark et al. (2020)","ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators","Pretraining deteksi token palsu, lebih efisien dari MLM","Core",0],
+["llm51",1,"Raffel et al. (2019)","Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer","Semua tugas NLP jadi text-to-text, plus studi transfer masif","Core",0],
+["llm52",1,"Yang et al. (2019)","XLNet: Generalized Autoregressive Pretraining for Language Understanding","Permutation LM, gabung kelebihan autoregressive & BERT","Core",0],
+["llm53",1,"Sun et al. (2020)","MobileBERT: a Compact Task-Agnostic BERT for Resource-Limited Devices","BERT tipis buat HP lewat bottleneck & distilasi","Core",0],
+["llm54",1,"Wei et al. (2022)","Chain-of-Thought Prompting Elicits Reasoning in Large Language Models","Suruh model 'mikir langkah demi langkah', nalar langsung naik","Advanced",0],
+["llm55",1,"Kojima et al. (2022)","Large Language Models are Zero-Shot Reasoners","Cukup tambah 'Let's think step by step', tanpa contoh","Advanced",0],
+["llm56",1,"Wang et al. (2022)","Self-Consistency Improves Chain of Thought Reasoning in Language Models","Sampling banyak jalur nalar, ambil jawaban mayoritas","Advanced",0],
+["llm57",1,"Brown et al. (2020)","Language Models are Few-Shot Learners","GPT-3: kasih beberapa contoh di prompt, langsung bisa","Advanced",1],
+["llm58",1,"Kaplan et al. (2020)","Scaling Laws for Neural Language Models","Rumus dasar: loss turun mulus ngikut ukuran & data","Advanced",0],
+["llm59",1,"Hoffmann et al. (2022)","Training Compute-Optimal Large Language Models","Chinchilla: model kekecilan datanya, harus lebih banyak token","Advanced",0],
+["llm60",1,"Wei et al. (2021)","Finetuned Language Models Are Zero-Shot Learners","FLAN: tuning pakai instruksi bikin jago task baru","Advanced",0],
+["llm61",1,"Sanh et al. (2021)","Multitask Prompted Training Enables Zero-Shot Task Generalization","T0: latih multitask prompt, zero-shot langsung nyala","Advanced",0],
+["llm62",1,"Chung et al. (2022)","Scaling Instruction-Finetuned Language Models","Flan-T5/PaLM: skalain jumlah task + CoT pas tuning","Advanced",0],
+["llm63",1,"Hu et al. (2021)","LoRA: Low-Rank Adaptation of Large Language Models","Tuning murah: cukup latih matriks low-rank kecil","Advanced",1],
+["llm64",1,"Lester et al. (2021)","The Power of Scale for Parameter-Efficient Prompt Tuning","Prompt tuning: cukup latih embedding soft, makin gede makin nempel","Advanced",0],
+["llm65",1,"Li & Liang (2021)","Prefix-Tuning: Optimizing Continuous Prompts for Generation","Cuma optimasi prefix kontinu, badan model dibekuin","Advanced",0],
+["llm66",1,"Liu et al. (2021)","GPT Understands, Too","P-tuning: prompt kontinu bikin GPT jago NLU juga","Advanced",0],
+["llm67",1,"Houlsby et al. (2019)","Parameter-Efficient Transfer Learning for NLP","Adapter: sisipin modul kecil, tuning irit banget","Advanced",0],
+["llm68",1,"Karpukhin et al. (2020)","Dense Passage Retrieval for Open-Domain Question Answering","DPR: retrieval pakai embedding padat, ngalahin BM25","Advanced",0],
+["llm69",1,"Lewis et al. (2020)","Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks","RAG: gabung retriever + generator buat jawab berbasis fakta","Advanced",0],
+["llm70",1,"Guu et al. (2020)","REALM: Retrieval-Augmented Language Model Pre-Training","Retriever laten dilatih bareng pretraining, backprop tembus retrieval","Advanced",0],
+["llm71",1,"Borgeaud et al. (2021)","Improving language models by retrieving from trillions of tokens","RETRO: ambil dari triliunan token, model kecil nyaingin GPT-3","Advanced",0],
+["llm72",1,"Ouyang et al. (2022)","Training language models to follow instructions with human feedback","InstructGPT: RLHF bikin model nurut maunya manusia","Advanced",0],
+["llm73",1,"Su et al. (2021)","RoFormer: Enhanced Transformer with Rotary Position Embedding","RoPE: posisi diputar, extrapolasi panjang jadi enak","Advanced",0],
+["llm74",1,"Press et al. (2021)","Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation","ALiBi: bias linear di attention, latih pendek tes panjang","Advanced",0],
+["llm75",1,"Dao et al. (2022)","FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness","Attention exact tapi sadar IO, cepet & hemat memori","Advanced",0],
+["llm76",1,"Zhang et al. (2022)","OPT: Open Pre-trained Transformer Language Models","OPT: bobot 175B dibuka + logbook training jujur","Advanced",0],
+["llm77",1,"Le Scao et al. (2022)","BLOOM: A 176B-Parameter Open-Access Multilingual Language Model","BLOOM: 176B multibahasa, dilatih rame-rame terbuka","Advanced",0],
+["llm78",1,"Rae et al. (2021)","Scaling Language Models: Methods, Analysis & Insights from Training Gopher","Gopher 280B: analisis tuntas efek skala di 152 task","Advanced",0],
+["llm79",1,"Chowdhery et al. (2022)","PaLM: Scaling Language Modeling with Pathways","PaLM 540B lewat Pathways, lompatan nalar kelihatan","Advanced",0],
+["llm80",1,"Du et al. (2021)","GLaM: Efficient Scaling of Language Models with Mixture-of-Experts","GLaM: sparse MoE 1.2T, aktif dikit tapi tetap kuat","Advanced",0],
+["llm81",1,"Hendrycks et al. (2021)","Measuring Massive Multitask Language Understanding","MMLU, tolok ukur 57 subjek yang jadi standar de facto","Frontier",0],
+["llm82",1,"Wang et al. (2022)","Self-Instruct: Aligning Language Models with Self-Generated Instructions","Model bikin data instruksinya sendiri, murah banget","Frontier",0],
+["llm83",1,"Yao et al. (2023)","ReAct: Synergizing Reasoning and Acting in Language Models","Gabung mikir + aksi, fondasi semua agent LLM","Frontier",0],
+["llm84",1,"Srivastava et al. (2022)","Beyond the Imitation Game: Quantifying and Extrapolating the Capabilities of Language Models","BIG-bench, 200+ tugas ekstrem buat uji batas LLM","Frontier",0],
+["llm85",1,"Touvron et al. (2023)","LLaMA: Open and Efficient Foundation Language Models","Yang meledakkan era open-weight LLM","Frontier",0],
+["llm86",1,"Liang et al. (2022)","Holistic Evaluation of Language Models","HELM, evaluasi menyeluruh lintas metrik dan skenario","Frontier",0],
+["llm87",1,"Jiang et al. (2023)","Mistral 7B","7B ngalahin yang lebih gede, sliding-window attention","Frontier",0],
+["llm88",1,"Schick et al. (2023)","Toolformer: Language Models Can Teach Themselves to Use Tools","LLM belajar sendiri panggil API/tools","Frontier",0],
+["llm89",1,"Fedus et al. (2021)","Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity","MoE trilyun param, satu expert per token","Frontier",0],
+["llm90",1,"Dettmers et al. (2022)","LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale","Kuantisasi 8-bit tanpa turun akurasi, handle outlier","Frontier",0],
+["llm91",1,"Frantar et al. (2022)","GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers","PTQ 3-4 bit akurat, dasar kuantisasi modern","Frontier",0],
+["llm92",1,"Xiao et al. (2022)","SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models","Geser kesulitan aktivasi ke bobot biar W8A8 mulus","Frontier",0],
+["llm93",1,"Lin et al. (2023)","AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration","Lindungi 1% bobot penting lewat sinyal aktivasi","Frontier",0],
+["llm94",1,"Dettmers et al. (2023)","QLoRA: Efficient Finetuning of Quantized LLMs","Finetune 65B di 1 GPU, NF4 + LoRA","Frontier",0],
+["llm95",1,"Xiao et al. (2023)","Efficient Streaming Language Models with Attention Sinks","StreamingLLM, konteks tak-hingga via attention sink","Frontier",0],
+["llm96",1,"Peng et al. (2023)","YaRN: Efficient Context Window Extension of Large Language Models","Perpanjang konteks RoPE hemat, jauh lebih efisien","Frontier",0],
+["llm97",1,"Leviathan et al. (2022)","Fast Inference from Transformers via Speculative Decoding","Draft model kecil + verifikasi, inferensi 2-3x cepat","Frontier",0],
+["llm98",1,"Rafailov et al. (2023)","Direct Preference Optimization: Your Language Model is Secretly a Reward Model","DPO, align tanpa RL ribet, cukup loss klasifikasi","Frontier",0],
+["llm99",1,"Lee et al. (2023)","RLAIF vs. RLHF: Scaling Reinforcement Learning from Human Feedback with AI Feedback","Ganti pelabel manusia dengan AI, tetap setara","Frontier",0],
+["llm100",1,"Bai et al. (2022)","Constitutional AI: Harmlessness from AI Feedback","Align pakai daftar prinsip, self-critique tanpa label human","Frontier",0],
+["cv1",2,"Canny (1986)","A Computational Approach to Edge Detection","Deteksi tepi klasik yang jadi standar; gampang dipahami, dasar banget CV","Intro",0],
+["cv2",2,"Harris & Stephens (1988)","A Combined Corner and Edge Detector","Detektor sudut legendaris, matematika simpel, fondasi feature detection","Intro",0],
+["cv3",2,"Perona & Malik (1990)","Scale-Space and Edge Detection Using Anisotropic Diffusion","Filtering pinter yang haluskan gambar tapi jaga tepi; intro anisotropic diffusion","Intro",0],
+["cv4",2,"Lucas & Kanade (1981)","An Iterative Image Registration Technique with an Application to Stereo Vision","Optical flow paling dasar, lacak gerakan piksel antar frame","Intro",0],
+["cv5",2,"Horn & Schunck (1981)","Determining Optical Flow","Optical flow global klasik, pasangan wajib Lucas-Kanade","Intro",0],
+["cv6",2,"Shi & Tomasi (1994)","Good Features to Track","Good Features to Track, nyempurnain Harris buat tracking","Intro",0],
+["cv7",2,"Lowe (2004)","Distinctive Image Features from Scale-Invariant Keypoints","SIFT, deskriptor fitur paling ikonik, tahan skala & rotasi","Intro",0],
+["cv8",2,"Bay et al. (2006)","SURF: Speeded Up Robust Features","SURF, versi lebih cepat dari SIFT pakai integral image","Intro",0],
+["cv9",2,"Dalal & Triggs (2005)","Histograms of Oriented Gradients for Human Detection","HOG buat deteksi orang, dasar sebelum era deep learning","Intro",0],
+["cv10",2,"Sivic & Zisserman (2003)","Video Google: A Text Retrieval Approach to Object Matching in Videos","Cari objek di video ala Google pakai bag-of-words visual","Intro",0],
+["cv11",2,"Csurka et al. (2004)","Visual Categorization with Bags of Keypoints","Bag-of-keypoints, awal mula klasifikasi gambar pakai visual words","Intro",0],
+["cv12",2,"Lazebnik et al. (2006)","Beyond Bags of Features: Spatial Pyramid Matching for Recognizing Natural Scene Categories","Spatial pyramid, tambahin info lokasi ke bag-of-features","Intro",0],
+["cv13",2,"Viola & Jones (2001)","Rapid Object Detection using a Boosted Cascade of Simple Features","Deteksi wajah real-time legendaris pakai Haar + AdaBoost cascade","Intro",0],
+["cv14",2,"Rosenblatt (1958)","The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain","Perceptron, nenek moyang semua neural network","Intro",0],
+["cv15",2,"Rumelhart et al. (1986)","Learning Representations by Back-Propagating Errors","Backpropagation, cara neural net belajar yang dipakai sampai sekarang","Intro",0],
+["cv16",2,"LeCun et al. (1998)","Gradient-Based Learning Applied to Document Recognition","LeNet, CNN pertama yang sukses baca digit tulisan tangan","Intro",0],
+["cv17",2,"Nair & Hinton (2010)","Rectified Linear Units Improve Restricted Boltzmann Machines","ReLU lahir di sini, aktivasi yang bikin deep net gampang dilatih","Intro",0],
+["cv18",2,"Glorot et al. (2011)","Deep Sparse Rectifier Neural Networks","Deep sparse rectifier, alasan ReLU menang buat jaringan dalam","Intro",0],
+["cv19",2,"Scherer et al. (2010)","Evaluation of Pooling Operations in Convolutional Architectures for Object Recognition","Bandingin max vs average pooling, max menang telak","Intro",0],
+["cv20",2,"Boureau et al. (2010)","A Theoretical Analysis of Feature Pooling in Visual Recognition","Analisis teori kenapa pooling penting buat recognition","Intro",0],
+["cv21",2,"Krizhevsky et al. (2012)","ImageNet Classification with Deep Convolutional Neural Networks","AlexNet, momen big-bang deep learning menang ImageNet 2012","Intro",0],
+["cv22",2,"Ciresan et al. (2012)","Multi-column Deep Neural Networks for Image Classification","Multi-column CNN di GPU, pemecah rekor sebelum AlexNet","Intro",0],
+["cv23",2,"Hinton et al. (2012)","Improving neural networks by preventing co-adaptation of feature detectors","Dropout pertama, matiin neuron acak biar gak overfitting","Intro",0],
+["cv24",2,"Lin et al. (2013)","Network In Network","Network-in-Network, micro-MLP + global average pooling","Intro",0],
+["cv25",2,"Simonyan & Zisserman (2014)","Very Deep Convolutional Networks for Large-Scale Image Recognition","VGG, resep CNN dalam pakai kernel 3x3 ditumpuk, simpel & kuat","Intro",0],
+["cv26",2,"Zeiler & Fergus (2014)","Visualizing and Understanding Convolutional Networks","ZFNet, ngintip isi CNN biar ngerti apa yang dipelajari filter","Intro",0],
+["cv27",2,"Yosinski et al. (2014)","How transferable are features in deep neural networks?","Bukti fitur awal CNN bisa dipindah antar tugas, dasar transfer learning","Core",0],
+["cv28",2,"Ioffe & Szegedy (2015)","Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift","Normalisasi tiap batch bikin training stabil dan jauh lebih cepat","Core",0],
+["cv29",2,"He et al. (2015)","Deep Residual Learning for Image Recognition","ResNet: skip connection bikin jaringan super dalam gampang dilatih","Core",1],
+["cv30",2,"Iandola et al. (2016)","SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and <0.5MB model size","Akurasi AlexNet tapi model super mungil, fokus efisiensi parameter","Core",0],
+["cv31",2,"Howard et al. (2017)","MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications","Depthwise separable conv bikin CNN ringan buat HP","Core",0],
+["cv32",2,"Szegedy et al. (2014)","Going Deeper with Convolutions","GoogLeNet/Inception: modul multi-skala hemat komputasi","Core",0],
+["cv33",2,"Szegedy et al. (2015)","Rethinking the Inception Architecture for Computer Vision","Inception-v3: faktorisasi konvolusi biar efisien dan akurat","Core",0],
+["cv34",2,"Huang et al. (2016)","Densely Connected Convolutional Networks","DenseNet: tiap layer nyambung ke semua layer berikutnya","Core",0],
+["cv35",2,"Xie et al. (2016)","Aggregated Residual Transformations for Deep Neural Networks","ResNeXt: dimensi cardinality, gabung banyak jalur seragam","Core",0],
+["cv36",2,"Zhang et al. (2017)","ShuffleNet: An Extremely Efficient Convolutional Neural Network for Mobile Devices","Group conv + channel shuffle buat model ekstra hemat","Core",0],
+["cv37",2,"Sandler et al. (2018)","MobileNetV2: Inverted Residuals and Linear Bottlenecks","Inverted residual + linear bottleneck, MobileNet makin efisien","Core",0],
+["cv38",2,"Girshick et al. (2014)","Rich feature hierarchies for accurate object detection and semantic segmentation","R-CNN: region proposal + CNN, awal deteksi objek modern","Core",0],
+["cv39",2,"He et al. (2014)","Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition","SPP-net: pooling piramida biar input ukuran bebas, deteksi cepat","Core",0],
+["cv40",2,"Girshick (2015)","Fast R-CNN","Satu forward pass buat semua region, R-CNN jauh lebih cepat","Core",0],
+["cv41",2,"Ren et al. (2015)","Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks","RPN bikin proposal region jadi bagian jaringan, nyaris real-time","Core",0],
+["cv42",2,"Redmon et al. (2016)","You Only Look Once: Unified, Real-Time Object Detection","YOLO: deteksi objek sekali lihat, super kilat","Core",0],
+["cv43",2,"Liu et al. (2016)","SSD: Single Shot MultiBox Detector","Deteksi single-shot multi-skala, cepat dan akurat","Core",0],
+["cv44",2,"Redmon & Farhadi (2016)","YOLO9000: Better, Faster, Stronger","YOLOv2: anchor box + gabung deteksi-klasifikasi ribuan kelas","Core",0],
+["cv45",2,"Redmon & Farhadi (2018)","YOLOv3: An Incremental Improvement","YOLOv3: prediksi multi-skala, backbone lebih kuat","Core",0],
+["cv46",2,"Lin et al. (2017)","Feature Pyramid Networks for Object Detection","FPN: piramida fitur biar deteksi objek besar-kecil sama bagus","Core",0],
+["cv47",2,"Lin et al. (2017)","Focal Loss for Dense Object Detection","RetinaNet: focal loss atasi ketidakseimbangan kelas foreground","Core",0],
+["cv48",2,"Long et al. (2015)","Fully Convolutional Networks for Semantic Segmentation","FCN: CNN full-conv buat segmentasi pixel-wise end-to-end","Core",0],
+["cv49",2,"Badrinarayanan et al. (2015)","SegNet: A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation","Encoder-decoder pakai pooling indices buat upsample efisien","Core",0],
+["cv50",2,"Ronneberger et al. (2015)","U-Net: Convolutional Networks for Biomedical Image Segmentation","U-Net: skip connection U-shape, jago segmentasi data medis kecil","Core",0],
+["cv51",2,"Chen et al. (2016)","DeepLab: Semantic Image Segmentation with Deep Convolutional Nets, Atrous Convolution, and Fully Connected CRFs","Atrous conv + ASPP + CRF buat segmentasi tajam multi-skala","Core",0],
+["cv52",2,"Chen et al. (2018)","Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation","DeepLabv3+: decoder + atrous separable, batas objek makin halus","Core",0],
+["cv53",2,"Jaderberg et al. (2015)","Spatial Transformer Networks","Modul yang belajar transformasi spasial, invarian geometrik","Core",0],
+["cv54",2,"Kingma & Welling (2013)","Auto-Encoding Variational Bayes","Fondasi VAE, generatif probabilistik yang paling gampang dicerna duluan","Advanced",0],
+["cv55",2,"Goodfellow et al. (2014)","Generative Adversarial Networks","Induknya semua GAN, wajib paham dulu sebelum varian lain","Advanced",1],
+["cv56",2,"Mirza & Osindero (2014)","Conditional Generative Adversarial Nets","GAN dikasih label biar output bisa dikontrol, tambahan simpel","Advanced",0],
+["cv57",2,"Radford et al. (2015)","Unsupervised Representation Learning with Deep Convolutional GANs","DCGAN, resep arsitektur GAN pakai CNN yang stabil ditiru","Advanced",0],
+["cv58",2,"Gatys et al. (2015)","A Neural Algorithm of Artistic Style","Neural style transfer klasik, konsep content vs style loss","Advanced",0],
+["cv59",2,"Johnson et al. (2016)","Perceptual Losses for Real-Time Style Transfer and Super-Resolution","Style transfer feed-forward realtime pakai perceptual loss","Advanced",0],
+["cv60",2,"Ledig et al. (2016)","Photo-Realistic Single Image Super-Resolution Using a GAN","SRGAN, super-resolusi fotorealistik pertama pakai GAN","Advanced",0],
+["cv61",2,"Isola et al. (2016)","Image-to-Image Translation with Conditional Adversarial Networks","pix2pix, translasi gambar berpasangan, tinggal ganti dataset","Advanced",0],
+["cv62",2,"Arjovsky et al. (2017)","Wasserstein GAN","WGAN, loss Wasserstein bikin training GAN jauh lebih stabil","Advanced",0],
+["cv63",2,"Gulrajani et al. (2017)","Improved Training of Wasserstein GANs","WGAN-GP, gradient penalty ganti weight clipping yang norak","Advanced",0],
+["cv64",2,"Zhu et al. (2017)","Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks","CycleGAN, translasi tanpa pasangan pakai cycle consistency","Advanced",0],
+["cv65",2,"Tan & Le (2019)","EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks","Scaling compound rapi, backbone efisien yang gampang dipakai","Advanced",0],
+["cv66",2,"Karras et al. (2017)","Progressive Growing of GANs for Improved Quality, Stability, and Variation","ProGAN, gambar HD dengan naikin resolusi bertahap","Advanced",0],
+["cv67",2,"Wang et al. (2018)","ESRGAN: Enhanced Super-Resolution Generative Adversarial Networks","Upgrade SRGAN pakai RRDB, tekstur super-res lebih natural","Advanced",0],
+["cv68",2,"He et al. (2017)","Mask R-CNN","Instance segmentation standar, tambah branch mask ke Faster R-CNN","Advanced",0],
+["cv69",2,"Dosovitskiy et al. (2020)","An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale","ViT, gambar dipecah patch lalu masuk Transformer murni","Advanced",0],
+["cv70",2,"Touvron et al. (2020)","Training data-efficient image transformers & distillation through attention","DeiT, latih ViT hemat data pakai distilasi, ga butuh JFT","Advanced",0],
+["cv71",2,"He et al. (2019)","Momentum Contrast for Unsupervised Visual Representation Learning","MoCo, self-supervised pakai queue + momentum encoder","Advanced",0],
+["cv72",2,"Chen et al. (2020)","A Simple Framework for Contrastive Learning of Visual Representations","SimCLR, kontrastif simpel tapi rakus augmentasi & batch gede","Advanced",0],
+["cv73",2,"Brock et al. (2018)","Large Scale GAN Training for High Fidelity Natural Image Synthesis","BigGAN, GAN kelas berat, butuh compute besar buat ditiru","Advanced",0],
+["cv74",2,"Karras et al. (2018)","A Style-Based Generator Architecture for Generative Adversarial Networks","StyleGAN, generator berbasis style, kontrol fitur per level","Advanced",0],
+["cv75",2,"Grill et al. (2020)","Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning","BYOL, self-supervised tanpa negatif, tricky biar ga collapse","Advanced",0],
+["cv76",2,"Caron et al. (2020)","Unsupervised Learning of Visual Features by Contrasting Cluster Assignments","SwAV, kontras via cluster online + multi-crop, lumayan ribet","Advanced",0],
+["cv77",2,"Carion et al. (2020)","End-to-End Object Detection with Transformers","DETR, deteksi end-to-end pakai set loss, no anchor/NMS","Advanced",0],
+["cv78",2,"Karras et al. (2019)","Analyzing and Improving the Image Quality of StyleGAN","StyleGAN2, benerin artifact tetes air, kualitas makin gila","Advanced",0],
+["cv79",2,"Radford et al. (2021)","Learning Transferable Visual Models From Natural Language Supervision","CLIP, latih vision-language kontrastif, zero-shot mantap","Advanced",0],
+["cv80",2,"Caron et al. (2021)","Emerging Properties in Self-Supervised Vision Transformers","DINO, self-distillation ViT, fitur segmentasi muncul sendiri","Advanced",0],
+["cv81",2,"Liu et al. (2022)","A ConvNet for the 2020s","ConvNet dimodernin biar nyaingin Transformer, gampang dicerna buat masuk frontier","Frontier",0],
+["cv82",2,"Liu et al. (2021)","Swin Transformer: Hierarchical Vision Transformer using Shifted Windows","ViT dibikin hierarkis pakai shifted window, jadi backbone serba-guna","Frontier",0],
+["cv83",2,"He et al. (2021)","Masked Autoencoders Are Scalable Vision Learners","Tutup 75% patch gambar terus rekonstruksi, self-supervised yang simpel tapi kuat","Frontier",0],
+["cv84",2,"Bao et al. (2021)","BEiT: BERT Pre-Training of Image Transformers","Bawa gaya BERT ke gambar lewat masked image modeling pakai token visual","Frontier",0],
+["cv85",2,"Oquab et al. (2023)","DINOv2: Learning Robust Visual Features without Supervision","Fitur visual serbaguna tanpa label, langsung kepakai banyak task tanpa finetune","Frontier",0],
+["cv86",2,"Kirillov et al. (2023)","Segment Anything","SAM: model + dataset gede buat segmentasi apa aja lewat prompt, zero-shot","Frontier",1],
+["cv87",2,"Arnab et al. (2021)","ViViT: A Video Vision Transformer","ViT dibawa ke video, tokenisasi spasial-temporal buat klasifikasi aksi","Frontier",0],
+["cv88",2,"Tong et al. (2022)","VideoMAE: Masked Autoencoders are Data-Efficient Learners for Self-Supervised Video Pre-Training","MAE versi video, tube-masking 90%+ tapi tetap hemat data dan jago","Frontier",0],
+["cv89",2,"Li et al. (2022)","BLIP: Bootstrapping Language-Image Pre-training for Unified Vision-Language Understanding and Generation","Satu model paham + generate caption, bootstrap caption noisy dari web","Frontier",0],
+["cv90",2,"Li et al. (2023)","BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models","Jembatani encoder gambar beku ke LLM beku pakai Q-Former, murah tapi kuat","Frontier",0],
+["cv91",2,"Liu et al. (2023)","Visual Instruction Tuning","LLaVA: instruction-tuning multimodal, resep asisten yang bisa lihat gambar","Frontier",0],
+["cv92",2,"Alayrac et al. (2022)","Flamingo: a Visual Language Model for Few-Shot Learning","VLM few-shot yang selang-seling gambar-teks, gated cross-attn ke LM beku","Frontier",0],
+["cv93",2,"Ho et al. (2020)","Denoising Diffusion Probabilistic Models","DDPM: fondasi diffusion, belajar denoise bertahap dari noise ke gambar","Frontier",1],
+["cv94",2,"Song et al. (2020)","Denoising Diffusion Implicit Models","DDIM: sampling diffusion non-Markov, jauh lebih cepat tanpa latih ulang","Frontier",0],
+["cv95",2,"Ho & Salimans (2022)","Classifier-Free Diffusion Guidance","Guidance tanpa classifier, trik wajib biar text-to-image nurut prompt","Frontier",0],
+["cv96",2,"Dhariwal & Nichol (2021)","Diffusion Models Beat GANs on Image Synthesis","ADM: diffusion ngalahin GAN pakai classifier guidance, titik balik generatif","Frontier",0],
+["cv97",2,"Nichol et al. (2021)","GLIDE: Towards Photorealistic Image Generation and Editing with Text-Guided Diffusion Models","Text-to-image diffusion + editing, cikal bakal generasi gambar dari teks","Frontier",0],
+["cv98",2,"Rombach et al. (2022)","High-Resolution Image Synthesis with Latent Diffusion Models","Stable Diffusion: diffusion di ruang laten, hemat komputasi tapi resolusi tinggi","Frontier",0],
+["cv99",2,"Peebles & Xie (2022)","Scalable Diffusion Models with Transformers","DiT: ganti U-Net jadi Transformer, diffusion yang scaling-nya mulus","Frontier",0],
+["cv100",2,"Saharia et al. (2022)","Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding","Imagen: teks-encoder gede + cascade diffusion, hasil foto-realistis","Frontier",0],
+["rl1",3,"Kaelbling, Littman & Moore (1996)","Reinforcement Learning: A Survey","Peta besar RL dalam satu survei, titik start paling enak buat pemula","Intro",0],
+["rl2",3,"Tesauro (1995)","Temporal Difference Learning and TD-Gammon","TD belajar main backgammon level dunia, kisah sukses RL yang legendaris","Intro",0],
+["rl3",3,"Samuel (1959)","Some Studies in Machine Learning Using the Game of Checkers","Cikal bakal RL: program checkers yang belajar sendiri sejak 1959","Intro",0],
+["rl4",3,"Robbins (1952)","Some Aspects of the Sequential Design of Experiments","Akar bandit, dilema eksplorasi vs eksploitasi mulai dari sini","Intro",0],
+["rl5",3,"Bellman (1954)","The Theory of Dynamic Programming","Pengantar santai dynamic programming langsung dari penciptanya","Intro",0],
+["rl6",3,"Bellman (1957)","A Markovian Decision Process","Kelahiran MDP + persamaan Bellman, fondasi semua RL","Intro",0],
+["rl7",3,"Thompson (1933)","On the Likelihood That One Unknown Probability Exceeds Another in View of the Evidence of Two Samples","Asal-usul Thompson sampling, ide Bayesian buat pilih aksi terbaik","Intro",0],
+["rl8",3,"Sutton (1988)","Learning to Predict by the Methods of Temporal Differences","Makalah TD asli: belajar prediksi dari selisih antar-waktu, wajib baca","Intro",0],
+["rl9",3,"Watkins & Dayan (1992)","Q-learning","Q-learning resmi + bukti konvergensinya, algoritma RL paling ikonik","Intro",1],
+["rl10",3,"Rummery & Niranjan (1994)","On-line Q-learning using connectionist systems","SARSA lahir di sini, versi on-policy dari Q-learning","Intro",0],
+["rl11",3,"Barto, Sutton & Anderson (1983)","Neuronlike adaptive elements that can solve difficult learning control problems","Actor-critic klasik lewat cerita nyeimbangin tiang (cart-pole)","Intro",0],
+["rl12",3,"Singh & Sutton (1996)","Reinforcement Learning with Replacing Eligibility Traces","Eligibility trace model 'replacing', bikin belajar lebih cepat & stabil","Intro",0],
+["rl13",3,"Peng & Williams (1996)","Incremental Multi-step Q-learning","Gabungin Q-learning sama TD(lambda) jadi Q(lambda), multi-langkah","Intro",0],
+["rl14",3,"Sutton (1990)","Integrated Architectures for Learning, Planning, and Reacting Based on Approximating Dynamic Programming","Dyna: campur belajar, planning, dan react dari DP aproksimasi","Intro",0],
+["rl15",3,"Moore & Atkeson (1993)","Prioritized Sweeping: Reinforcement Learning with Less Data and Less Time","Prioritas update state penting dulu, RL hemat data & waktu","Intro",0],
+["rl16",3,"Auer, Cesa-Bianchi & Fischer (2002)","Finite-time Analysis of the Multiarmed Bandit Problem","UCB1 & analisis regret finite-time bandit, dasar eksplorasi optimis","Intro",0],
+["rl17",3,"Lai & Robbins (1985)","Asymptotically Efficient Adaptive Allocation Rules","Batas bawah regret bandit yang legendaris, teori di balik UCB","Intro",0],
+["rl18",3,"Williams (1992)","Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning","REINFORCE: gradien kebijakan paling dasar buat connectionist RL","Intro",0],
+["rl19",3,"Barto, Bradtke & Singh (1995)","Learning to Act Using Real-Time Dynamic Programming","Real-time DP: planning asinkron sambil jalan, jembatan DP-RL","Intro",0],
+["rl20",3,"Dayan (1992)","The Convergence of TD(lambda) for General lambda","Bukti TD(lambda) konvergen buat lambda umum, teori eligibility traces","Intro",0],
+["rl21",3,"Sutton, McAllester, Singh & Mansour (2000)","Policy Gradient Methods for Reinforcement Learning with Function Approximation","Teorema policy gradient + fungsi aproksimasi, fondasi metode PG modern","Intro",0],
+["rl22",3,"Chapelle & Li (2011)","An Empirical Evaluation of Thompson Sampling","Bukti empiris Thompson sampling ngalahin UCB, bikin TS naik daun lagi","Intro",0],
+["rl23",3,"Agrawal & Goyal (2012)","Analysis of Thompson Sampling for the Multi-armed Bandit Problem","Analisis regret pertama buat Thompson sampling, akhirnya ada teorinya","Intro",0],
+["rl24",3,"Jaakkola, Jordan & Singh (1994)","Convergence of Stochastic Iterative Dynamic Programming Algorithms","Kerangka umum kenapa Q-learning & TD konvergen, agak berat matematis","Intro",0],
+["rl25",3,"Tsitsiklis & Van Roy (1997)","An Analysis of Temporal-Difference Learning with Function Approximation","TD + aproksimasi linear: kapan konvergen, kapan meledak","Intro",0],
+["rl26",3,"Gittins (1979)","Bandit Processes and Dynamic Allocation Indices","Gittins index: solusi optimal bandit Bayesian, elegan tapi berat","Intro",0],
+["rl27",3,"Mnih et al. (2013)","Playing Atari with Deep Reinforcement Learning","Awal deep RL: Q-network main Atari langsung dari piksel. Wajib baca pertama.","Core",0],
+["rl28",3,"Mnih et al. (2015)","Human-level control through deep reinforcement learning","Nature DQN: target network + replay bikin stabil, level manusia di 49 game.","Core",0],
+["rl29",3,"van Hasselt et al. (2016)","Deep Reinforcement Learning with Double Q-learning","DQN overestimate nilai; Double DQN benerin pakai dua estimator. Simpel banget.","Core",0],
+["rl30",3,"Wang et al. (2016)","Dueling Network Architectures for Deep Reinforcement Learning","Pisah value sama advantage di arsitektur; belajar state penting tanpa tiap aksi.","Core",0],
+["rl31",3,"Schaul et al. (2015)","Prioritized Experience Replay","Replay transisi yang kejutannya gede lebih sering. Belajar jadi jauh lebih cepat.","Core",0],
+["rl32",3,"Hausknecht & Stone (2015)","Deep Recurrent Q-Learning for Partially Observable MDPs","Tambah LSTM ke DQN buat observasi parsial. Jembatan ke memori di RL.","Core",0],
+["rl33",3,"Osband et al. (2016)","Deep Exploration via Bootstrapped DQN","Eksplorasi lewat ensemble Q-head, bukan epsilon acak. Ide deep exploration.","Core",0],
+["rl34",3,"Fortunato et al. (2017)","Noisy Networks for Exploration","Noise di bobot jaringan gantiin epsilon-greedy; eksplorasi ikut kepelajar.","Core",0],
+["rl35",3,"Nair et al. (2015)","Massively Parallel Methods for Deep Reinforcement Learning","Gorila: DQN didistribusi banyak aktor+learner. Awal RL skala besar.","Core",0],
+["rl36",3,"Riedmiller (2005)","Neural Fitted Q Iteration","Nenek moyang DQN: batch Q pakai neural net. Konteks sejarah value-based.","Core",0],
+["rl37",3,"Konda & Tsitsiklis (2000)","Actor-Critic Algorithms","Formalisasi actor-critic: kritik nilai bimbing aktor. Fondasi advantage AC.","Core",0],
+["rl38",3,"Kakade (2001)","A Natural Policy Gradient","Gradien natural pakai geometri Fisher; cikal bakal TRPO/PPO nanti.","Core",0],
+["rl39",3,"Mnih et al. (2016)","Asynchronous Methods for Deep Reinforcement Learning","A3C/A2C: banyak aktor paralel ganti replay. Batu penjuru actor-critic modern.","Core",0],
+["rl40",3,"Schulman et al. (2015)","High-Dimensional Continuous Control Using Generalized Advantage Estimation","GAE: tukar bias-variansi advantage pakai lambda. Dipakai di mana-mana.","Core",0],
+["rl41",3,"Silver et al. (2014)","Deterministic Policy Gradient Algorithms","DPG: gradien policy deterministik buat aksi kontinu. Basis teori DDPG.","Core",0],
+["rl42",3,"Lillicrap et al. (2015)","Continuous control with deep reinforcement learning","DDPG: DPG + trik DQN buat kontrol kontinu deep. Actor-critic off-policy.","Core",0],
+["rl43",3,"Gu et al. (2016)","Continuous Deep Q-Learning with Model-based Acceleration","NAF: Q-learning kontinu tanpa actor terpisah pakai advantage normal.","Core",0],
+["rl44",3,"Wang et al. (2017)","Sample Efficient Actor-Critic with Experience Replay","ACER: actor-critic off-policy pakai importance sampling terpotong + trust region.","Core",0],
+["rl45",3,"Bellemare et al. (2017)","A Distributional Perspective on Reinforcement Learning","C51: belajar distribusi return, bukan cuma rata-rata. Komponen Rainbow.","Core",0],
+["rl46",3,"Wu et al. (2017)","Scalable trust-region method for deep reinforcement learning using Kronecker-factored approximation","ACKTR: natural gradient praktis pakai K-FAC. Gabung teori Kakade + AC.","Core",0],
+["rl47",3,"Dabney et al. (2017)","Distributional Reinforcement Learning with Quantile Regression","QR-DQN: model distribusi return via kuantil. Lanjutan C51 yang lebih rapi.","Core",0],
+["rl48",3,"Hessel et al. (2017)","Rainbow: Combining Improvements in Deep Reinforcement Learning","Gabung 6 upgrade DQN jadi satu. Ablation-nya bikin ngerti tiap komponen.","Core",0],
+["rl49",3,"Horgan et al. (2018)","Distributed Prioritized Experience Replay","Ape-X: prioritized replay didistribusi ratusan aktor. Skala + sample-efficient.","Core",0],
+["rl50",3,"Dabney et al. (2018)","Implicit Quantile Networks for Distributional Reinforcement Learning","IQN: fungsi kuantil implisit penuh; distributional paling fleksibel + risk-aware.","Core",0],
+["rl51",3,"Espeholt et al. (2018)","IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-Learner Architectures","IMPALA + V-trace: koreksi off-policy buat actor-learner throughput tinggi.","Core",0],
+["rl52",3,"Schulman et al. (2017)","Proximal Policy Optimization Algorithms","Clip ratio, gampang dibikin, jadi baseline RL paling populer","Advanced",1],
+["rl53",3,"Andrychowicz et al. (2017)","Hindsight Experience Replay","Belajar dari gagal dengan relabel goal — sparse reward jadi bisa","Advanced",0],
+["rl54",3,"Fujimoto et al. (2018)","Addressing Function Approximation Error in Actor-Critic Methods","DDPG minus overestimation — twin Q + delayed update, stabil","Advanced",0],
+["rl55",3,"Schulman et al. (2015)","Trust Region Policy Optimization","Update policy dalam trust region — jaminan monoton, matematis berat","Advanced",0],
+["rl56",3,"Haarnoja et al. (2017)","Reinforcement Learning with Deep Energy-Based Policies","Policy energy-based max-entropy — cikal bakal SAC","Advanced",0],
+["rl57",3,"Haarnoja et al. (2018)","Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor","Max-entropy off-policy, sample-efficient & stabil — juara kontrol kontinu","Advanced",0],
+["rl58",3,"Haarnoja et al. (2018)","Soft Actor-Critic Algorithms and Applications","SAC v2: auto-tune temperature entropi, dites di robot nyata","Advanced",0],
+["rl59",3,"Pathak et al. (2017)","Curiosity-driven Exploration by Self-supervised Prediction","Reward penasaran dari error prediksi — eksplor tanpa reward eksternal","Advanced",0],
+["rl60",3,"Bellemare et al. (2016)","Unifying Count-Based Exploration and Intrinsic Motivation","Pseudo-count dari density model — eksplorasi terarah ke state jarang","Advanced",0],
+["rl61",3,"Burda et al. (2018)","Exploration by Random Network Distillation","Bonus eksplor dari error distilasi net random — simpel, tembus Montezuma","Advanced",0],
+["rl62",3,"Munos et al. (2016)","Safe and Efficient Off-Policy Reinforcement Learning","Koreksi off-policy return aman & low-variance — dasar ACER/R2D2","Advanced",0],
+["rl63",3,"Barth-Maron et al. (2018)","Distributed Distributional Deterministic Policy Gradients","DDPG + distributional + distributed replay — kontrol kontinu kelas berat","Advanced",0],
+["rl64",3,"Kapturowski et al. (2019)","Recurrent Experience Replay in Distributed Reinforcement Learning","LSTM + replay terdistribusi — 4x lipat Ape-X, ribet nyetelnya","Advanced",0],
+["rl65",3,"Deisenroth & Rasmussen (2011)","PILCO: A Model-Based and Data-Efficient Approach to Policy Search","Model dinamika GP + propagasi ketidakpastian — super hemat data","Advanced",0],
+["rl66",3,"Chua et al. (2018)","Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models","Ensemble model probabilistik + MPC — model-based sekelas model-free","Advanced",0],
+["rl67",3,"Janner et al. (2019)","When to Trust Your Model: Model-Based Policy Optimization","Rollout model pendek buat gede-in data — kapan percaya model, teoretis","Advanced",0],
+["rl68",3,"Vieillard et al. (2020)","Munchausen Reinforcement Learning","Cukup tambah log-policy ke reward, DQN langsung selevel Rainbow","Advanced",0],
+["rl69",3,"Christodoulou (2019)","Soft Actor-Critic for Discrete Action Settings","SAC diadaptasi ke aksi diskrit, tinggal ganti Gaussian jadi kategorikal","Advanced",0],
+["rl70",3,"Srinivas et al. (2020)","CURL: Contrastive Unsupervised Representations for Reinforcement Learning","Contrastive learning dari pixel mentah, sample-efficient banget","Advanced",0],
+["rl71",3,"Laskin et al. (2020)","Reinforcement Learning with Augmented Data","Augmentasi data doang bikin RL dari pixel jauh lebih efisien","Advanced",0],
+["rl72",3,"Kostrikov et al. (2020)","Image Augmentation Is All You Need: Regularizing Deep Reinforcement Learning from Pixels","Augment gambar + regularisasi Q, SAC dari pixel langsung SOTA","Advanced",0],
+["rl73",3,"Chen et al. (2021)","Randomized Ensembled Double Q-Learning: Learning Fast Without a Model","Ensemble Q + UTD tinggi, secepat model-based tanpa modelnya","Advanced",0],
+["rl74",3,"Kuznetsov et al. (2020)","Controlling Overestimation Bias with Truncated Mixture of Continuous Distributional Quantile Critics","Truncate quantile critic buat tekan overestimation di continuous control","Advanced",0],
+["rl75",3,"Cobbe et al. (2020)","Phasic Policy Gradient","Pisah fase training policy & value, sample reuse lebih agresif dari PPO","Advanced",0],
+["rl76",3,"Ho & Ermon (2016)","Generative Adversarial Imitation Learning","Imitasi gaya GAN—tiru ahli tanpa reward, gerbang masuk inverse RL","Frontier",0],
+["rl77",3,"Fujimoto & Gu (2021)","A Minimalist Approach to Offline Reinforcement Learning","Offline RL paling simpel: TD3 + satu term BC, tetap juara","Frontier",0],
+["rl78",3,"Fujimoto et al. (2018)","Off-Policy Deep Reinforcement Learning without Exploration","Offline RL perdana lawan extrapolation error, fondasi semua","Frontier",0],
+["rl79",3,"Kostrikov et al. (2021)","Offline Reinforcement Learning with Implicit Q-Learning","Belajar offline tanpa query aksi luar dataset, expectile regression","Frontier",0],
+["rl80",3,"Kumar et al. (2020)","Conservative Q-Learning for Offline Reinforcement Learning","Q-value konservatif biar ga overestimate aksi OOD, baseline wajib","Frontier",0],
+["rl81",3,"Chen et al. (2021)","Decision Transformer: Reinforcement Learning via Sequence Modeling","RL jadi sequence modeling—prediksi aksi via return-to-go, elegan","Frontier",0],
+["rl82",3,"Janner et al. (2021)","Offline Reinforcement Learning as One Big Sequence Modeling Problem","Transformer model seluruh trajektori + beam search buat planning","Frontier",0],
+["rl83",3,"Bacon et al. (2017)","The Option-Critic Architecture","Belajar opsi (aksi temporal) end-to-end tanpa subgoal manual","Frontier",0],
+["rl84",3,"Vezhnevets et al. (2017)","FeUdal Networks for Hierarchical Reinforcement Learning","Hierarki manager-worker, manager kasih goal di ruang laten","Frontier",0],
+["rl85",3,"Nachum et al. (2018)","Data-Efficient Hierarchical Reinforcement Learning","HRL off-policy hemat sampel, koreksi goal buat robot nyata","Frontier",0],
+["rl86",3,"Duan et al. (2016)","RL^2: Fast Reinforcement Learning via Slow Reinforcement Learning","Meta-RL: algoritma disimpen di bobot RNN, adaptasi kilat","Frontier",0],
+["rl87",3,"Finn et al. (2017)","Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks","Meta-learning inisialisasi biar adaptasi task baru beberapa step","Frontier",0],
+["rl88",3,"Sunehag et al. (2017)","Value-Decomposition Networks For Cooperative Multi-Agent Learning","MARL: pecah value tim jadi per-agen, atasi lazy agent","Frontier",0],
+["rl89",3,"Rashid et al. (2018)","QMIX: Monotonic Value Function Factorisation for Deep Multi-Agent Reinforcement Learning","VDN naik level—mixing non-linear monoton, koordinasi lebih kaya","Frontier",0],
+["rl90",3,"Lowe et al. (2017)","Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments","Actor-critic multi-agen, kritik tahu aksi semua agen (CTDE)","Frontier",0],
+["rl91",3,"Yu et al. (2021)","The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games","PPO ternyata jago di MARL kooperatif, minim tuning","Frontier",0],
+["rl92",3,"Ha & Schmidhuber (2018)","World Models","Bikin model mimpi dunia (VAE+RNN), latih agen di dalam imajinasi","Frontier",0],
+["rl93",3,"Hafner et al. (2018)","Learning Latent Dynamics for Planning from Pixels","Planning dari piksel via model dinamika laten, tanpa policy","Frontier",0],
+["rl94",3,"Hafner et al. (2019)","Dream to Control: Learning Behaviors by Latent Imagination","Latih actor-critic murni di imajinasi model laten, efisien","Frontier",0],
+["rl95",3,"Hafner et al. (2023)","Mastering Diverse Domains through World Models","Satu config kuasai 150+ task, pertama dapat diamond Minecraft","Frontier",0],
+["rl96",3,"Silver et al. (2016)","Mastering the game of Go with deep neural networks and tree search","Kalahkan juara Go pakai policy/value net + MCTS, bersejarah","Frontier",0],
+["rl97",3,"Silver et al. (2017)","Mastering the game of Go without human knowledge","Tanpa data manusia, self-play murni lampaui AlphaGo","Frontier",0],
+["rl98",3,"Silver et al. (2017)","Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm","Satu algoritma kuasai catur, shogi, Go dari nol via self-play","Frontier",0],
+["rl99",3,"Schrittwieser et al. (2019)","Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model","Planning tanpa tahu aturan—pelajari model sendiri, kuasai Atari+board","Frontier",0],
+["rl100",3,"Ye et al. (2021)","Mastering Atari Games with Limited Data","MuZero super hemat data: super-human Atari cuma 2 jam main","Frontier",0]
+];
+const main=document.getElementById('main'), empty=document.getElementById('empty'),
+      countEl=document.getElementById('count'), qEl=document.getElementById('q');
+let curDom='all', curQ='';
+const U = {
+
+"ds1":["https://www.sjsu.edu/faculty/gerstman/StatPrimer/anscombe1973.pdf","free"],
+"ds2":["http://www.stat.ucla.edu/~nchristo/statistics100C/history_regression.pdf","free"],
+"ds3":["https://galton.org/essays/1880-1889/galton-1888-co-relations-rsoc.pdf","free"],
+"ds4":["https://webspace.ship.edu/pgmarr/Geo441/Readings/Spearman%201904%20-%20The%20Proof%20and%20Measurement%20of%20Association%20between%20Two%20Things.pdf","free"],
+"ds5":["https://www.americanscientist.org/article/first-links-in-the-markov-chain","free"],
+"ds6":["https://www.york.ac.uk/depts/maths/histstat/student.pdf","free"],
+"ds7":["https://pca.narod.ru/pearson1901.pdf","free"],
+"ds8":["https://repository.rothamsted.ac.uk/id/eprint/33079/1/Annals%20of%20Eugenics%20-%20September%201936%20-%20FISHER%20-%20THE%20USE%20OF%20MULTIPLE%20MEASUREMENTS%20IN%20TAXONOMIC%20PROBLEMS.pdf","free"],
+"ds9":["https://apps.dtic.mil/sti/citations/ADA800276","free"],
+"ds10":["https://isl.stanford.edu/~cover/papers/transIT/0021cove.pdf","free"],
+"ds11":["https://academic.oup.com/jrsssb/article/20/2/215/7027376","paywall"],
+"ds12":["https://projecteuclid.org/ebooks/berkeley-symposium-on-mathematical-statistics-and-probability/Some-methods-for-classification-and-analysis-of-multivariate-observations/chapter/Some-methods-for-classification-and-analysis-of-multivariate-observations/bsmsp/1200512992","free"],
+"ds13":["https://www.tandfonline.com/doi/abs/10.1080/01621459.1963.10500845","paywall"],
+"ds14":["https://www.stat.cmu.edu/~rnugent/PCMI2016/papers/LloydKMeans.pdf","free"],
+"ds15":["https://link.springer.com/article/10.1007/BF00116251","paywall"],
+"ds16":["https://www.sciencedirect.com/science/article/abs/pii/S0169207003001134","paywall"],
+"ds17":["https://pubsonline.informs.org/doi/10.1287/mnsc.6.3.324","paywall"],
+"ds18":["https://royalsocietypublishing.org/doi/10.1098/rsta.1927.0007","paywall"],
+"ds19":["https://pubs.rsna.org/doi/10.1148/radiology.143.1.7063747","paywall"],
+"ds20":["https://people.inf.elte.hu/kiss/13dwhdm/roc.pdf","free"],
+"ds21":["https://projecteuclid.org/journals/annals-of-statistics/volume-7/issue-1/Bootstrap-Methods-Another-Look-at-the-Jackknife/10.1214/aos/1176344552.full","free"],
+"ds22":["https://www.tandfonline.com/doi/abs/10.1080/00031305.1983.10483087","paywall"],
+"ds23":["https://sites.stat.washington.edu/courses/stat527/s14/readings/Stone1974.pdf","free"],
+"ds24":["https://www.ijcai.org/Proceedings/95-2/Papers/016.pdf","free"],
+"ds25":["http://doursat.free.fr/docs/Geman_Bienenstock_Doursat_1992_bv_NeurComp.pdf","free"],
+"ds26":["https://www.joelvelasco.net/teaching/249/Neyman%20Pearson%201933.pdf","free"],
+"ds27":["https://www.tandfonline.com/doi/abs/10.1080/00401706.1970.10488634","paywall"],
+"ds28":["https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1996.tb02080.x","paywall"],
+"ds29":["https://www.stat.berkeley.edu/~breiman/bagging.pdf","free"],
+"ds30":["https://www.stat.berkeley.edu/~breiman/randomforest2001.pdf","free"],
+"ds31":["http://engr.case.edu/ray_soumya/mlrg/optimality_of_nb.pdf","free"],
+"ds32":["https://arxiv.org/abs/1106.1813","free"],
+"ds33":["https://hastie.su.domains/Papers/elasticnet.pdf","free"],
+"ds34":["https://www.jmlr.org/papers/v3/guyon03a.html","free"],
+"ds35":["https://www.sciencedirect.com/science/article/abs/pii/S0893608005800231","paywall"],
+"ds36":["https://cdn.aaai.org/KDD/1996/KDD96-037.pdf","free"],
+"ds37":["https://www.scienceopen.com/document?vid=d4a847a5-3613-4441-99f0-cf896c9b490d","free"],
+"ds38":["https://www.cs.cornell.edu/~alexn/papers/calibration.icml05.crc.rev3.pdf","free"],
+"ds39":["https://www.sciencedirect.com/science/article/pii/S002200009791504X","free"],
+"ds40":["https://dl.acm.org/doi/10.1145/130385.130401","paywall"],
+"ds41":["https://link.springer.com/article/10.1007/BF00994018","free"],
+"ds42":["https://leon.bottou.org/publications/pdf/compstat-2010.pdf","free"],
+"ds43":["https://arxiv.org/abs/1609.04747","free"],
+"ds44":["https://proceedings.mlr.press/v28/sutskever13.html","free"],
+"ds45":["https://arxiv.org/abs/1412.6980","free"],
+"ds46":["https://projecteuclid.org/journals/annals-of-statistics/volume-29/issue-5/Greedy-function-approximation-A-gradient-boosting-machine/10.1214/aos/1013203451.full","free"],
+"ds47":["https://projecteuclid.org/journals/annals-of-statistics/volume-28/issue-2/Additive-logistic-regression--a-statistical-view-of-boosting-With/10.1214/aos/1016218223.full","free"],
+"ds48":["https://link.springer.com/referenceworkentry/10.1007/978-0-387-73003-5_196","paywall"],
+"ds49":["https://proceedings.neurips.cc/paper/2001/hash/801272ee79cfde7fa5960571fee36b9b-Abstract.html","free"],
+"ds50":["https://link.springer.com/article/10.1023/A:1018946025316","paywall"],
+"ds51":["https://arxiv.org/abs/0711.0189","free"],
+"ds52":["https://arxiv.org/abs/1602.04938","free"],
+"ds53":["https://archives.iw3c2.org/www10/cdrom/papers/519/index.html","free"],
+"ds54":["https://dl.acm.org/doi/10.1109/MC.2009.263","paywall"],
+"ds55":["https://arxiv.org/abs/1705.07874","free"],
+"ds56":["https://doi.org/10.1109/ICDM.2008.17","paywall"],
+"ds57":["http://cucis.ece.northwestern.edu/projects/DMS/publications/AnomalyDetection.pdf","free"],
+"ds58":["https://arxiv.org/abs/1603.02754","free"],
+"ds59":["https://proceedings.neurips.cc/paper/2017/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html","free"],
+"ds60":["https://arxiv.org/abs/1706.09516","free"],
+"ds61":["https://www.jmlr.org/papers/v9/vandermaaten08a.html","free"],
+"ds62":["https://arxiv.org/abs/1802.03426","free"],
+"ds63":["https://arxiv.org/abs/1205.2618","free"],
+"ds64":["https://rss.onlinelibrary.wiley.com/doi/10.1111/j.2517-6161.1972.tb00899.x","paywall"],
+"ds65":["https://academic.oup.com/biomet/article/70/1/41/240879","paywall"],
+"ds66":["https://www.nber.org/papers/w4509","free"],
+"ds67":["https://www.nber.org/papers/w13039","free"],
+"ds68":["https://www.tandfonline.com/doi/abs/10.1080/01621459.1996.10476902","paywall"],
+"ds69":["https://link.springer.com/article/10.1023/A:1020281327116","paywall"],
+"ds70":["https://academic.oup.com/biomet/article/57/1/97/284580","paywall"],
+"ds71":["https://ieeexplore.ieee.org/document/4767596","paywall"],
+"ds72":["http://gaussianprocess.org/gpml/chapters/RW.pdf","free"],
+"ds73":["https://arxiv.org/abs/1601.00670","free"],
+"ds74":["https://www.jmlr.org/papers/v14/hoffman13a.html","free"],
+"ds75":["https://arxiv.org/abs/1206.1901","free"],
+"ds76":["https://www.jmlr.org/papers/v15/hoffman14a.html","free"],
+"ds77":["https://arxiv.org/abs/1309.6835","free"],
+"ds78":["https://arxiv.org/abs/1706.04599","free"],
+"ds79":["https://arxiv.org/abs/2107.07511","free"],
+"ds80":["https://peerj.com/preprints/3190/","free"],
+"ds81":["https://arxiv.org/abs/1506.02142","free"],
+"ds82":["https://arxiv.org/abs/1612.01474","free"],
+"ds83":["https://arxiv.org/abs/1908.07442","free"],
+"ds84":["https://arxiv.org/abs/1610.02413","free"],
+"ds85":["https://arxiv.org/abs/1905.03222","free"],
+"ds86":["https://arxiv.org/abs/1704.04110","free"],
+"ds87":["https://arxiv.org/abs/2106.11959","free"],
+"ds88":["https://arxiv.org/abs/1909.06312","free"],
+"ds89":["https://arxiv.org/abs/1703.01780","free"],
+"ds90":["https://arxiv.org/abs/1905.02249","free"],
+"ds91":["https://arxiv.org/abs/2001.07685","free"],
+"ds92":["https://arxiv.org/abs/1505.07818","free"],
+"ds93":["https://arxiv.org/abs/1708.00489","free"],
+"ds94":["https://arxiv.org/abs/1703.02910","free"],
+"ds95":["https://arxiv.org/abs/1905.10437","free"],
+"ds96":["https://arxiv.org/abs/1912.09363","free"],
+"ds97":["https://arxiv.org/abs/1911.08731","free"],
+"ds98":["https://arxiv.org/abs/1505.05424","free"],
+"ds99":["https://arxiv.org/abs/1510.04342","free"],
+"ds100":["https://arxiv.org/abs/1806.09055","free"],
+"llm1":["https://www.staff.city.ac.uk/~sbrp622/idfpapers/ksj_orig.pdf","free"],
+"llm2":["https://www.sciencedirect.com/science/article/abs/pii/0306457388900210","paywall"],
+"llm3":["https://arxiv.org/abs/1301.3781","free"],
+"llm4":["https://arxiv.org/abs/1310.4546","free"],
+"llm5":["https://aclanthology.org/D14-1162/","free"],
+"llm6":["https://arxiv.org/abs/1607.01759","free"],
+"llm7":["https://arxiv.org/abs/1607.04606","free"],
+"llm8":["https://arxiv.org/abs/1408.5882","free"],
+"llm9":["https://arxiv.org/abs/1405.4053","free"],
+"llm10":["https://arxiv.org/abs/1509.01626","free"],
+"llm11":["https://aclanthology.org/J92-4003/","free"],
+"llm12":["https://aclanthology.org/P96-1041/","free"],
+"llm13":["https://aclanthology.org/W96-0213/","free"],
+"llm14":["https://aclanthology.org/N03-1033/","free"],
+"llm15":["https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf","free"],
+"llm16":["https://www.isca-archive.org/interspeech_2010/mikolov10_interspeech.html","free"],
+"llm17":["https://www.bioinf.jku.at/publications/older/2604.pdf","free"],
+"llm18":["https://arxiv.org/abs/1406.1078","free"],
+"llm19":["https://arxiv.org/abs/1409.3215","free"],
+"llm20":["https://arxiv.org/abs/1409.0473","free"],
+"llm21":["https://arxiv.org/abs/1508.04025","free"],
+"llm22":["https://arxiv.org/abs/1508.01991","free"],
+"llm23":["https://aclanthology.org/N16-1030/","free"],
+"llm24":["https://aclanthology.org/P16-1101/","free"],
+"llm25":["https://arxiv.org/abs/1103.0398","free"],
+"llm26":["https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf","free"],
+"llm27":["https://arxiv.org/abs/1606.08415","free"],
+"llm28":["https://arxiv.org/abs/1607.06450","free"],
+"llm29":["https://arxiv.org/abs/1508.07909","free"],
+"llm30":["https://arxiv.org/abs/1503.02531","free"],
+"llm31":["https://arxiv.org/abs/1511.01432","free"],
+"llm32":["https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/37842.pdf","free"],
+"llm33":["https://arxiv.org/abs/1808.06226","free"],
+"llm34":["https://arxiv.org/abs/1804.10959","free"],
+"llm35":["https://arxiv.org/abs/1909.03341","free"],
+"llm36":["https://arxiv.org/abs/1801.06146","free"],
+"llm37":["https://arxiv.org/abs/1802.05365","free"],
+"llm38":["https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf","free"],
+"llm39":["https://arxiv.org/abs/1706.03762","free"],
+"llm40":["https://arxiv.org/abs/1803.02155","free"],
+"llm41":["https://arxiv.org/abs/1810.04805","free"],
+"llm42":["https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf","free"],
+"llm43":["https://arxiv.org/abs/1910.01108","free"],
+"llm44":["https://arxiv.org/abs/1907.11692","free"],
+"llm45":["https://arxiv.org/abs/1908.10084","free"],
+"llm46":["https://arxiv.org/abs/1910.13461","free"],
+"llm47":["https://arxiv.org/abs/1909.11942","free"],
+"llm48":["https://arxiv.org/abs/1908.09355","free"],
+"llm49":["https://arxiv.org/abs/1909.10351","free"],
+"llm50":["https://arxiv.org/abs/2003.10555","free"],
+"llm51":["https://arxiv.org/abs/1910.10683","free"],
+"llm52":["https://arxiv.org/abs/1906.08237","free"],
+"llm53":["https://arxiv.org/abs/2004.02984","free"],
+"llm54":["https://arxiv.org/abs/2201.11903","free"],
+"llm55":["https://arxiv.org/abs/2205.11916","free"],
+"llm56":["https://arxiv.org/abs/2203.11171","free"],
+"llm57":["https://arxiv.org/abs/2005.14165","free"],
+"llm58":["https://arxiv.org/abs/2001.08361","free"],
+"llm59":["https://arxiv.org/abs/2203.15556","free"],
+"llm60":["https://arxiv.org/abs/2109.01652","free"],
+"llm61":["https://arxiv.org/abs/2110.08207","free"],
+"llm62":["https://arxiv.org/abs/2210.11416","free"],
+"llm63":["https://arxiv.org/abs/2106.09685","free"],
+"llm64":["https://arxiv.org/abs/2104.08691","free"],
+"llm65":["https://arxiv.org/abs/2101.00190","free"],
+"llm66":["https://arxiv.org/abs/2103.10385","free"],
+"llm67":["https://arxiv.org/abs/1902.00751","free"],
+"llm68":["https://arxiv.org/abs/2004.04906","free"],
+"llm69":["https://arxiv.org/abs/2005.11401","free"],
+"llm70":["https://arxiv.org/abs/2002.08909","free"],
+"llm71":["https://arxiv.org/abs/2112.04426","free"],
+"llm72":["https://arxiv.org/abs/2203.02155","free"],
+"llm73":["https://arxiv.org/abs/2104.09864","free"],
+"llm74":["https://arxiv.org/abs/2108.12409","free"],
+"llm75":["https://arxiv.org/abs/2205.14135","free"],
+"llm76":["https://arxiv.org/abs/2205.01068","free"],
+"llm77":["https://arxiv.org/abs/2211.05100","free"],
+"llm78":["https://arxiv.org/abs/2112.11446","free"],
+"llm79":["https://arxiv.org/abs/2204.02311","free"],
+"llm80":["https://arxiv.org/abs/2112.06905","free"],
+"llm81":["https://arxiv.org/abs/2009.03300","free"],
+"llm82":["https://arxiv.org/abs/2212.10560","free"],
+"llm83":["https://arxiv.org/abs/2210.03629","free"],
+"llm84":["https://arxiv.org/abs/2206.04615","free"],
+"llm85":["https://arxiv.org/abs/2302.13971","free"],
+"llm86":["https://arxiv.org/abs/2211.09110","free"],
+"llm87":["https://arxiv.org/abs/2310.06825","free"],
+"llm88":["https://arxiv.org/abs/2302.04761","free"],
+"llm89":["https://arxiv.org/abs/2101.03961","free"],
+"llm90":["https://arxiv.org/abs/2208.07339","free"],
+"llm91":["https://arxiv.org/abs/2210.17323","free"],
+"llm92":["https://arxiv.org/abs/2211.10438","free"],
+"llm93":["https://arxiv.org/abs/2306.00978","free"],
+"llm94":["https://arxiv.org/abs/2305.14314","free"],
+"llm95":["https://arxiv.org/abs/2309.17453","free"],
+"llm96":["https://arxiv.org/abs/2309.00071","free"],
+"llm97":["https://arxiv.org/abs/2211.17192","free"],
+"llm98":["https://arxiv.org/abs/2305.18290","free"],
+"llm99":["https://arxiv.org/abs/2309.00267","free"],
+"llm100":["https://arxiv.org/abs/2212.08073","free"],
+"cv1":["https://ieeexplore.ieee.org/document/4767851","paywall"],
+"cv2":["https://www.bmva-archive.org.uk/bmvc/1988/avc-88-023.pdf","free"],
+"cv3":["https://ieeexplore.ieee.org/document/56205","paywall"],
+"cv4":["https://publications.ri.cmu.edu/storage/publications/pub_files/pub3/lucas_bruce_d_1981_1/lucas_bruce_d_1981_1.pdf","free"],
+"cv5":["https://people.csail.mit.edu/bkph/AIM/AIM-572-OCR.pdf","free"],
+"cv6":["http://www.ces.clemson.edu/~stb/klt/shi-tomasi-good-features-cvpr1994.pdf","free"],
+"cv7":["https://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf","free"],
+"cv8":["https://people.ee.ethz.ch/~surf/eccv06.pdf","free"],
+"cv9":["https://lear.inrialpes.fr/people/triggs/pubs/Dalal-cvpr05.pdf","free"],
+"cv10":["https://ora.ox.ac.uk/objects/uuid:54efa1e8-8197-4194-9635-f51ab9427057","free"],
+"cv11":["https://www.cs.cmu.edu/~efros/courses/LBMV07/Papers/csurka-eccv-04.pdf","free"],
+"cv12":["https://slazebni.cs.illinois.edu/publications/cvpr06b.pdf","free"],
+"cv13":["https://www.cs.cmu.edu/~efros/courses/LBMV07/Papers/viola-cvpr-01.pdf","free"],
+"cv14":["https://psycnet.apa.org/record/1959-09865-001","paywall"],
+"cv15":["https://www.nature.com/articles/323533a0","paywall"],
+"cv16":["https://gwern.net/doc/ai/nn/cnn/1998-lecun.pdf","free"],
+"cv17":["https://www.cs.toronto.edu/~fritz/absps/reluICML.pdf","free"],
+"cv18":["https://proceedings.mlr.press/v15/glorot11a/glorot11a.pdf","free"],
+"cv19":["https://www.ais.uni-bonn.de/papers/icann2010_maxpool.pdf","free"],
+"cv20":["https://icml.cc/Conferences/2010/papers/638.pdf","free"],
+"cv21":["https://proceedings.neurips.cc/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf","free"],
+"cv22":["https://arxiv.org/abs/1202.2745","free"],
+"cv23":["https://arxiv.org/abs/1207.0580","free"],
+"cv24":["https://arxiv.org/abs/1312.4400","free"],
+"cv25":["https://arxiv.org/abs/1409.1556","free"],
+"cv26":["https://arxiv.org/abs/1311.2901","free"],
+"cv27":["https://arxiv.org/abs/1411.1792","free"],
+"cv28":["https://arxiv.org/abs/1502.03167","free"],
+"cv29":["https://arxiv.org/abs/1512.03385","free"],
+"cv30":["https://arxiv.org/abs/1602.07360","free"],
+"cv31":["https://arxiv.org/abs/1704.04861","free"],
+"cv32":["https://arxiv.org/abs/1409.4842","free"],
+"cv33":["https://arxiv.org/abs/1512.00567","free"],
+"cv34":["https://arxiv.org/abs/1608.06993","free"],
+"cv35":["https://arxiv.org/abs/1611.05431","free"],
+"cv36":["https://arxiv.org/abs/1707.01083","free"],
+"cv37":["https://arxiv.org/abs/1801.04381","free"],
+"cv38":["https://arxiv.org/abs/1311.2524","free"],
+"cv39":["https://arxiv.org/abs/1406.4729","free"],
+"cv40":["https://arxiv.org/abs/1504.08083","free"],
+"cv41":["https://arxiv.org/abs/1506.01497","free"],
+"cv42":["https://arxiv.org/abs/1506.02640","free"],
+"cv43":["https://arxiv.org/abs/1512.02325","free"],
+"cv44":["https://arxiv.org/abs/1612.08242","free"],
+"cv45":["https://arxiv.org/abs/1804.02767","free"],
+"cv46":["https://arxiv.org/abs/1612.03144","free"],
+"cv47":["https://arxiv.org/abs/1708.02002","free"],
+"cv48":["https://arxiv.org/abs/1411.4038","free"],
+"cv49":["https://arxiv.org/abs/1511.00561","free"],
+"cv50":["https://arxiv.org/abs/1505.04597","free"],
+"cv51":["https://arxiv.org/abs/1606.00915","free"],
+"cv52":["https://arxiv.org/abs/1802.02611","free"],
+"cv53":["https://arxiv.org/abs/1506.02025","free"],
+"cv54":["https://arxiv.org/abs/1312.6114","free"],
+"cv55":["https://arxiv.org/abs/1406.2661","free"],
+"cv56":["https://arxiv.org/abs/1411.1784","free"],
+"cv57":["https://arxiv.org/abs/1511.06434","free"],
+"cv58":["https://arxiv.org/abs/1508.06576","free"],
+"cv59":["https://arxiv.org/abs/1603.08155","free"],
+"cv60":["https://arxiv.org/abs/1609.04802","free"],
+"cv61":["https://arxiv.org/abs/1611.07004","free"],
+"cv62":["https://arxiv.org/abs/1701.07875","free"],
+"cv63":["https://arxiv.org/abs/1704.00028","free"],
+"cv64":["https://arxiv.org/abs/1703.10593","free"],
+"cv65":["https://arxiv.org/abs/1905.11946","free"],
+"cv66":["https://arxiv.org/abs/1710.10196","free"],
+"cv67":["https://arxiv.org/abs/1809.00219","free"],
+"cv68":["https://arxiv.org/abs/1703.06870","free"],
+"cv69":["https://arxiv.org/abs/2010.11929","free"],
+"cv70":["https://arxiv.org/abs/2012.12877","free"],
+"cv71":["https://arxiv.org/abs/1911.05722","free"],
+"cv72":["https://arxiv.org/abs/2002.05709","free"],
+"cv73":["https://arxiv.org/abs/1809.11096","free"],
+"cv74":["https://arxiv.org/abs/1812.04948","free"],
+"cv75":["https://arxiv.org/abs/2006.07733","free"],
+"cv76":["https://arxiv.org/abs/2006.09882","free"],
+"cv77":["https://arxiv.org/abs/2005.12872","free"],
+"cv78":["https://arxiv.org/abs/1912.04958","free"],
+"cv79":["https://arxiv.org/abs/2103.00020","free"],
+"cv80":["https://arxiv.org/abs/2104.14294","free"],
+"cv81":["https://arxiv.org/abs/2201.03545","free"],
+"cv82":["https://arxiv.org/abs/2103.14030","free"],
+"cv83":["https://arxiv.org/abs/2111.06377","free"],
+"cv84":["https://arxiv.org/abs/2106.08254","free"],
+"cv85":["https://arxiv.org/abs/2304.07193","free"],
+"cv86":["https://arxiv.org/abs/2304.02643","free"],
+"cv87":["https://arxiv.org/abs/2103.15691","free"],
+"cv88":["https://arxiv.org/abs/2203.12602","free"],
+"cv89":["https://arxiv.org/abs/2201.12086","free"],
+"cv90":["https://arxiv.org/abs/2301.12597","free"],
+"cv91":["https://arxiv.org/abs/2304.08485","free"],
+"cv92":["https://arxiv.org/abs/2204.14198","free"],
+"cv93":["https://arxiv.org/abs/2006.11239","free"],
+"cv94":["https://arxiv.org/abs/2010.02502","free"],
+"cv95":["https://arxiv.org/abs/2207.12598","free"],
+"cv96":["https://arxiv.org/abs/2105.05233","free"],
+"cv97":["https://arxiv.org/abs/2112.10741","free"],
+"cv98":["https://arxiv.org/abs/2112.10752","free"],
+"cv99":["https://arxiv.org/abs/2212.09748","free"],
+"cv100":["https://arxiv.org/abs/2205.11487","free"],
+"rl1":["https://www.jair.org/index.php/jair/article/view/10166","free"],
+"rl2":["https://cacm.acm.org/research/temporal-difference-learning-and-td-gammon/","free"],
+"rl3":["https://dl.acm.org/doi/10.1147/rd.33.0210","paywall"],
+"rl4":["https://projecteuclid.org/journals/bulletin-of-the-american-mathematical-society-new-series/volume-58/issue-5/Some-aspects-of-the-sequential-design-of-experiments/bams/1183517370.full","free"],
+"rl5":["https://projecteuclid.org/journals/bulletin-of-the-american-mathematical-society/volume-60/issue-6/The-theory-of-dynamic-programming/bams/1183519147.full","free"],
+"rl6":["http://www.iumj.indiana.edu/IUMJ/FULLTEXT/1957/6/56038","paywall"],
+"rl7":["https://academic.oup.com/biomet/article-abstract/25/3-4/285/200862","paywall"],
+"rl8":["http://incompleteideas.net/papers/sutton-88-with-erratum.pdf","free"],
+"rl9":["https://link.springer.com/article/10.1007/BF00992698","free"],
+"rl10":["http://mi.eng.cam.ac.uk/reports/svr-ftp/auto-pdf/rummery_tr166.pdf","free"],
+"rl11":["http://incompleteideas.net/papers/barto-sutton-anderson-83.pdf","free"],
+"rl12":["https://link.springer.com/article/10.1007/BF00114726","paywall"],
+"rl13":["https://link.springer.com/article/10.1007/BF00114731","paywall"],
+"rl14":["http://incompleteideas.net/papers/sutton-90.pdf","free"],
+"rl15":["https://link.springer.com/article/10.1007/BF00993104","paywall"],
+"rl16":["https://link.springer.com/article/10.1023/A:1013689704352","paywall"],
+"rl17":["https://www.sciencedirect.com/science/article/pii/0196885885900028","free"],
+"rl18":["https://link.springer.com/article/10.1007/BF00992696","paywall"],
+"rl19":["https://scholarworks.umass.edu/cs_faculty_pubs/353/","free"],
+"rl20":["https://link.springer.com/article/10.1007/BF00992697","paywall"],
+"rl21":["https://proceedings.neurips.cc/paper_files/paper/1999/hash/464d828b85b0bed98e80ade0a5c43b0f-Abstract.html","free"],
+"rl22":["https://proceedings.neurips.cc/paper/2011/hash/e53a0a2978c28872a4505bdb51db06dc-Abstract.html","free"],
+"rl23":["https://arxiv.org/abs/1111.1797","free"],
+"rl24":["https://proceedings.neurips.cc/paper_files/paper/1993/hash/5807a685d1a9ab3b599035bc566ce2b9-Abstract.html","free"],
+"rl25":["http://web.mit.edu/jnt/www/Papers/J063-97-bvr-td.pdf","free"],
+"rl26":["https://people.eecs.berkeley.edu/~russell/classes/cs294/s11/readings/Gittins:1979.pdf","free"],
+"rl27":["https://arxiv.org/abs/1312.5602","free"],
+"rl28":["https://www.nature.com/articles/nature14236","paywall"],
+"rl29":["https://arxiv.org/abs/1509.06461","free"],
+"rl30":["https://arxiv.org/abs/1511.06581","free"],
+"rl31":["https://arxiv.org/abs/1511.05952","free"],
+"rl32":["https://arxiv.org/abs/1507.06527","free"],
+"rl33":["https://arxiv.org/abs/1602.04621","free"],
+"rl34":["https://arxiv.org/abs/1706.10295","free"],
+"rl35":["https://arxiv.org/abs/1507.04296","free"],
+"rl36":["https://link.springer.com/chapter/10.1007/11564096_32","paywall"],
+"rl37":["https://proceedings.neurips.cc/paper/1999/hash/6449f44a102fde848669bdd9eb6b76fa-Abstract.html","free"],
+"rl38":["https://proceedings.neurips.cc/paper/2001/hash/4b86abe48d358ecf194c56c69108433e-Abstract.html","free"],
+"rl39":["https://arxiv.org/abs/1602.01783","free"],
+"rl40":["https://arxiv.org/abs/1506.02438","free"],
+"rl41":["https://proceedings.mlr.press/v32/silver14.html","free"],
+"rl42":["https://arxiv.org/abs/1509.02971","free"],
+"rl43":["https://arxiv.org/abs/1603.00748","free"],
+"rl44":["https://arxiv.org/abs/1611.01224","free"],
+"rl45":["https://arxiv.org/abs/1707.06887","free"],
+"rl46":["https://arxiv.org/abs/1708.05144","free"],
+"rl47":["https://arxiv.org/abs/1710.10044","free"],
+"rl48":["https://arxiv.org/abs/1710.02298","free"],
+"rl49":["https://arxiv.org/abs/1803.00933","free"],
+"rl50":["https://arxiv.org/abs/1806.06923","free"],
+"rl51":["https://arxiv.org/abs/1802.01561","free"],
+"rl52":["https://arxiv.org/abs/1707.06347","free"],
+"rl53":["https://arxiv.org/abs/1707.01495","free"],
+"rl54":["https://arxiv.org/abs/1802.09477","free"],
+"rl55":["https://arxiv.org/abs/1502.05477","free"],
+"rl56":["https://arxiv.org/abs/1702.08165","free"],
+"rl57":["https://arxiv.org/abs/1801.01290","free"],
+"rl58":["https://arxiv.org/abs/1812.05905","free"],
+"rl59":["https://arxiv.org/abs/1705.05363","free"],
+"rl60":["https://arxiv.org/abs/1606.01868","free"],
+"rl61":["https://arxiv.org/abs/1810.12894","free"],
+"rl62":["https://arxiv.org/abs/1606.02647","free"],
+"rl63":["https://arxiv.org/abs/1804.08617","free"],
+"rl64":["https://openreview.net/forum?id=r1lyTjAqYX","free"],
+"rl65":["http://mlg.eng.cam.ac.uk/pub/pdf/DeiRas11.pdf","free"],
+"rl66":["https://arxiv.org/abs/1805.12114","free"],
+"rl67":["https://arxiv.org/abs/1906.08253","free"],
+"rl68":["https://arxiv.org/abs/2007.14430","free"],
+"rl69":["https://arxiv.org/abs/1910.07207","free"],
+"rl70":["https://arxiv.org/abs/2004.04136","free"],
+"rl71":["https://arxiv.org/abs/2004.14990","free"],
+"rl72":["https://arxiv.org/abs/2004.13649","free"],
+"rl73":["https://arxiv.org/abs/2101.05982","free"],
+"rl74":["https://arxiv.org/abs/2005.04269","free"],
+"rl75":["https://arxiv.org/abs/2009.04416","free"],
+"rl76":["https://arxiv.org/abs/1606.03476","free"],
+"rl77":["https://arxiv.org/abs/2106.06860","free"],
+"rl78":["https://arxiv.org/abs/1812.02900","free"],
+"rl79":["https://arxiv.org/abs/2110.06169","free"],
+"rl80":["https://arxiv.org/abs/2006.04779","free"],
+"rl81":["https://arxiv.org/abs/2106.01345","free"],
+"rl82":["https://arxiv.org/abs/2106.02039","free"],
+"rl83":["https://arxiv.org/abs/1609.05140","free"],
+"rl84":["https://arxiv.org/abs/1703.01161","free"],
+"rl85":["https://arxiv.org/abs/1805.08296","free"],
+"rl86":["https://arxiv.org/abs/1611.02779","free"],
+"rl87":["https://arxiv.org/abs/1703.03400","free"],
+"rl88":["https://arxiv.org/abs/1706.05296","free"],
+"rl89":["https://arxiv.org/abs/1803.11485","free"],
+"rl90":["https://arxiv.org/abs/1706.02275","free"],
+"rl91":["https://arxiv.org/abs/2103.01955","free"],
+"rl92":["https://arxiv.org/abs/1803.10122","free"],
+"rl93":["https://arxiv.org/abs/1811.04551","free"],
+"rl94":["https://arxiv.org/abs/1912.01603","free"],
+"rl95":["https://arxiv.org/abs/2301.04104","free"],
+"rl96":["https://www.nature.com/articles/nature16961","paywall"],
+"rl97":["https://www.nature.com/articles/nature24270","paywall"],
+"rl98":["https://arxiv.org/abs/1712.01815","free"],
+"rl99":["https://arxiv.org/abs/1911.08265","free"],
+"rl100":["https://arxiv.org/abs/2111.00210","free"]
+};
+const ACCLBL={free:"PDF gratis",paywall:"paywall"};
+function render(){
+  main.innerHTML='';
+  let shown=0;
+  for(let d=0; d<NDOM; d++){
+    if(curDom!=='all' && String(d)!==curDom) continue;
+    const rows=P.filter(p=>p[1]===d).filter(p=>{
+      if(!curQ) return true;
+      const h=(p[2]+" "+p[3]+" "+p[4]+" "+p[5]).toLowerCase();
+      return h.includes(curQ);
+    });
+    if(!rows.length) continue;
+    shown+=rows.length;
+    const L=DOMAINS[d];
+    const sec=document.createElement('section'); sec.className='level';
+    sec.innerHTML=`<div class="lvhead">
+        <span class="lvtag" style="background:${L.color}">${L.tag}</span>
+        <h2>${L.name}</h2><span class="d">${L.d}</span>
+      </div><div class="grid"></div>`;
+    const grid=sec.querySelector('.grid');
+    rows.forEach((p,idx)=>{
+      const [num,,name,title,desc,tier,star]=p;
+      const lnk=U[num]||["#","free"];
+      const c=document.createElement('div'); c.className='card';
+      c.innerHTML=`<div class="top">
+          <span class="num">${L.tag}${idx+1}</span>
+          <span class="nm">${name}${star?' <span class="star">★</span>':''}</span>
+          <span class="badge b-${tier}">${tier}</span>
+        </div>
+        <div class="title">${title}</div>
+        <div class="desc">${desc}</div>
+        <div class="foot">
+          <a class="read" href="${lnk[0]}" target="_blank" rel="noopener">Baca →</a>
+          <span class="acc a-${lnk[1]}">${ACCLBL[lnk[1]]}</span>
+        </div>`;
+      grid.appendChild(c);
+    });
+    main.appendChild(sec);
+  }
+  empty.style.display = shown?'none':'block';
+  countEl.textContent = shown+" / "+P.length+" papers";
+}
+document.getElementById('chips').addEventListener('click',e=>{
+  const c=e.target.closest('.chip'); if(!c) return;
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on'); curDom=c.dataset.l; render();
+});
+qEl.addEventListener('input',()=>{curQ=qEl.value.trim().toLowerCase(); render();});
+
+const drawer=document.getElementById('drawer'), scrim=document.getElementById('scrim'), dList=document.getElementById('drawerList');
+function openDrawer(v){drawer.classList.toggle('open',v);scrim.classList.toggle('open',v);}
+document.getElementById('menuBtn').onclick=()=>openDrawer(true);
+document.getElementById('drawerX').onclick=()=>openDrawer(false);
+scrim.onclick=()=>openDrawer(false);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')openDrawer(false);});
+let dHTML=`<div class="di" data-l="all"><div class="row1"><span class="lv">·</span><span class="nm">Semua bidang</span></div></div>`;
+for(let d=0;d<NDOM;d++){const L=DOMAINS[d];
+  dHTML+=`<div class="di" data-l="${d}">
+    <div class="row1"><span class="dot" style="background:${L.color}"></span><span class="lv">${L.tag}</span><span class="nm">${L.name}</span></div>
+  </div>`;}
+dHTML+=`<div class="tierkey"><span class="badge b-Intro">Intro</span><span class="badge b-Core">Core</span><span class="badge b-Advanced">Advanced</span><span class="badge b-Frontier">Frontier</span></div>`;
+dList.innerHTML=dHTML;
+function syncSide(){dList.querySelectorAll('.di').forEach(x=>x.classList.toggle('on',x.dataset.l===curDom));}
+dList.addEventListener('click',e=>{
+  const x=e.target.closest('.di'); if(!x) return;
+  document.querySelector('.chip[data-l="'+x.dataset.l+'"]').click();
+  syncSide(); openDrawer(false); window.scrollTo({top:0,behavior:'smooth'});
+});
+document.getElementById('chips').addEventListener('click',syncSide);
+syncSide();
+render();
+</script>
+</body>
+</html>

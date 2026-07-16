@@ -1,0 +1,1192 @@
+[
+{
+"author": "Bachelier (1900)",
+"title": "Théorie de la spéculation",
+"why": "Asal-usul semua: harga bergerak acak. Bapak matematika keuangan.",
+"tier": "Intro",
+"url": "https://www.numdam.org/item/ASENS_1900_3_17__21_0/",
+"access": "free",
+"star": 1,
+"summary": "Disertasi 1900: harga sekuritas digerakkan Brownian motion (random walk), 5 tahun sebelum Einstein. Turunkan harga opsi lewat proses difusi. Replikasi = simulasi random walk + cek distribusi harga vs data nyata."
+},
+{
+"author": "Samuelson (1965)",
+"title": "Proof that Properly Anticipated Prices Fluctuate Randomly",
+"why": "Bukti matematis: harga yang diantisipasi benar pasti fluktuasi acak.",
+"tier": "Intro",
+"url": "https://scholar.google.com/scholar?q=Proof+that+Properly+Anticipated+Prices+Fluctuate+Randomly+Samuelson",
+"access": "search",
+"star": 0,
+"summary": "Bukti formal: kalau pasar sudah pakai semua info, perubahan harga jadi martingale — tak terprediksi. Basis teoretis EMH; pahami buktinya, bukan direplikasi empiris."
+},
+{
+"author": "Fama (1970)",
+"title": "Efficient Capital Markets: A Review of Theory and Empirical Work",
+"why": "Efficient Market Hypothesis — 3 bentuk efisiensi (weak/semi/strong).",
+"tier": "Intro",
+"url": "https://doi.org/10.1111/j.1540-6261.1970.tb00518.x",
+"access": "paywall",
+"star": 1,
+"summary": "Survei + kerangka EMH; definisikan tiga bentuk efisiensi (weak/semi-strong/strong) dan cara mengujinya. Cetak biru semua uji efisiensi pasar sesudahnya."
+},
+{
+"author": "Fama (1965)",
+"title": "The Behavior of Stock-Market Prices",
+"why": "Bukti empiris awal: harga saham ≈ random walk. Bisa lu cek ulang.",
+"tier": "Intro",
+"url": "https://doi.org/10.1086/294743",
+"access": "paywall",
+"star": 0,
+"summary": "Analisis empiris harga saham harian: mendekati random walk dengan ekor tebal (non-normal). Replikasi gampang = uji autokorelasi & runs test di data sendiri."
+},
+{
+"author": "Markowitz (1952)",
+"title": "Portfolio Selection",
+"why": "Racik portfolio optimal: imbang return vs risiko. Fondasi alokasi.",
+"tier": "Intro",
+"url": "https://doi.org/10.1111/j.1540-6261.1952.tb01525.x",
+"access": "paywall",
+"star": 1,
+"summary": "Mean-variance optimization: diversifikasi turunin risiko tanpa korbanin return; lahirnya efficient frontier. Replikasi = bangun frontier dari beberapa aset + matriks kovarians."
+},
+{
+"author": "Sharpe (1966)",
+"title": "Mutual Fund Performance",
+"why": "Sharpe ratio — return per unit risiko.",
+"tier": "Intro",
+"url": "https://doi.org/10.1086/294846",
+"access": "paywall",
+"star": 0,
+"summary": "Perkenalkan reward-to-variability (kelak Sharpe ratio) buat menilai reksadana. Alat evaluasi paling dasar; replikasi = hitung Sharpe strategi apa pun."
+},
+{
+"author": "Jensen (1968)",
+"title": "The Performance of Mutual Funds in the Period 1945–1964",
+"why": "Jensen's alpha — ngukur skill manajer di atas pasar.",
+"tier": "Intro",
+"url": "https://doi.org/10.1111/j.1540-6261.1968.tb00815.x",
+"access": "paywall",
+"star": 0,
+"summary": "Jensen's alpha = return di atas prediksi CAPM; temuan: reksadana rata-rata gak ngalahin pasar setelah biaya. Replikasi = regresi alpha excess return vs market."
+},
+{
+"author": "Treynor (1965)",
+"title": "How to Rate Management of Investment Funds",
+"why": "Treynor ratio — return per unit risiko pasar (beta).",
+"tier": "Intro",
+"url": "https://scholar.google.com/scholar?q=How+to+Rate+Management+of+Investment+Funds+Treynor",
+"access": "search",
+"star": 0,
+"summary": "Treynor ratio (return per unit beta) + karakteristik dana. Salah satu ukuran kinerja berbasis risiko yang pertama."
+},
+{
+"author": "Black & Scholes (1973)",
+"title": "The Pricing of Options and Corporate Liabilities",
+"why": "Rumus harga opsi; lahirnya industri derivatif.",
+"tier": "Intro",
+"url": "https://www.cs.princeton.edu/courses/archive/fall09/cos323/papers/black_scholes73.pdf",
+"access": "free",
+"star": 1,
+"summary": "PDE + rumus tutup harga opsi Eropa lewat argumen replikasi delta-hedge bebas-risiko. Lahirnya rekayasa keuangan. Replikasi = implementasi rumus + simulasi delta hedging."
+},
+{
+"author": "Merton (1973)",
+"title": "Theory of Rational Option Pricing",
+"why": "Perluasan & pembuktian formal Black-Scholes.",
+"tier": "Intro",
+"url": "https://doi.org/10.2307/3003143",
+"access": "paywall",
+"star": 0,
+"summary": "Pembuktian ulang & generalisasi Black-Scholes (dividen, batas rasional harga opsi). Landasan formal teori opsi modern."
+},
+{
+"author": "Cox, Ross & Rubinstein (1979)",
+"title": "Option Pricing: A Simplified Approach",
+"why": "Binomial tree — cara paling gampang paham & hitung harga opsi.",
+"tier": "Intro",
+"url": "https://doi.org/10.1016/0304-405X(79)90015-1",
+"access": "paywall",
+"star": 1,
+"summary": "Binomial tree diskret yang konvergen ke Black-Scholes; cara paling intuitif paham & hitung harga opsi, plus bisa opsi Amerika. Replikasi = coding binomial pricer."
+},
+{
+"author": "Harrison & Pliska (1981)",
+"title": "Martingales and Stochastic Integrals in the Theory of Continuous Trading",
+"why": "Risk-neutral / martingale pricing — Fundamental Theorem of Asset Pricing.",
+"tier": "Intro",
+"url": "https://doi.org/10.1016/0304-4149(81)90026-0",
+"access": "paywall",
+"star": 1,
+"summary": "Formalkan pricing lewat martingale & ukuran risk-neutral: no-arbitrage ⇔ ada equivalent martingale measure. Fundamental Theorem of Asset Pricing."
+},
+{
+"author": "Black (1976)",
+"title": "The Pricing of Commodity Contracts",
+"why": "Opsi buat futures/komoditas.",
+"tier": "Intro",
+"url": "https://doi.org/10.1016/0304-405X(76)90024-6",
+"access": "paywall",
+"star": 0,
+"summary": "Adaptasi Black-Scholes untuk opsi atas futures/komoditas (Black-76). Standar quote vol di pasar komoditas & suku bunga."
+},
+{
+"author": "Engle (1982)",
+"title": "Autoregressive Conditional Heteroscedasticity (ARCH)",
+"why": "Model volatilitas yang berubah-ubah. (Nobel)",
+"tier": "Intro",
+"url": "http://www.econ.uiuc.edu/~econ508/Papers/engle82.pdf",
+"access": "free",
+"star": 1,
+"summary": "ARCH — model varians bersyarat yang berubah waktu, nangkep volatility clustering. Nobel 2003. Replikasi = fit ARCH ke deret return."
+},
+{
+"author": "Bollerslev (1986)",
+"title": "Generalized Autoregressive Conditional Heteroskedasticity (GARCH)",
+"why": "Standar industri buat forecast volatilitas.",
+"tier": "Intro",
+"url": "https://public.econ.duke.edu/~boller/Published_Papers/joe_86.pdf",
+"access": "free",
+"star": 0,
+"summary": "GARCH — generalisasi ARCH jadi parsimoni (lag varians sendiri); standar industri forecast volatilitas. Replikasi = GARCH(1,1) + prediksi vol."
+},
+{
+"author": "Heston (1993)",
+"title": "A Closed-Form Solution for Options with Stochastic Volatility",
+"why": "Stochastic volatility — dasar pricing opsi modern (volatility smile).",
+"tier": "Intro",
+"url": "https://doi.org/10.1093/rfs/6.2.327",
+"access": "paywall",
+"star": 0,
+"summary": "Solusi closed-form opsi dengan volatilitas stokastik; jelasin volatility smile/skew. Replikasi = kalibrasi Heston ke surface opsi."
+},
+{
+"author": "Vasicek (1977)",
+"title": "An Equilibrium Characterization of the Term Structure",
+"why": "Model suku bunga pertama; harga obligasi.",
+"tier": "Intro",
+"url": "https://doi.org/10.1016/0304-405X(77)90016-2",
+"access": "paywall",
+"star": 0,
+"summary": "Model short-rate mean-reverting pertama (Ornstein-Uhlenbeck); harga obligasi analitis. Kelemahan: suku bunga bisa negatif."
+},
+{
+"author": "Cox, Ingersoll & Ross (1985)",
+"title": "A Theory of the Term Structure of Interest Rates",
+"why": "Model term-structure suku bunga (CIR), perbaikan Vasicek.",
+"tier": "Intro",
+"url": "https://doi.org/10.2307/1911242",
+"access": "paywall",
+"star": 0,
+"summary": "Model term-structure equilibrium (CIR) dengan suku bunga non-negatif (proses akar-kuadrat). Perbaikan Vasicek, dipakai luas."
+},
+{
+"author": "Merton (1974)",
+"title": "On the Pricing of Corporate Debt",
+"why": "Risiko gagal-bayar perusahaan dilihat sebagai opsi. (structural credit)",
+"tier": "Intro",
+"url": "https://doi.org/10.1111/j.1540-6261.1974.tb03058.x",
+"access": "paywall",
+"star": 0,
+"summary": "Model struktural kredit: ekuitas = opsi call atas aset firm; hitung harga utang berisiko & probabilitas default. Basis KMV/distance-to-default."
+},
+{
+"author": "Jegadeesh & Titman (1993)",
+"title": "Returns to Buying Winners and Selling Losers",
+"why": "Saham naik 3–12 bln terus naik; yang jeblok terus jeblok. (momentum)",
+"tier": "Core",
+"url": "https://www.bauer.uh.edu/rsusmel/phd/jegadeesh-titman93.pdf",
+"access": "free",
+"star": 1,
+"summary": "Beli winner 3–12 bln, jual loser dengan bobot seimbang; momentum untung ~1%/bln dan bertahan setelah kontrol risiko. Anomali paling terkenal. Replikasi = form portfolio J-bulan/K-bulan."
+},
+{
+"author": "Jegadeesh (1990)",
+"title": "Evidence of Predictable Behavior of Security Returns",
+"why": "Jangka super pendek: yang jeblok bulan lalu mantul bulan depan.",
+"tier": "Core",
+"url": "https://finance.martinsewell.com/stylized-facts/dependence/Jegadeesh1990.pdf",
+"access": "free",
+"star": 0,
+"summary": "Reversal jangka pendek: loser bulan lalu cenderung mantul bulan depan; kontrarian untung. Sebagian efek mikrostruktur/bid-ask bounce."
+},
+{
+"author": "Lehmann (1990)",
+"title": "Fads, Martingales, and Market Efficiency",
+"why": "Reversal versi mingguan.",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w2533",
+"access": "free",
+"star": 0,
+"summary": "Reversal mingguan; contrarian zero-cost portfolio untung konsisten. Bukti overreaksi jangka sangat pendek."
+},
+{
+"author": "De Bondt & Thaler (1985)",
+"title": "Does the Stock Market Overreact?",
+"why": "3–5 thn: saham pecundang lama malah bangkit; investor over-reaksi.",
+"tier": "Core",
+"url": "http://efinance.org.cn/cn/fm/Does%20the%20Stock%20Market%20Overreact.pdf",
+"access": "free",
+"star": 1,
+"summary": "Loser 3–5 tahun malah ngalahin winner lama: investor over-reaksi ke berita. Salah satu fondasi behavioral finance."
+},
+{
+"author": "Frazzini & Pedersen (2014)",
+"title": "Betting Against Beta",
+"why": "Saham kalem lebih cuan per risiko daripada saham liar.",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w16601",
+"access": "free",
+"star": 1,
+"summary": "Betting-Against-Beta: long low-beta (di-leverage), short high-beta; untung karena banyak investor kena batasan leverage. Replikasi = bangun faktor BAB."
+},
+{
+"author": "Ang, Hodrick, Xing & Zhang (2006)",
+"title": "The Cross-Section of Volatility and Expected Returns",
+"why": "Saham paling acak/gak jelas justru return-nya jelek. (idiosyncratic vol)",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w10852",
+"access": "free",
+"star": 0,
+"summary": "Teka-teki: saham idiosyncratic-vol tinggi justru return-nya rendah (harusnya risiko dibayar). Replikasi = sort saham by IVOL residual."
+},
+{
+"author": "Amihud (2002)",
+"title": "Illiquidity and Stock Returns",
+"why": "Saham susah dijual dibayar ekstra sebagai kompensasi ribet.",
+"tier": "Core",
+"url": "https://www.cis.upenn.edu/~mkearns/finread/amihud.pdf",
+"access": "free",
+"star": 0,
+"summary": "Ukuran illiquidity Amihud (|return|/volume harian); saham illiquid dibayar return lebih tinggi. Replikasi = hitung ILLIQ + sort."
+},
+{
+"author": "George & Hwang (2004)",
+"title": "The 52-Week High and Momentum Investing",
+"why": "Saham deket rekor tertinggi 52-minggu cenderung nembus lebih tinggi.",
+"tier": "Core",
+"url": "https://www.bauer.uh.edu/tgeorge/papers/gh4-paper.pdf",
+"access": "free",
+"star": 0,
+"summary": "Rasio harga terhadap 52-week high memprediksi momentum lebih baik daripada return masa lalu; anchoring bias."
+},
+{
+"author": "Novy-Marx (2013)",
+"title": "The Other Side of Value: The Gross Profitability Premium",
+"why": "Perusahaan profit kotor tinggi sahamnya lebih cuan. Quality bayar.",
+"tier": "Core",
+"url": "https://oldschoolvalue-files.s3.amazonaws.com/pdf/Novy-Marx_Gross-Profitability-Anomaly_JFE_2013.pdf",
+"access": "free",
+"star": 0,
+"summary": "Gross profitability (laba kotor/aset) memprediksi return sekuat value; 'quality' dibayar. Replikasi = sort GP/A."
+},
+{
+"author": "Banz (1981)",
+"title": "The Relationship Between Return and Market Value of Common Stocks",
+"why": "Perusahaan kecil return-nya ngalahin yang gede. (size effect)",
+"tier": "Core",
+"url": "https://search.dailystocks.com/Banz_sizeeffect_1980.pdf",
+"access": "free",
+"star": 1,
+"summary": "Efek ukuran: firm kecil return-nya ngalahin yang besar setelah kontrol beta. Anomali size yang pertama."
+},
+{
+"author": "Basu (1977)",
+"title": "Investment Performance of Common Stocks in Relation to Their P/E Ratios",
+"why": "Saham murah (P/E rendah) ngalahin yang mahal. (value awal)",
+"tier": "Core",
+"url": "https://doi.org/10.1111/j.1540-6261.1977.tb01979.x",
+"access": "paywall",
+"star": 0,
+"summary": "Saham P/E rendah ngalahin P/E tinggi bahkan setelah risiko; bukti value effect paling awal."
+},
+{
+"author": "Rosenberg, Reid & Lanstein (1985)",
+"title": "Persuasive Evidence of Market Inefficiency",
+"why": "Saham book-to-market tinggi (murah) lebih cuan.",
+"tier": "Core",
+"url": "https://doi.org/10.3905/jpm.1985.409007",
+"access": "paywall",
+"star": 0,
+"summary": "Book-to-market tinggi (murah) = return lebih tinggi; bukti inefisiensi berbasis nilai buku."
+},
+{
+"author": "Bhandari (1988)",
+"title": "Debt/Equity Ratio and Expected Common Stock Returns",
+"why": "Perusahaan berutang lebih tinggi return-nya lebih tinggi (risiko).",
+"tier": "Core",
+"url": "https://doi.org/10.1111/j.1540-6261.1988.tb03952.x",
+"access": "paywall",
+"star": 0,
+"summary": "Leverage (D/E) lebih tinggi berkorelasi dengan return saham lebih tinggi — kompensasi risiko finansial."
+},
+{
+"author": "Sloan (1996)",
+"title": "Do Stock Prices Fully Reflect Information in Accruals and Cash Flows?",
+"why": "Laba dari akrual (bukan cash) rapuh; akrual tinggi bakal jeblok.",
+"tier": "Core",
+"url": "https://www.cuhk.edu.hk/acy2/workshop/June2009Wasley/1996TAR).pdf",
+"access": "free",
+"star": 1,
+"summary": "Accrual anomaly: laba dari akrual kurang persisten dibanding cash flow; short high-accrual, long low-accrual. Replikasi = accrual sort."
+},
+{
+"author": "Cooper, Gulen & Schill (2008)",
+"title": "Asset Growth and the Cross-Section of Stock Returns",
+"why": "Perusahaan yang asetnya membengkak cepet, sahamnya malah jelek.",
+"tier": "Core",
+"url": "https://assets.super.so/e46b77e7-ee08-445e-b43f-4ffd88ae0a0e/files/9713c95f-dbf6-431a-96bc-e647045f3037.pdf",
+"access": "free",
+"star": 0,
+"summary": "Asset growth tinggi → return saham rendah; overinvestment/ekspektasi berlebih. Investment anomaly."
+},
+{
+"author": "Titman, Wei & Xie (2004)",
+"title": "Capital Investments and Stock Returns",
+"why": "Perusahaan boros investasi return sahamnya rendah.",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w9951",
+"access": "free",
+"star": 0,
+"summary": "Capex/investasi tinggi → return saham rendah; konsisten dengan asset-growth effect."
+},
+{
+"author": "Haugen & Baker (1996)",
+"title": "Commonality in the Determinants of Expected Stock Returns",
+"why": "Saham volatilitas rendah malah return-nya lebih bagus. (lawan teori)",
+"tier": "Core",
+"url": "https://static1.squarespace.com/static/5c64407877b903bc8cbe88f7/t/5d1a0b30401735000129e234/1561987891544/1996-Haugen-Multifactor+.pdf",
+"access": "free",
+"star": 0,
+"summary": "Saham volatilitas rendah malah return lebih tinggi — lawan CAPM. Cikal bakal low-volatility anomaly."
+},
+{
+"author": "Blitz & van Vliet (2007)",
+"title": "The Volatility Effect",
+"why": "Konfirmasi global: portfolio low-vol menang.",
+"tier": "Core",
+"url": "https://repub.eur.nl/pub/10460/ERS-2007-044-F&A.pdf",
+"access": "free",
+"star": 0,
+"summary": "Konfirmasi global: portfolio low-vol punya Sharpe lebih tinggi di banyak pasar. Bukti robust low-vol effect."
+},
+{
+"author": "Fama & French (1992)",
+"title": "The Cross-Section of Expected Stock Returns",
+"why": "Beta CAPM gak jelasin return; ukuran & value yang ngaruh.",
+"tier": "Core",
+"url": "https://people.hec.edu/rosu/wp-content/uploads/sites/43/2023/09/Fama-French-Cross-section-of-expected-stock-returns-1992.pdf",
+"access": "free",
+"star": 1,
+"summary": "Beta CAPM gagal jelasin cross-section; size & book-to-market yang dominan. Pemicu langsung 3-factor model."
+},
+{
+"author": "Harvey & Siddique (2000)",
+"title": "Conditional Skewness in Asset Pricing Tests",
+"why": "Saham yang bisa kasih kejutan positif ekstrem dihargai mahal. (coskewness)",
+"tier": "Core",
+"url": "https://people.duke.edu/~charvey/Research/Published_Papers/P56_Conditional_skewness_in.pdf",
+"access": "free",
+"star": 0,
+"summary": "Coskewness dihargai: saham yang nambah skewness portfolio return-nya lebih rendah. Perluasan CAPM ke momen ketiga."
+},
+{
+"author": "Sharpe (1964)",
+"title": "Capital Asset Prices: A Theory of Market Equilibrium",
+"why": "CAPM: return cuma dibayar buat risiko pasar. Titik awal semua.",
+"tier": "Core",
+"url": "https://finance.martinsewell.com/capm/Sharpe1964.pdf",
+"access": "free",
+"star": 1,
+"summary": "CAPM: expected return linear ke beta pasar. Titik awal seluruh asset pricing; dasar cost-of-capital."
+},
+{
+"author": "Lintner (1965)",
+"title": "The Valuation of Risk Assets and the Selection of Risky Investments",
+"why": "Versi paralel CAPM.",
+"tier": "Core",
+"url": "https://finance.martinsewell.com/capm/Lintner1965a.pdf",
+"access": "free",
+"star": 0,
+"summary": "Turunan CAPM paralel Lintner, plus wawasan konstruksi portfolio optimal di bawah ketidakpastian."
+},
+{
+"author": "Black, Jensen & Scholes (1972)",
+"title": "The Capital Asset Pricing Model: Some Empirical Tests",
+"why": "Tes CAPM pertama; ketauan gak sempurna.",
+"tier": "Core",
+"url": "http://www.efalken.com/LowVolClassics/blackjensenscholes.pdf",
+"access": "free",
+"star": 0,
+"summary": "Uji CAPM time-series pertama (BJS); garis SML lebih datar dari prediksi — sinyal low-beta anomaly."
+},
+{
+"author": "Merton (1973)",
+"title": "An Intertemporal Capital Asset Pricing Model (ICAPM)",
+"why": "CAPM antarwaktu: risiko berubah seiring waktu.",
+"tier": "Core",
+"url": "http://home.cerge-ei.cz/petrz/fm/f400n25.pdf",
+"access": "free",
+"star": 0,
+"summary": "ICAPM: CAPM antarwaktu — faktor risiko tambahan muncul dari perubahan set peluang investasi. Landasan multi-factor."
+},
+{
+"author": "Ross (1976)",
+"title": "The Arbitrage Theory of Capital Asset Pricing (APT)",
+"why": "Return bisa dijelasin banyak faktor, bukan cuma pasar.",
+"tier": "Core",
+"url": "https://raw.githubusercontent.com/yangyutu/FinancialResearch/master/Ross%20-%201976%20-%20The%20arbitrage%20theory%20of%20capital%20asset%20pricing.pdf",
+"access": "free",
+"star": 1,
+"summary": "APT: return dijelasin banyak faktor lewat argumen no-arbitrage, tanpa asumsi utilitas seperti CAPM."
+},
+{
+"author": "Chen, Roll & Ross (1986)",
+"title": "Economic Forces and the Stock Market",
+"why": "Faktor makro (inflasi, suku bunga) gerakin saham.",
+"tier": "Core",
+"url": "https://doi.org/10.1086/296344",
+"access": "paywall",
+"star": 0,
+"summary": "Faktor makro (produksi industri, inflasi tak terduga, term & default spread) dihargai di saham. Uji APT empiris."
+},
+{
+"author": "Fama & French (1993)",
+"title": "Common Risk Factors in the Returns on Stocks and Bonds",
+"why": "3 faktor: pasar + ukuran + value. Fondasi industri.",
+"tier": "Core",
+"url": "https://www.bauer.uh.edu/rsusmel/phd/Fama-French_JFE93.pdf",
+"access": "free",
+"star": 1,
+"summary": "3-factor (market, SMB, HML) jelasin sebagian besar cross-section return; jadi standar industri. Replikasi = bangun ketiga faktor."
+},
+{
+"author": "Fama & French (1996)",
+"title": "Multifactor Explanations of Asset Pricing Anomalies",
+"why": "3-faktor bisa jelasin banyak anomali sekaligus.",
+"tier": "Core",
+"url": "https://pdfs.semanticscholar.org/cb36/0176707f818319747290b2fb40d68634a56d.pdf",
+"access": "free",
+"star": 0,
+"summary": "3-factor menyerap banyak anomali sekaligus (kecuali momentum). Konsolidasi model FF."
+},
+{
+"author": "Carhart (1997)",
+"title": "On Persistence in Mutual Fund Performance",
+"why": "Tambah momentum jadi faktor ke-4; dipakai nilai reksadana.",
+"tier": "Core",
+"url": "https://finance.martinsewell.com/fund-performance/Carhart1997.pdf",
+"access": "free",
+"star": 1,
+"summary": "Tambah momentum jadi 4-factor; dipakai evaluasi persistensi kinerja reksadana (skill vs faktor)."
+},
+{
+"author": "Fama & French (2015)",
+"title": "A Five-Factor Asset Pricing Model",
+"why": "Naik jadi 5 faktor: + profitabilitas + investasi.",
+"tier": "Core",
+"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2287202",
+"access": "free",
+"star": 1,
+"summary": "5-factor: tambah profitability (RMW) & investment (CMA); HML jadi redundan. Model FF generasi baru."
+},
+{
+"author": "Hou, Xue & Zhang (2015)",
+"title": "Digesting Anomalies: An Investment Approach",
+"why": "Model saingan: 4 faktor beda (q-factor) cukup.",
+"tier": "Core",
+"url": "https://global-q.org/uploads/1/2/2/6/122679606/houxuezhang2015rfs.pdf",
+"access": "free",
+"star": 0,
+"summary": "q-factor (market, size, investment, profitability) dari teori investasi menyaingi FF5. Model kompetitor."
+},
+{
+"author": "Fama & MacBeth (1973)",
+"title": "Risk, Return, and Equilibrium: Empirical Tests",
+"why": "Cara ngetes faktor dibayar/nggak. Metodologi wajib kuasai.",
+"tier": "Core",
+"url": "https://people.hec.edu/rosu/wp-content/uploads/sites/43/2023/09/Fama-MacBeth-Risk-return-and-equilibrium-Empirical-tests-1973.pdf",
+"access": "free",
+"star": 1,
+"summary": "Fama-MacBeth: regresi cross-section 2-tahap buat uji apakah faktor benar-benar dibayar. Metodologi wajib kuasai. Replikasi = FM regression."
+},
+{
+"author": "Asness & Frazzini (2013)",
+"title": "The Devil in HML's Details",
+"why": "Detail masak (harga baru vs lama) bikin value keliatan jauh lebih bagus.",
+"tier": "Core",
+"url": "https://stoxray.com/docs/Asness_Frazzini_AdjustHML.pdf",
+"access": "free",
+"star": 0,
+"summary": "Pakai harga terbaru (bukan lag) buat HML → value factor jadi jauh lebih kuat dan kurang tumpang-tindih dengan momentum. Detail konstruksi krusial."
+},
+{
+"author": "Daniel & Titman (1997)",
+"title": "Evidence on the Characteristics of Cross-Sectional Variation",
+"why": "Return tinggi krn karakter perusahaan atau risiko? (debat)",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w5604",
+"access": "free",
+"star": 0,
+"summary": "Debat: karakteristik firm (bukan loading faktor risiko) yang prediksi return. Tantangan langsung ke interpretasi risiko FF."
+},
+{
+"author": "Fama & French (2018)",
+"title": "Choosing Factors",
+"why": "Cara milih faktor mana yang beneran perlu.",
+"tier": "Core",
+"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2668236",
+"access": "free",
+"star": 0,
+"summary": "Cara sistematis pilih faktor pakai maximum squared Sharpe ratio; mana yang beneran nambah."
+},
+{
+"author": "Barillas & Shanken (2018)",
+"title": "Comparing Asset Pricing Models",
+"why": "Cara adu model faktor: mana yang menang.",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w21771",
+"access": "free",
+"star": 0,
+"summary": "Bandingin model faktor secara Bayesian; pemenang tergantung himpunan faktor yang dipertimbangkan."
+},
+{
+"author": "Stambaugh & Yuan (2017)",
+"title": "Mispricing Factors",
+"why": "2 faktor kesalahan-harga dari gabungan banyak anomali.",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w21533",
+"access": "free",
+"star": 0,
+"summary": "Dua mispricing factor (management & performance) diringkas dari 11 anomali; gabung dengan market & size."
+},
+{
+"author": "Daniel, Hirshleifer & Sun (2020)",
+"title": "Short- and Long-Horizon Behavioral Factors",
+"why": "Faktor berbasis bias perilaku investor.",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w24163",
+"access": "free",
+"star": 0,
+"summary": "Faktor behavioral horizon pendek (PEAD) & panjang (financing); mispricing dari bias investor + limits to arbitrage."
+},
+{
+"author": "Kozak, Nagel & Santosh (2020)",
+"title": "Shrinking the Cross-Section",
+"why": "Ciutin ratusan anomali jadi segelintir faktor pakai statistik.",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w24070",
+"access": "free",
+"star": 0,
+"summary": "Ringkas ratusan anomali jadi SDF berdimensi rendah pakai shrinkage/PCA; sedikit faktor sudah cukup jelasin."
+},
+{
+"author": "Lettau & Pelger (2020)",
+"title": "Factors That Fit the Time Series and Cross-Section",
+"why": "Nemuin faktor otomatis dari data (PCA yang diperbaiki).",
+"tier": "Core",
+"url": "https://www.nber.org/papers/w24858",
+"access": "free",
+"star": 0,
+"summary": "Risk-Premium PCA: nemuin faktor laten yang fit deret waktu DAN cross-section sekaligus (perbaikan PCA biasa)."
+},
+{
+"author": "Moskowitz, Ooi & Pedersen (2012)",
+"title": "Time Series Momentum",
+"why": "Momentum jalan di SEMUA aset (komoditas, obligasi, forex).",
+"tier": "Advanced",
+"url": "https://w4.stern.nyu.edu/facdir/lpederse/papers/TimeSeriesMomentum.pdf",
+"access": "free",
+"star": 1,
+"summary": "Time-series momentum di 58 instrumen semua asset class: tren 12-bln prediksi return 1-bln. Basis trend-following. Replikasi = TSMOM."
+},
+{
+"author": "Gatev, Goetzmann & Rouwenhorst (2006)",
+"title": "Pairs Trading: Performance of a Relative-Value Arbitrage Rule",
+"why": "2 saham yang biasa gerak bareng; pas melenceng, taruhan balik nyatu.",
+"tier": "Advanced",
+"url": "https://www.nber.org/papers/w7032",
+"access": "free",
+"star": 1,
+"summary": "Pairs trading distance method: pasangkan saham yang biasa gerak bareng, taruhan konvergen saat divergen. Untung setelah biaya. Replikasi = distance pairs."
+},
+{
+"author": "Avellaneda & Lee (2010)",
+"title": "Statistical Arbitrage in the U.S. Equities Market",
+"why": "Versi canggih pairs: puluhan pasangan otomatis pakai PCA.",
+"tier": "Advanced",
+"url": "https://traders.studentorg.berkeley.edu/papers/Statistical%20arbitrage%20in%20the%20US%20equities%20market.pdf",
+"access": "free",
+"star": 0,
+"summary": "Stat-arb skala industri: residual mean-reverting ratusan saham via PCA/ETF factor. Versi sistematis pairs trading."
+},
+{
+"author": "Asness, Moskowitz & Pedersen (2013)",
+"title": "Value and Momentum Everywhere",
+"why": "Value & momentum jalan di semua pasar dunia & saling nutupin.",
+"tier": "Advanced",
+"url": "https://pages.stern.nyu.edu/~lpederse/papers/ValMomEverywhere.pdf",
+"access": "free",
+"star": 1,
+"summary": "Value & momentum konsisten di 8 pasar & asset class; korelasi negatif antar keduanya → kombinasi jauh lebih kuat. Replikasi = value+mom global."
+},
+{
+"author": "Baltas & Kosowski (2013)",
+"title": "Momentum Strategies in Futures Markets and Trend-Following Funds",
+"why": "Trend-following works, tapi ada batas duit sebelum rusak. (kapasitas)",
+"tier": "Advanced",
+"url": "https://www.naaim.org/wp-content/uploads/2013/10/00S_Momentum_Strategies_in_Futures_Markets_Nick_Baltas.pdf",
+"access": "free",
+"star": 0,
+"summary": "Trend-following works di futures, tapi kapasitas & crowding menekan return saat AUM membesar."
+},
+{
+"author": "Engle & Granger (1987)",
+"title": "Co-integration and Error Correction",
+"why": "Teori Nobel: kapan 2 hal yang jalan sendiri sebenernya keiket. (cointegration)",
+"tier": "Advanced",
+"url": "https://www.jstor.org/stable/1913236",
+"access": "paywall",
+"star": 1,
+"summary": "Cointegration & error-correction: teori Nobel dasar pairs/stat-arb — kapan dua deret non-stasioner sebenarnya terikat. Replikasi = uji Engle-Granger."
+},
+{
+"author": "Lo & MacKinlay (1988)",
+"title": "Stock Market Prices Do Not Follow Random Walks",
+"why": "Bukti harga saham BUKAN jalan acak murni. (variance ratio)",
+"tier": "Advanced",
+"url": "https://www.nber.org/papers/w2168",
+"access": "free",
+"star": 0,
+"summary": "Variance ratio test menolak random walk; return mingguan indeks autokorelasi positif. Bukti prediktabilitas."
+},
+{
+"author": "Lo & MacKinlay (1990)",
+"title": "When Are Contrarian Profits Due to Overreaction?",
+"why": "Saham besar mimpin saham kecil; ada efek lead-lag.",
+"tier": "Advanced",
+"url": "https://www.nber.org/papers/w2977",
+"access": "free",
+"star": 0,
+"summary": "Lead-lag: saham besar mimpin kecil; profit kontrarian sebagian dari cross-autocorrelation, bukan murni overreaksi."
+},
+{
+"author": "Conrad & Kaul (1998)",
+"title": "An Anatomy of Trading Strategies",
+"why": "Bedah kenapa strategi momentum/contrarian untung.",
+"tier": "Advanced",
+"url": "https://doi.org/10.1093/rfs/11.3.489",
+"access": "paywall",
+"star": 0,
+"summary": "Dekomposisi profit momentum/kontrarian: berapa dari autokorelasi vs variasi cross-sectional expected return."
+},
+{
+"author": "Hong & Stein (1999)",
+"title": "A Unified Theory of Underreaction, Momentum, and Overreaction",
+"why": "Teori kenapa momentum & reversal bisa ada bareng (info nyebar pelan).",
+"tier": "Advanced",
+"url": "https://www.nber.org/papers/w6324",
+"access": "free",
+"star": 0,
+"summary": "Model dua tipe investor (newswatchers & momentum traders) jelasin underreaction→momentum lalu overreaction→reversal dalam satu kerangka."
+},
+{
+"author": "Poterba & Summers (1988)",
+"title": "Mean Reversion in Stock Prices",
+"why": "Jangka panjang harga saham balik ke rata-rata.",
+"tier": "Advanced",
+"url": "https://www.nber.org/papers/w2343",
+"access": "free",
+"star": 0,
+"summary": "Mean reversion horizon panjang: variance ratio < 1 di horizon multi-tahun. Harga saham sebagian bisa diprediksi jangka panjang."
+},
+{
+"author": "Balvers, Wu & Gilliland (2000)",
+"title": "Mean Reversion across National Stock Markets",
+"why": "Mean-reversion antarnegara bisa jadi strategi.",
+"tier": "Advanced",
+"url": "https://doi.org/10.1111/0022-1082.00225",
+"access": "paywall",
+"star": 0,
+"summary": "Mean reversion antar indeks pasar nasional → strategi kontrarian lintas negara."
+},
+{
+"author": "Gorton & Rouwenhorst (2006)",
+"title": "Facts and Fantasies about Commodity Futures",
+"why": "Fakta dasar return komoditas futures.",
+"tier": "Advanced",
+"url": "https://www.nber.org/papers/w10595",
+"access": "free",
+"star": 0,
+"summary": "Indeks komoditas futures equal-weight: return historis mirip ekuitas, negatif berkorelasi dengan saham/obligasi, hedge inflasi."
+},
+{
+"author": "Erb & Harvey (2006)",
+"title": "The Strategic and Tactical Value of Commodity Futures",
+"why": "Untung komoditas dari roll yield, bukan harga spot.",
+"tier": "Advanced",
+"url": "https://people.duke.edu/~charvey/Research/Working_Papers/W77_The_tactical_and.pdf",
+"access": "free",
+"star": 0,
+"summary": "Return komoditas terutama datang dari roll yield (backwardation/contango), bukan pergerakan harga spot."
+},
+{
+"author": "Lustig, Roussanov & Verdelhan (2011)",
+"title": "Common Risk Factors in Currency Markets",
+"why": "Faktor carry mata uang: pinjam bunga rendah, taruh bunga tinggi.",
+"tier": "Advanced",
+"url": "https://www.nber.org/papers/w14082",
+"access": "free",
+"star": 0,
+"summary": "Faktor carry FX: currency bunga tinggi outperform bunga rendah; slope factor jelasin return carry. Replikasi = carry trade FX."
+},
+{
+"author": "Menkhoff, Sarno, Schmeling & Schrimpf (2012)",
+"title": "Currency Momentum Strategies",
+"why": "Momentum juga jalan di mata uang.",
+"tier": "Advanced",
+"url": "https://www.bis.org/publ/work366.pdf",
+"access": "free",
+"star": 0,
+"summary": "Momentum juga jalan di pasar mata uang, tapi profit tergerus biaya transaksi yang realistis."
+},
+{
+"author": "Koijen, Moskowitz, Pedersen & Vrugt (2018)",
+"title": "Carry",
+"why": "Carry universal di semua kelas aset.",
+"tier": "Advanced",
+"url": "https://www.nber.org/papers/w19325",
+"access": "free",
+"star": 1,
+"summary": "Carry universal: prediktor return di ekuitas, obligasi, komoditas, FX sekaligus. Kerangka pemersatu. Replikasi = carry semua asset."
+},
+{
+"author": "Szymanowska, de Roon, Nijman & van den Goorbergh (2014)",
+"title": "An Anatomy of Commodity Futures Risk Premia",
+"why": "Peta lengkap premi risiko di pasar komoditas.",
+"tier": "Advanced",
+"url": "https://doi.org/10.1111/jofi.12096",
+"access": "paywall",
+"star": 0,
+"summary": "Peta lengkap premi risiko spot & term structure di pasar komoditas futures."
+},
+{
+"author": "Vidyamurthy (2004)",
+"title": "Pairs Trading: Quantitative Methods and Analysis",
+"why": "Buku: model teknis pairs (Ornstein-Uhlenbeck, half-life).",
+"tier": "Advanced",
+"url": "https://archive.org/details/pairstradingquan0000vidy",
+"access": "free",
+"star": 0,
+"summary": "Buku praktik pairs: model cointegration, Ornstein-Uhlenbeck, estimasi half-life untuk timing entry/exit."
+},
+{
+"author": "Khandani & Lo (2007)",
+"title": "What Happened to the Quants in August 2007?",
+"why": "Bedah Quant Meltdown: pas banyak quant pakai strategi sama, kompak rugi.",
+"tier": "Advanced",
+"url": "https://www.nber.org/papers/w14465",
+"access": "free",
+"star": 0,
+"summary": "Bedah Quant Meltdown Agustus 2007: saat banyak quant pegang strategi sama, deleveraging serentak bikin kompak rugi. Pelajaran crowding & likuiditas."
+},
+{
+"author": "Gu, Kelly & Xiu (2020)",
+"title": "Empirical Asset Pricing via Machine Learning",
+"why": "ML buat prediksi return; ngalahin metode lama tapi hati-hati kompleksitas.",
+"tier": "Frontier",
+"url": "https://www.nber.org/papers/w25398",
+"access": "free",
+"star": 1,
+"summary": "Bandingin banyak metode ML (tree, NN) buat prediksi return; NN menang, tapi gain dari nonlinearitas & interaksi. Replikasi = ML panel + purged CV."
+},
+{
+"author": "Harvey, Liu & Zhu (2016)",
+"title": "…and the Cross-Section of Expected Returns",
+"why": "Ribuan orang tes ribuan strategi → banyak penemuan cuma kebetulan.",
+"tier": "Frontier",
+"url": "https://www.nber.org/papers/w20592",
+"access": "free",
+"star": 1,
+"summary": "300+ faktor telah dipublish → dengan multiple testing butuh t-stat > 3.0, bukan 2.0. Banyak 'penemuan' cuma false positive."
+},
+{
+"author": "McLean & Pontiff (2016)",
+"title": "Does Academic Research Destroy Stock Return Predictability?",
+"why": "Begitu dipublish, cuan strategi turun ~58% (semua orang ikut).",
+"tier": "Frontier",
+"url": "https://www.hec.ca/finance/Fichier/McLean.pdf",
+"access": "free",
+"star": 1,
+"summary": "Return anomali turun ~26% in-sample→OOS dan makin turun (~58%) pasca-publikasi karena arbitrase. Replikasi = ukur post-publication decay."
+},
+{
+"author": "Hou, Xue & Zhang (2020)",
+"title": "Replicating Anomalies",
+"why": "Tes ulang 400+ anomali → 65% GAGAL pakai metode bener.",
+"tier": "Frontier",
+"url": "https://www.nber.org/papers/w23394",
+"access": "free",
+"star": 1,
+"summary": "Replikasi 452 anomali dengan metode konsisten (NYSE breakpoint, value-weight): 65% gagal signifikan. Studi replikasi terbesar."
+},
+{
+"author": "Bailey & López de Prado (2014)",
+"title": "The Deflated Sharpe Ratio",
+"why": "Nilai bagus ini beneran atau hoki krn nyoba 1000 kali?",
+"tier": "Frontier",
+"url": "https://www.davidhbailey.com/dhbpapers/deflated-sharpe.pdf",
+"access": "free",
+"star": 1,
+"summary": "Deflated Sharpe Ratio: koreksi Sharpe untuk jumlah trial & non-normalitas return. 'Nilai ini beneran atau hoki dari 1000 percobaan?' Replikasi = DSR."
+},
+{
+"author": "Bailey, Borwein, López de Prado & Zhu (2014)",
+"title": "Pseudo-Mathematics and Financial Charlatanism",
+"why": "Makin banyak nyoba makin gampang ketipu backtest. (prob. of overfit)",
+"tier": "Frontier",
+"url": "https://scholarworks.wmich.edu/math_pubs/40/",
+"access": "free",
+"star": 0,
+"summary": "Probability of Backtest Overfitting (CSCV): makin banyak konfigurasi dicoba, makin pasti backtest terbaik overfit."
+},
+{
+"author": "López de Prado (2018)",
+"title": "Advances in Financial Machine Learning",
+"why": "Purged/embargoed CV: nge-tes tanpa ngintip masa depan gak sengaja.",
+"tier": "Frontier",
+"url": "https://scholar.google.com/scholar?q=Advances+in+Financial+Machine+Learning+Lopez+de+Prado",
+"access": "search",
+"star": 0,
+"summary": "Buku: purged & embargoed k-fold CV mencegah leakage di data finansial berkorelasi waktu. Toolkit anti-overfit wajib."
+},
+{
+"author": "Harvey & Liu (2015)",
+"title": "Backtesting",
+"why": "Haircut Sharpe: potong nilai Sharpe biar jujur setelah banyak percobaan.",
+"tier": "Frontier",
+"url": "https://people.duke.edu/~charvey/Research/Published_Papers/P120_Backtesting.PDF",
+"access": "free",
+"star": 0,
+"summary": "Haircut Sharpe: potong Sharpe pakai koreksi multiple-testing (Bonferroni/Holm/BHY) biar jujur setelah banyak percobaan."
+},
+{
+"author": "Harvey & Liu (2020)",
+"title": "False (and Missed) Discoveries in Financial Economics",
+"why": "Deteksi penemuan palsu di ratusan faktor.",
+"tier": "Frontier",
+"url": "https://arxiv.org/abs/2006.04269",
+"access": "free",
+"star": 0,
+"summary": "Kerangka false discovery rate untuk memisahkan faktor asli dari palsu di antara ratusan kandidat."
+},
+{
+"author": "Feng, Giglio & Xiu (2020)",
+"title": "Taming the Factor Zoo: A Test of New Factors",
+"why": "Dari ratusan faktor, mana yang beneran nambah info. (LASSO)",
+"tier": "Frontier",
+"url": "https://www.nber.org/papers/w25481",
+"access": "free",
+"star": 1,
+"summary": "Double-selection LASSO menilai kontribusi marjinal faktor baru di atas 'factor zoo' yang sudah ada."
+},
+{
+"author": "Kelly, Pruitt & Su (2019)",
+"title": "Characteristics Are Covariances (IPCA)",
+"why": "Model faktor adaptif yang berubah seiring karakter perusahaan.",
+"tier": "Frontier",
+"url": "https://www.nber.org/papers/w24540",
+"access": "free",
+"star": 0,
+"summary": "IPCA: beta faktor jadi fungsi karakteristik firm yang berubah waktu; instrumented PCA menyatukan karakter & faktor laten."
+},
+{
+"author": "Kelly & Pruitt (2013)",
+"title": "Market Expectations in the Cross-Section of Present Values",
+"why": "Metode 3-pass buat prediksi pakai banyak sinyal.",
+"tier": "Frontier",
+"url": "https://doi.org/10.1111/jofi.12060",
+"access": "paywall",
+"star": 0,
+"summary": "3-pass regression filter (partial least squares) buat prediksi dari banyak prediktor bising sekaligus."
+},
+{
+"author": "Giglio & Xiu (2021)",
+"title": "Asset Pricing with Omitted Factors",
+"why": "Estimasi premi risiko walau ada faktor yang kelewat.",
+"tier": "Frontier",
+"url": "https://dachxiu.chicagobooth.edu/download/RP.pdf",
+"access": "free",
+"star": 0,
+"summary": "Estimasi risk premium yang konsisten walau ada faktor penting yang terlewat, via pendekatan three-pass."
+},
+{
+"author": "Freyberger, Neuhierl & Weber (2020)",
+"title": "Dissecting Characteristics Nonparametrically",
+"why": "Karakter mana yang beneran prediktif, tanpa asumsi bentuk.",
+"tier": "Frontier",
+"url": "https://www.nber.org/papers/w23227",
+"access": "free",
+"star": 0,
+"summary": "Adaptive group LASSO pilih karakteristik mana yang benar-benar prediktif, tanpa asumsi bentuk fungsi (nonparametrik)."
+},
+{
+"author": "Gu, Kelly & Xiu (2021)",
+"title": "Autoencoder Asset Pricing Models",
+"why": "Autoencoder: neural net buat model faktor.",
+"tier": "Frontier",
+"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3335536",
+"access": "free",
+"star": 0,
+"summary": "Conditional autoencoder: gabung faktor laten + karakter firm lewat neural net untuk asset pricing."
+},
+{
+"author": "Chen, Pelger & Zhu (2024)",
+"title": "Deep Learning in Asset Pricing",
+"why": "Deep learning penuh buat asset pricing.",
+"tier": "Frontier",
+"url": "https://arxiv.org/abs/1904.00745",
+"access": "free",
+"star": 0,
+"summary": "Deep learning + no-arbitrage (adversarial/GAN) untuk estimasi SDF; state-of-the-art ML asset pricing."
+},
+{
+"author": "Welch & Goyal (2008)",
+"title": "A Comprehensive Look at Equity Premium Prediction",
+"why": "Cek jujur: hampir semua prediktor equity premium GAGAL out-of-sample.",
+"tier": "Frontier",
+"url": "https://www.nber.org/papers/w10483",
+"access": "free",
+"star": 1,
+"summary": "Uji OOS jujur: hampir semua prediktor equity premium gagal ngalahin rata-rata historis out-of-sample. Pelajaran kehati-hatian."
+},
+{
+"author": "Campbell & Thompson (2008)",
+"title": "Predicting Excess Stock Returns Out of Sample",
+"why": "Dengan batasan masuk akal, prediksi bisa sedikit works.",
+"tier": "Frontier",
+"url": "https://dash.harvard.edu/bitstream/1/2622619/2/Campbell_Predicting.pdf",
+"access": "free",
+"star": 0,
+"summary": "Dengan batasan ekonomis (koefisien bertanda benar, forecast return ≥ 0), prediksi OOS sedikit membaik. Jawaban parsial ke Welch-Goyal."
+},
+{
+"author": "Chen & Zimmermann (2022)",
+"title": "Open Source Cross-Sectional Asset Pricing",
+"why": "Rilis data + kode terbuka 200+ anomali; lu bisa cek sendiri.",
+"tier": "Frontier",
+"url": "https://www.federalreserve.gov/econres/feds/files/2021-037pap.pdf",
+"access": "free",
+"star": 1,
+"summary": "Open Source Asset Pricing: rilis data + kode 200+ prediktor cross-section untuk reproduksibilitas. Sumber data bersih buat replikasi."
+},
+{
+"author": "Arnott, Harvey & Markowitz (2019)",
+"title": "A Backtesting Protocol in the Era of Machine Learning",
+"why": "Panduan backtesting yang gak bohongin diri sendiri. Wajib baca.",
+"tier": "Frontier",
+"url": "https://people.duke.edu/~charvey/Research/Published_Papers/P138_A_backtesting_protocol.pdf",
+"access": "free",
+"star": 0,
+"summary": "Protokol backtesting era ML: tujuh prinsip anti self-deception. Checklist wajib sebelum percaya backtest apa pun."
+},
+{
+"author": "Rockafellar & Uryasev (2000)",
+"title": "Optimization of Conditional Value-at-Risk",
+"why": "Optimisasi portfolio berbasis CVaR (risiko ekor), bukan varians.",
+"tier": "Frontier",
+"url": "https://sites.math.washington.edu/~rtr/papers/rtr179-CVaR1.pdf",
+"access": "free",
+"star": 0,
+"summary": "Optimisasi CVaR (expected shortfall) yang bisa diselesaikan sebagai linear program; fokus risiko ekor, bukan varians. Replikasi = CVaR optimizer."
+},
+{
+"author": "Merton (1969)",
+"title": "Lifetime Portfolio Selection under Uncertainty",
+"why": "Alokasi optimal sepanjang hidup (versi kontinu).",
+"tier": "Frontier",
+"url": "https://www.sfu.ca/~kkasa/Merton_69.pdf",
+"access": "free",
+"star": 0,
+"summary": "Masalah konsumsi-investasi kontinu: di bawah CRRA, fraksi optimal ke aset berisiko konstan (Merton fraction)."
+},
+{
+"author": "Dupire (1994)",
+"title": "Pricing with a Smile",
+"why": "Local volatility — kalibrasi model ke seluruh permukaan opsi.",
+"tier": "Frontier",
+"url": "https://scholar.google.com/scholar?q=Pricing+with+a+Smile+Dupire",
+"access": "search",
+"star": 0,
+"summary": "Local volatility: fungsi vol unik yang cocok ke seluruh surface opsi (Dupire forward PDE). Dasar kalibrasi pricing eksotik."
+},
+{
+"author": "Longstaff & Schwartz (2001)",
+"title": "Valuing American Options by Simulation (LSM)",
+"why": "Harga opsi Amerika pakai Monte Carlo + regresi. (komputasi)",
+"tier": "Frontier",
+"url": "https://escholarship.org/content/qt43n1k4jb/qt43n1k4jb.pdf",
+"access": "free",
+"star": 0,
+"summary": "Least-Squares Monte Carlo (LSM): harga opsi Amerika/early-exercise pakai regresi continuation value. Replikasi = LSM pricer."
+},
+{
+"author": "Bakshi & Kapadia (2003)",
+"title": "Delta-Hedged Gains and the Negative Volatility Risk Premium",
+"why": "Jual asuransi (opsi) rata-rata cuan; orang bayar mahal buat rasa aman.",
+"tier": "Frontier",
+"url": "https://people.umass.edu/~nkapadia/docs/Bakshi_and_Kapadia_2003_RFS.pdf",
+"access": "free",
+"star": 0,
+"summary": "Delta-hedged option gains rata-rata negatif → ada volatility risk premium negatif. Jual opsi (vol) rata-rata cuan."
+},
+{
+"author": "Carr & Wu (2009)",
+"title": "Variance Risk Premiums",
+"why": "Peta lengkap premi risiko volatilitas.",
+"tier": "Frontier",
+"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1359527",
+"access": "free",
+"star": 0,
+"summary": "Peta variance risk premium via variance swap sintetis; besar dan negatif. Replikasi = VRP dari opsi."
+},
+{
+"author": "Coval & Shumway (2001)",
+"title": "Expected Option Returns",
+"why": "Beli opsi rata-rata rugi; return opsi bisa diprediksi.",
+"tier": "Frontier",
+"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=189840",
+"access": "free",
+"star": 0,
+"summary": "Return opsi (call, straddle) rata-rata negatif dan bisa diprediksi; konsisten dengan volatilitas yang priced."
+},
+{
+"author": "Bollerslev, Tauchen & Zhou (2009)",
+"title": "Expected Stock Returns and Variance Risk Premia",
+"why": "Selisih volatilitas prediksi return pasar.",
+"tier": "Frontier",
+"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=948309",
+"access": "free",
+"star": 0,
+"summary": "Selisih implied − realized variance (VRP) memprediksi return pasar jangka pendek lebih baik dari prediktor klasik."
+},
+{
+"author": "Barroso & Santa-Clara (2015)",
+"title": "Momentum Has Its Moments",
+"why": "Momentum sesekali crash parah; bisa dijinakin atur ukuran posisi.",
+"tier": "Frontier",
+"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2041429",
+"access": "free",
+"star": 1,
+"summary": "Risk-managed momentum: skala posisi dengan realized vol → Sharpe naik ~2x dan crash hilang. Replikasi = vol-scaled momentum."
+},
+{
+"author": "Daniel & Moskowitz (2016)",
+"title": "Momentum Crashes",
+"why": "Kapan & kenapa momentum ambruk (pas pasar mantul dari krisis).",
+"tier": "Frontier",
+"url": "https://www.nber.org/papers/w20439",
+"access": "free",
+"star": 0,
+"summary": "Momentum crashes terjadi saat pasar rebound dari bear (beta opsi-like loser); dynamic weighting menjinakkannya."
+},
+{
+"author": "Almgren & Chriss (2000)",
+"title": "Optimal Execution of Portfolio Transactions",
+"why": "Cara jual order gede tanpa ngerusak harga sendiri. (eksekusi)",
+"tier": "Frontier",
+"url": "https://www.smallake.kr/wp-content/uploads/2016/03/optliq.pdf",
+"access": "free",
+"star": 1,
+"summary": "Optimal execution frontier: trade-off market impact vs risiko timing saat likuidasi order besar. Basis algo execution. Replikasi = jadwal eksekusi."
+},
+{
+"author": "Kyle (1985)",
+"title": "Continuous Auctions and Insider Trading",
+"why": "Teori gimana info orang dalam bocor pelan ke harga. (mikrostruktur)",
+"tier": "Frontier",
+"url": "https://www.jstor.org/stable/1913210",
+"access": "paywall",
+"star": 1,
+"summary": "Model insider trading kontinu; 'Kyle's lambda' mengukur kedalaman pasar & price impact. Fondasi mikrostruktur."
+},
+{
+"author": "Glosten & Milgrom (1985)",
+"title": "Bid, Ask and Transaction Prices in a Specialist Market",
+"why": "Kenapa ada selisih beli-jual — risiko lawan yang lebih tau.",
+"tier": "Frontier",
+"url": "https://www.edegan.com/pdfs/Glosten%20Milgrom%20(1985)%20-%20Bid%20Ask%20and%20Transaction%20Prices%20in%20a%20Specialist%20Market%20with%20Heterogeneously%20Informed%20Trades.pdf",
+"access": "free",
+"star": 0,
+"summary": "Bid-ask spread muncul dari adverse selection (dealer takut lawan yang lebih tahu). Menjelaskan asal-usul spread."
+},
+{
+"author": "Avellaneda & Stoikov (2008)",
+"title": "High-Frequency Trading in a Limit Order Book",
+"why": "Matematika jadi bandar (market maker) yang pasang harga optimal.",
+"tier": "Frontier",
+"url": "https://math.nyu.edu/inmemoriam/avellaneda/HighFrequencyTrading.pdf",
+"access": "free",
+"star": 0,
+"summary": "Market making optimal: reservation price & spread ditentukan inventory + risiko. Basis matematis HFT market maker."
+},
+{
+"author": "Amihud & Mendelson (1986)",
+"title": "Asset Pricing and the Bid-Ask Spread",
+"why": "Aset yang likuid dihargai lebih mahal (return lebih rendah).",
+"tier": "Frontier",
+"url": "https://doi.org/10.1016/0304-405X(86)90065-6",
+"access": "paywall",
+"star": 0,
+"summary": "Return meningkat dengan bid-ask spread: aset illiquid dihargai lebih murah (return lebih tinggi). Liquidity premium."
+},
+{
+"author": "DeMiguel, Garlappi & Uppal (2009)",
+"title": "Optimal Versus Naive Diversification (1/N)",
+"why": "Kejutan: bagi rata 1/N sering ngalahin optimisasi canggih.",
+"tier": "Frontier",
+"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1376199",
+"access": "free",
+"star": 1,
+"summary": "Kejutan: 1/N naive ngalahin 14 model optimisasi canggih out-of-sample karena error estimasi. Pelajaran humility portfolio."
+},
+{
+"author": "Ledoit & Wolf (2004)",
+"title": "Honey, I Shrunk the Sample Covariance Matrix",
+"why": "Haluskan estimasi risiko biar portfolio gak meledak. (shrinkage)",
+"tier": "Frontier",
+"url": "http://www.ledoit.net/honey.pdf",
+"access": "free",
+"star": 0,
+"summary": "Shrinkage covariance: tarik matriks kovarians sampel ke target terstruktur → portfolio jauh lebih stabil. Replikasi = Ledoit-Wolf estimator."
+},
+{
+"author": "Black & Litterman (1992)",
+"title": "Global Portfolio Optimization",
+"why": "Gabungin pandangan lu sama pasar buat alokasi yang stabil.",
+"tier": "Frontier",
+"url": "https://people.duke.edu/~charvey/Teaching/BA453_2006/Black_Litterman_Global_Portfolio_Optimization_1992.pdf",
+"access": "free",
+"star": 0,
+"summary": "Black-Litterman: gabung equilibrium prior pasar + views investor secara Bayesian → alokasi stabil, tanpa corner solution ekstrem."
+},
+{
+"author": "Kelly (1956) / Thorp",
+"title": "A New Interpretation of Information Rate",
+"why": "Rumus ukuran taruhan optimal biar tumbuh maks gak bangkrut. (Kelly)",
+"tier": "Frontier",
+"url": "https://www.princeton.edu/~wbialek/rome/refs/kelly_56.pdf",
+"access": "free",
+"star": 0,
+"summary": "Kelly criterion: ukuran taruhan yang memaksimalkan log-growth jangka panjang tanpa risiko bangkrut. Replikasi = Kelly/fractional-Kelly sizing."
+},
+{
+"author": "Grinold & Kahn (2000)",
+"title": "Active Portfolio Management — The Fundamental Law",
+"why": "Seberapa sering bener × seberapa banyak taruhan = skill manajer.",
+"tier": "Frontier",
+"url": "https://archive.org/details/activeportfoliom0000grin",
+"access": "free",
+"star": 1,
+"summary": "Fundamental Law of Active Management: Information Ratio ≈ IC × √breadth — skill × seberapa sering & luas bertaruh."
+}
+]

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Generate ladder/index.html for ai-ladder-lab: 400 papers (100 per field),
-ordered easy->hard across 4 tiers, every link direct to the paper.
+"""Generate ladder/index.html for ai-ladder-lab: gabungan katalog Quant Finance +
+AI (DS/LLM/CV/RL), ~519 paper, tiap bidang urut easy->hard lewat 4 tier.
 Reads band JSON files from PAPERS_DIR. Run: python3 build.py"""
 import json, html, pathlib, re, glob, urllib.parse
 
@@ -8,6 +8,8 @@ PAPERS_DIR = pathlib.Path(__file__).parent / "data"
 
 # field key -> (tag, css-color-var, display name, one-line desc)
 FIELDS = [
+    ("quant", "QF", "var(--dQF)", "Quant Finance",
+     "Teori & pricing → anomali → factor → stat-arb → anti-overfit → advanced. Tiap card ada Ringkasan."),
     ("ds",  "DS",  "var(--dDS)",  "Data Science / ML Klasik",
      "Statistik → ensemble → boosting → causal → deep-tabular. 100 paper, gampang ke susah."),
     ("llm", "LLM", "var(--dLLM)", "Large Language Models",
@@ -17,7 +19,8 @@ FIELDS = [
     ("rl",  "RL",  "var(--dRL)",  "Reinforcement Learning",
      "MDP/Q-learning → DQN → PPO/SAC → AlphaZero/MuZero/offline. 100 paper."),
 ]
-TARGET = 100
+DEFAULT_CAP = 100
+CAP = {"quant": 999}   # quant: keep full catalog; AI fields capped at 100
 TIER_ORDER = {"Intro": 0, "Core": 1, "Advanced": 2, "Frontier": 3}
 BAD = re.compile(r'scholar\.google|semanticscholar|duckduckgo|/search\?|google\.[a-z.]+/search')
 
@@ -31,7 +34,7 @@ def load_field(fk):
                    key=lambda p: int(re.search(r'_(\d+)\.json', p).group(1)))
     for f in files:
         for p in json.load(open(f)):
-            if BAD.search(p["url"]):          # never a search page
+            if fk != "quant" and BAD.search(p["url"]):   # AI fields: never a search page
                 continue
             k = norm_title(p["title"])
             if k in seen:
@@ -63,15 +66,17 @@ def esc_js(s):
 P_rows, U_lines = [], []
 counts = {}
 for di, (fk, tag, color, name, desc) in enumerate(FIELDS):
-    rows = load_field(fk)[:TARGET]
+    rows = load_field(fk)[:CAP.get(fk, DEFAULT_CAP)]
     counts[fk] = len(rows)
     stars = STAR_TITLES.get(fk, set())
     for i, p in enumerate(rows, start=1):
         pid = f"{fk}{i}"
-        star = 1 if norm_title(p["title"]) in stars else 0
-        access = "paywall" if p["access"] in ("paid", "paywall") else "free"
+        star = int(p.get("star", 1 if norm_title(p["title"]) in stars else 0))
+        raw = p["access"]
+        access = "paywall" if raw in ("paid", "paywall") else ("search" if raw == "search" else "free")
+        summary = p.get("summary", "")
         P_rows.append(f'[{esc_js(pid)},{di},{esc_js(p["author"])},{esc_js(p["title"])},'
-                      f'{esc_js(p["why"])},{esc_js(p["tier"])},{star}]')
+                      f'{esc_js(p["why"])},{esc_js(p["tier"])},{star},{esc_js(summary)}]')
         U_lines.append(f'{esc_js(pid)}:[{esc_js(p["url"])},{esc_js(access)}]')
 
 # favicon: ladder icon in brand teal on dark rounded square, inline SVG data-URI
@@ -88,19 +93,22 @@ TOTAL = len(P_rows)
 FIELDS_JS = ",\n  ".join(
     f'{i}:{{tag:{esc_js(tag)},color:{json.dumps(color)},name:{esc_js(name)},d:{esc_js(desc)}}}'
     for i, (fk, tag, color, name, desc) in enumerate(FIELDS))
+CHIPS = ('<span class="chip on" data-l="all">Semua</span>'
+         + "".join(f'<span class="chip" data-l="{i}">{tag}</span>'
+                   for i, (fk, tag, *_ ) in enumerate(FIELDS)))
 
 HTML = f'''<!doctype html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Replication Ladder — {TOTAL} papers (DS · LLM · CV · RL)</title>
+<title>Replication Ladder — {TOTAL} papers (Quant · DS · LLM · CV · RL)</title>
 <link rel="icon" href="{FAVICON}">
 <style>
   :root{{
     --bg:#0b0e14; --bg2:#11151f; --card:#151a26; --line:#232a3a;
     --tx:#e6e9f0; --mut:#8b93a7; --acc:#4fd1c5; --acc2:#f6c177;
-    --dDS:#f6c177; --dLLM:#4fd1c5; --dCV:#63b3ff; --dRL:#a78bfa;
+    --dDS:#f6c177; --dLLM:#4fd1c5; --dCV:#63b3ff; --dRL:#a78bfa; --dQF:#34d399;
   }}
   *{{box-sizing:border-box}} html,body{{margin:0;padding:0}}
   body{{background:var(--bg);color:var(--tx);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}}
@@ -147,6 +155,14 @@ HTML = f'''<!doctype html>
   .acc{{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.2px}}
   .a-free{{background:rgba(79,209,197,.16);color:#6fe3d7}}
   .a-paywall{{background:rgba(246,193,119,.16);color:#f6c177}}
+  .a-search{{background:rgba(139,147,167,.18);color:#b6bccb}}
+  .more{{margin-top:1px}}
+  .more summary{{cursor:pointer;color:var(--mut);font-size:12px;font-weight:600;list-style:none;user-select:none}}
+  .more summary::-webkit-details-marker{{display:none}}
+  .more summary::before{{content:"▸ ";color:var(--acc)}}
+  .more[open] summary::before{{content:"▾ "}}
+  .more summary:hover{{color:var(--tx)}}
+  .sum{{font-size:12.5px;color:#b9c0d0;margin-top:6px;line-height:1.6}}
   .empty{{color:var(--mut);text-align:center;padding:60px 0;display:none}}
   footer{{margin:56px 0 40px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--line);padding-top:20px}}
   footer code{{background:var(--bg2);padding:1px 6px;border-radius:5px;color:#cfd4e0}}
@@ -178,10 +194,10 @@ HTML = f'''<!doctype html>
 </nav>
 <header>
   <div class="wrap">
-    <h1><span class="g">AI Replication</span> Ladder</h1>
-    <div class="sub">{TOTAL} paper landmark di <b>Data Science, LLM, Computer Vision &amp; Reinforcement Learning</b> — <b>100 paper per bidang</b>, disusun dari paling gampang ke paling susah lewat 4 tier. Replikasi tiap paper pakai kode sendiri buat portfolio. Klik <b>Baca →</b> langsung ke papernya.</div>
+    <h1><span class="g">Replication</span> Ladder</h1>
+    <div class="sub">{TOTAL} paper landmark di <b>Quant Finance, Data Science, LLM, Computer Vision &amp; Reinforcement Learning</b> — tiap bidang disusun dari paling gampang ke paling susah lewat 4 tier. Replikasi tiap paper pakai kode sendiri buat portfolio. Klik <b>Baca →</b> langsung ke papernya.</div>
     <div class="meta">
-      <span><b>{TOTAL}</b> papers</span><span><b>4</b> bidang × 100</span>
+      <span><b>{TOTAL}</b> papers</span><span><b>{len(FIELDS)}</b> bidang</span>
       <span>Tier: <span class="badge b-Intro">Intro</span> <span class="badge b-Core">Core</span> <span class="badge b-Advanced">Advanced</span> <span class="badge b-Frontier">Frontier</span></span>
     </div>
   </div>
@@ -190,13 +206,7 @@ HTML = f'''<!doctype html>
 <div class="controls">
   <div class="wrap">
     <input id="q" placeholder="Cari judul / penulis / metode…" autocomplete="off">
-    <div class="chips" id="chips">
-      <span class="chip on" data-l="all">Semua</span>
-      <span class="chip" data-l="0">DS</span>
-      <span class="chip" data-l="1">LLM</span>
-      <span class="chip" data-l="2">CV</span>
-      <span class="chip" data-l="3">RL</span>
-    </div>
+    <div class="chips" id="chips">{CHIPS}</div>
     <span class="count" id="count"></span>
   </div>
 </div>
@@ -205,8 +215,8 @@ HTML = f'''<!doctype html>
 <div class="empty" id="empty">Nggak ada paper yang cocok.</div>
 
 <footer class="wrap">
-  <p>Semua link <b>Baca →</b> nunjuk <b>langsung ke papernya</b> (arXiv/ACL/proceedings/author PDF), bukan halaman pencarian. <span class="acc a-free">PDF gratis</span> = full-text kebuka · <span class="acc a-paywall">paywall</span> = link resmi (mungkin bayar; cari mirror). ★ = flagship paling ikonik per bidang. Urutan tiap bidang: <b>Intro → Core → Advanced → Frontier</b>.</p>
-  <p>Repo: <code>~/coding-projects/ai-ladder-lab</code> · regen: <code>python3 build.py</code></p>
+  <p>Link <b>Baca →</b> nunjuk ke papernya. <span class="acc a-free">PDF gratis</span> = full-text kebuka · <span class="acc a-paywall">paywall</span> = link resmi (mungkin bayar) · <span class="acc a-search">cari</span> = tanpa PDF stabil, jatuh ke Scholar (cuma sebagian paper Quant). ★ = flagship. Urutan tiap bidang: <b>Intro → Core → Advanced → Frontier</b>. Bidang Quant punya <b>Ringkasan</b> per card.</p>
+  <p>Repo: <code>~/coding-projects/ai-ladder-lab</code> · regen: <code>python3 build.py</code> · gabungan quant-ladder + ai-ladder.</p>
 </footer>
 
 <script>
@@ -223,7 +233,7 @@ let curDom='all', curQ='';
 const U = {{
 {",".join(chr(10) + u for u in U_lines)}
 }};
-const ACCLBL={{free:"PDF gratis",paywall:"paywall"}};
+const ACCLBL={{free:"PDF gratis",paywall:"paywall",search:"cari"}};
 function render(){{
   main.innerHTML='';
   let shown=0;
@@ -231,7 +241,7 @@ function render(){{
     if(curDom!=='all' && String(d)!==curDom) continue;
     const rows=P.filter(p=>p[1]===d).filter(p=>{{
       if(!curQ) return true;
-      const h=(p[2]+" "+p[3]+" "+p[4]+" "+p[5]).toLowerCase();
+      const h=(p[2]+" "+p[3]+" "+p[4]+" "+p[5]+" "+(p[7]||"")).toLowerCase();
       return h.includes(curQ);
     }});
     if(!rows.length) continue;
@@ -244,7 +254,7 @@ function render(){{
       </div><div class="grid"></div>`;
     const grid=sec.querySelector('.grid');
     rows.forEach((p,idx)=>{{
-      const [num,,name,title,desc,tier,star]=p;
+      const [num,,name,title,desc,tier,star,summary]=p;
       const lnk=U[num]||["#","free"];
       const c=document.createElement('div'); c.className='card';
       c.innerHTML=`<div class="top">
@@ -254,6 +264,7 @@ function render(){{
         </div>
         <div class="title">${{title}}</div>
         <div class="desc">${{desc}}</div>
+        ${{summary?`<details class="more"><summary>Ringkasan</summary><div class="sum">${{summary}}</div></details>`:''}}
         <div class="foot">
           <a class="read" href="${{lnk[0]}}" target="_blank" rel="noopener">Baca →</a>
           <span class="acc a-${{lnk[1]}}">${{ACCLBL[lnk[1]]}}</span>
@@ -301,7 +312,8 @@ render();
 
 out = pathlib.Path(__file__).parent / "ladder" / "index.html"
 out.write_text(HTML, encoding="utf-8")
-print(f"wrote {out} — {TOTAL} papers")
+print(f"wrote {out} — {TOTAL} papers across {len(FIELDS)} fields")
 for fk, n in counts.items():
-    flag = "OK" if n == TARGET else f"!! only {n}"
+    exp = CAP.get(fk, DEFAULT_CAP)
+    flag = "OK" if (fk == "quant" or n == DEFAULT_CAP) else f"!! only {n}"
     print(f"  {fk}: {n} {flag}")

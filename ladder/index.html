@@ -67,6 +67,10 @@
   .lvhead .prog b{color:#34d399}
   .work{font-size:12px;font-weight:700;color:var(--dLLM);text-decoration:none}
   .work:hover{text-decoration:underline}
+  .rlink{color:var(--acc);text-decoration:none;font-weight:700}
+  .rlink:hover{text-decoration:underline}
+  .repobtn{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:7px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg2);color:var(--tx);text-decoration:none;font-size:13px;font-weight:600}
+  .repobtn:hover{border-color:var(--acc)}
   .more{margin-top:1px}
   .more summary{cursor:pointer;color:var(--mut);font-size:12px;font-weight:600;list-style:none;user-select:none}
   .more summary::-webkit-details-marker{display:none}
@@ -107,6 +111,7 @@
   <div class="wrap">
     <h1><span class="g">Replication</span> Ladder</h1>
     <div class="sub">519 paper landmark di <b>Quant Finance, Data Science, LLM, Computer Vision &amp; Reinforcement Learning</b> — tiap bidang disusun dari paling gampang ke paling susah lewat 4 tier. Replikasi tiap paper pakai kode sendiri buat portfolio. Klik <b>Baca →</b> langsung ke papernya.</div>
+    <a class="repobtn" href="https://github.com/nauvalZulfikar/paper-replications" target="_blank" rel="noopener">🧑‍💻 Repo replikasi (portfolio) → github.com/nauvalZulfikar/paper-replications</a>
     <div class="meta">
       <span><b>519</b> papers</span><span><b>5</b> bidang</span>
       <span>Tier: <span class="badge b-Intro">Intro</span> <span class="badge b-Core">Core</span> <span class="badge b-Advanced">Advanced</span> <span class="badge b-Frontier">Frontier</span></span>
@@ -131,7 +136,8 @@
 
 <footer class="wrap">
   <p>Link <b>Baca →</b> nunjuk ke papernya. <span class="acc a-free">PDF gratis</span> = full-text kebuka · <span class="acc a-paywall">paywall</span> = link resmi (mungkin bayar) · <span class="acc a-search">cari</span> = tanpa PDF stabil, jatuh ke Scholar (cuma sebagian paper Quant). ★ = flagship. Urutan tiap bidang: <b>Intro → Core → Advanced → Frontier</b>. Bidang Quant punya <b>Ringkasan</b> per card.</p>
-  <p>Repo: <code>~/coding-projects/ai-ladder-lab</code> · regen: <code>python3 build.py</code> · gabungan quant-ladder + ai-ladder.</p>
+  <p>Kerjaan replikasi (portfolio): <a class="rlink" href="https://github.com/nauvalZulfikar/paper-replications" target="_blank" rel="noopener">github.com/nauvalZulfikar/paper-replications</a> — progres nyusul di badge status tiap card (⬜→🟡→✅).</p>
+  <p>Repo situs: <code>~/coding-projects/ai-ladder-lab</code> · regen: <code>python3 build.py</code> · gabungan quant-ladder + ai-ladder.</p>
 </footer>
 
 <script>

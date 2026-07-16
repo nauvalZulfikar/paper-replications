@@ -1,17 +1,22 @@
-# AI Replication Ladder
+# Replication Ladder
 
-Katalog **400 paper landmark AI** (100 per bidang) buat direplikasi jadi portfolio, disusun dari **paling gampang ke paling susah**. Tiap link nunjuk **langsung ke papernya** (arXiv/ACL/proceedings/author PDF), bukan halaman pencarian.
+Katalog gabungan **519 paper landmark** (Quant Finance + AI) buat direplikasi jadi portfolio, tiap bidang disusun dari **paling gampang ke paling susah**.
 
 - **Live**: https://ai-ladder-lab.vercel.app
-- **4 bidang × 100**: Data Science / ML Klasik · LLM · Computer Vision · Reinforcement Learning
+- **5 bidang**: **Quant Finance (119)** · Data Science / ML Klasik (100) · LLM (100) · Computer Vision (100) · Reinforcement Learning (100)
 - **4 tier per card** (urutan easy→hard): Intro → Core → Advanced → Frontier
-- ★ = flagship paling ikonik per bidang
+- ★ = flagship paling ikonik per bidang; bidang **Quant** punya **Ringkasan** expandable per card
+- Link **Baca →** nunjuk ke papernya. AI: 0 search-page. Quant: mayoritas PDF gratis, sebagian paywall, 4 fallback Scholar (badge "cari").
+
+> Gabungan dari 2 situs lama: **ai-ladder-lab** (400 AI) + **quant-ladder-lab** (119 Quant, dulu di ladder-sand-five.vercel.app — deployment itu udah dihapus, digabung ke sini).
 
 ## Struktur
 
 ```
 ai-ladder-lab/
-├── build.py          # generator — baca band JSON, dedupe+trim-100, emit ladder/index.html
+├── build.py          # generator — baca data/*.json, dedupe + cap per-bidang, emit ladder/index.html
+├── extract_quant.py  # sekali-pakai: parse P/U/S dari quant-ladder-lab/ladder/index.html → data/quant_1.json
+├── data/             # <field>_<band>.json — quant_1 + ds/llm/cv/rl_1..4 (+rl_5)
 └── ladder/
     ├── index.html    # katalog statis self-contained (vanilla JS, 0 dependency)
     └── vercel.json    # {} — static hosting

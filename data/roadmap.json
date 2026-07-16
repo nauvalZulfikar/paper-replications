@@ -1,0 +1,24 @@
+{
+  "ds": [
+    "Regression Towards Mediocrity",
+    "On Lines and Planes of Closest Fit",
+    "Use of Multiple Measurements in Taxonomic",
+    "Nearest Neighbor Pattern Classification",
+    "Regression Analysis of Binary Sequences",
+    "Least Squares Quantization",
+    "Gaussian Mixture Models",
+    "Bootstrap Methods",
+    "Cross-Validatory Choice",
+    "Bagging Predictors",
+    "Random Forests",
+    "Support-Vector Networks",
+    "Decision-Theoretic Generalization",
+    "Greedy Function Approximation",
+    "XGBoost",
+    "Adam",
+    "Visualizing Data using t-SNE",
+    "Unified Approach to Interpreting Model Predictions",
+    "Central Role of the Propensity Score",
+    "Heterogeneous Treatment Effects using Random Forests"
+  ]
+}

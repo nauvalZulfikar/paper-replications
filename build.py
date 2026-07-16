@@ -72,6 +72,7 @@ def esc_js(s):
 
 P_rows, U_lines = [], []
 counts = {}
+PAPERS_BY_KEY = {}   # skey(title) -> info, for roadmap resolution
 for di, (fk, tag, color, name, desc) in enumerate(FIELDS):
     rows = load_field(fk)[:CAP.get(fk, DEFAULT_CAP)]
     counts[fk] = len(rows)
@@ -89,6 +90,9 @@ for di, (fk, tag, color, name, desc) in enumerate(FIELDS):
                       f'{esc_js(p["why"])},{esc_js(p["tier"])},{star},{esc_js(summary)},'
                       f'{esc_js(stcode)},{esc_js(sturl)}]')
         U_lines.append(f'{esc_js(pid)}:[{esc_js(p["url"])},{esc_js(access)}]')
+        PAPERS_BY_KEY[skey(p["title"])] = {
+            "tag": tag, "color": color, "author": p["author"], "title": p["title"],
+            "tier": p["tier"], "url": p["url"], "access": access, "status": stcode}
 
 # favicon: ladder icon in brand teal on dark rounded square, inline SVG data-URI
 FAVICON_SVG = ("<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'>"
@@ -99,6 +103,41 @@ FAVICON_SVG = ("<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' v
     "<line x1='11' y1='20' x2='21' y2='20'/><line x1='11' y1='25.5' x2='21' y2='25.5'/>"
     "</g></svg>")
 FAVICON = "data:image/svg+xml," + urllib.parse.quote(FAVICON_SVG)
+
+# ---- roadmap (recommended order) ----
+_rf = PAPERS_DIR / "roadmap.json"
+ROADMAP = json.loads(_rf.read_text()) if _rf.exists() else {}
+STLBL_PY = {"reading": "baca", "coding": "ngoding", "done": "lulus"}
+FIELDNAME = {fk: name for fk, tag, color, name, desc in FIELDS}
+
+def resolve_frag(frag):
+    fk = skey(frag)
+    for k, info in PAPERS_BY_KEY.items():
+        if fk in k:
+            return info
+    return None
+
+ROADMAP_HTML = ""
+for fld, frags in ROADMAP.items():
+    steps, missing = [], []
+    for frag in frags:
+        info = resolve_frag(frag)
+        (steps if info else missing).append(info or frag)
+    if missing:
+        print("  roadmap unmatched:", missing)
+    if not steps:
+        continue
+    lis = ""
+    for info in steps:
+        pill = (f'<span class="st st-{info["status"]}">{STLBL_PY.get(info["status"], info["status"])}</span>'
+                if info["status"] else "")
+        lis += (f'<li><span class="rmtag" style="background:{info["color"]}">{info["tag"]}</span>'
+                f'<b>{html.escape(info["author"])}</b> — {html.escape(info["title"])} '
+                f'<span class="badge b-{info["tier"]}">{info["tier"]}</span> {pill}'
+                f'<a class="read" href="{info["url"]}" target="_blank" rel="noopener">Baca →</a></li>')
+    ROADMAP_HTML += (f'<details class="roadmap" open><summary>🎯 Jalur belajar '
+                     f'{FIELDNAME.get(fld, fld.upper())} — {len(steps)} langkah, kerjain urut dari #1</summary>'
+                     f'<ol class="rmlist">{lis}</ol></details>')
 
 TOTAL = len(P_rows)
 FIELDS_JS = ",\n  ".join(
@@ -184,6 +223,17 @@ HTML = f'''<!doctype html>
   .rlink:hover{{text-decoration:underline}}
   .repobtn{{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:7px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg2);color:var(--tx);text-decoration:none;font-size:13px;font-weight:600}}
   .repobtn:hover{{border-color:var(--acc)}}
+  .roadmap{{background:var(--bg2);border:1px solid var(--line);border-radius:12px;margin:22px 0 0;padding:6px 4px}}
+  .roadmap summary{{cursor:pointer;font-weight:800;font-size:14px;padding:8px 12px;list-style:none;user-select:none}}
+  .roadmap summary::-webkit-details-marker{{display:none}}
+  .roadmap summary::before{{content:"▸ ";color:var(--acc)}}
+  .roadmap[open] summary::before{{content:"▾ "}}
+  .rmlist{{margin:2px 0 8px;padding:0 14px 0 42px;display:flex;flex-direction:column;gap:9px;counter-reset:rm}}
+  .rmlist li{{font-size:13.5px;line-height:1.5;position:relative}}
+  .rmlist li::marker{{color:var(--mut);font-weight:800}}
+  .rmtag{{font-size:10px;font-weight:800;color:#0b0e14;padding:1px 6px;border-radius:5px;margin-right:7px}}
+  .rmlist .badge{{margin:0 4px}}
+  .rmlist .read{{margin-left:6px}}
   .more{{margin-top:1px}}
   .more summary{{cursor:pointer;color:var(--mut);font-size:12px;font-weight:600;list-style:none;user-select:none}}
   .more summary::-webkit-details-marker{{display:none}}
@@ -231,6 +281,8 @@ HTML = f'''<!doctype html>
     </div>
   </div>
 </header>
+
+<div class="wrap">{ROADMAP_HTML}</div>
 
 <div class="controls">
   <div class="wrap">

@@ -2,7 +2,7 @@
 """Generate ladder/index.html for ai-ladder-lab: 400 papers (100 per field),
 ordered easy->hard across 4 tiers, every link direct to the paper.
 Reads band JSON files from PAPERS_DIR. Run: python3 build.py"""
-import json, html, pathlib, re, glob
+import json, html, pathlib, re, glob, urllib.parse
 
 PAPERS_DIR = pathlib.Path(__file__).parent / "data"
 
@@ -74,6 +74,16 @@ for di, (fk, tag, color, name, desc) in enumerate(FIELDS):
                       f'{esc_js(p["why"])},{esc_js(p["tier"])},{star}]')
         U_lines.append(f'{esc_js(pid)}:[{esc_js(p["url"])},{esc_js(access)}]')
 
+# favicon: ladder icon in brand teal on dark rounded square, inline SVG data-URI
+FAVICON_SVG = ("<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'>"
+    "<rect width='32' height='32' rx='7' fill='#0b0e14'/>"
+    "<g stroke='#4fd1c5' stroke-width='2.6' stroke-linecap='round'>"
+    "<line x1='11' y1='4' x2='11' y2='28'/><line x1='21' y1='4' x2='21' y2='28'/>"
+    "<line x1='11' y1='9' x2='21' y2='9'/><line x1='11' y1='14.5' x2='21' y2='14.5'/>"
+    "<line x1='11' y1='20' x2='21' y2='20'/><line x1='11' y1='25.5' x2='21' y2='25.5'/>"
+    "</g></svg>")
+FAVICON = "data:image/svg+xml," + urllib.parse.quote(FAVICON_SVG)
+
 TOTAL = len(P_rows)
 FIELDS_JS = ",\n  ".join(
     f'{i}:{{tag:{esc_js(tag)},color:{json.dumps(color)},name:{esc_js(name)},d:{esc_js(desc)}}}'
@@ -85,7 +95,7 @@ HTML = f'''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Replication Ladder — {TOTAL} papers (DS · LLM · CV · RL)</title>
-<link rel="icon" href="data:,">
+<link rel="icon" href="{FAVICON}">
 <style>
   :root{{
     --bg:#0b0e14; --bg2:#11151f; --card:#151a26; --line:#232a3a;

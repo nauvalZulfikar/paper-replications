@@ -27,6 +27,13 @@ BAD = re.compile(r'scholar\.google|semanticscholar|duckduckgo|/search\?|google\.
 def norm_title(t):
     return re.sub(r'[^a-z0-9]', '', html.unescape(t).lower())[:45]
 
+def skey(t):  # full normalized title key (for status lookup)
+    return re.sub(r'[^a-z0-9]', '', html.unescape(t).lower())
+
+# progress/status per paper, keyed by skey(title): {"status": reading|coding|done, "url": ...}
+_sf = PAPERS_DIR / "status.json"
+STATUS = json.loads(_sf.read_text()) if _sf.exists() else {}
+
 def load_field(fk):
     """Concatenate the field's bands in tier order, dedupe by title, drop bad URLs."""
     rows, seen = [], set()
@@ -75,8 +82,12 @@ for di, (fk, tag, color, name, desc) in enumerate(FIELDS):
         raw = p["access"]
         access = "paywall" if raw in ("paid", "paywall") else ("search" if raw == "search" else "free")
         summary = p.get("summary", "")
+        st = STATUS.get(skey(p["title"]), {})
+        stcode = st.get("status", "")
+        sturl = st.get("url", "")
         P_rows.append(f'[{esc_js(pid)},{di},{esc_js(p["author"])},{esc_js(p["title"])},'
-                      f'{esc_js(p["why"])},{esc_js(p["tier"])},{star},{esc_js(summary)}]')
+                      f'{esc_js(p["why"])},{esc_js(p["tier"])},{star},{esc_js(summary)},'
+                      f'{esc_js(stcode)},{esc_js(sturl)}]')
         U_lines.append(f'{esc_js(pid)}:[{esc_js(p["url"])},{esc_js(access)}]')
 
 # favicon: ladder icon in brand teal on dark rounded square, inline SVG data-URI
@@ -161,6 +172,14 @@ HTML = f'''<!doctype html>
   .a-free{{background:rgba(79,209,197,.16);color:#6fe3d7}}
   .a-paywall{{background:rgba(246,193,119,.16);color:#f6c177}}
   .a-search{{background:rgba(139,147,167,.18);color:#b6bccb}}
+  .st{{font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;letter-spacing:.3px;text-transform:uppercase}}
+  .st-reading{{background:rgba(99,179,255,.16);color:#8ec6ff}}
+  .st-coding{{background:rgba(246,193,119,.18);color:#f6c177}}
+  .st-done{{background:rgba(52,211,153,.18);color:#34d399}}
+  .lvhead .prog{{font-size:12px;color:var(--mut);font-weight:700}}
+  .lvhead .prog b{{color:#34d399}}
+  .work{{font-size:12px;font-weight:700;color:var(--dLLM);text-decoration:none}}
+  .work:hover{{text-decoration:underline}}
   .more{{margin-top:1px}}
   .more summary{{cursor:pointer;color:var(--mut);font-size:12px;font-weight:600;list-style:none;user-select:none}}
   .more summary::-webkit-details-marker{{display:none}}
@@ -258,20 +277,25 @@ function render(){{
     if(!rows.length) continue;
     shown+=rows.length;
     const L=DOMAINS[d];
+    const doneN=P.filter(p=>p[1]===d && p[8]==='done').length;
+    const totN=P.filter(p=>p[1]===d).length;
     const sec=document.createElement('section'); sec.className='level';
     sec.innerHTML=`<div class="lvhead">
         <span class="lvtag" style="background:${{L.color}}">${{L.tag}}</span>
         <h2>${{L.name}}</h2><span class="d">${{L.d}}</span>
+        <span class="prog"><b>${{doneN}}</b> / ${{totN}} ✓</span>
       </div><div class="grid"></div>`;
     const grid=sec.querySelector('.grid');
+    const STLBL={{reading:"baca",coding:"ngoding",done:"lulus"}};
     rows.forEach((p,idx)=>{{
-      const [num,,name,title,desc,tier,star,summary]=p;
+      const [num,,name,title,desc,tier,star,summary,stcode,sturl]=p;
       const lnk=U[num]||["#","free"];
       const c=document.createElement('div'); c.className='card';
       c.innerHTML=`<div class="top">
           <span class="num">${{L.tag}}${{idx+1}}</span>
           <span class="nm">${{name}}${{star?' <span class="star">★</span>':''}}</span>
           <span class="badge b-${{tier}}">${{tier}}</span>
+          ${{stcode?`<span class="st st-${{stcode}}">${{STLBL[stcode]||stcode}}</span>`:''}}
         </div>
         <div class="title">${{title}}</div>
         <div class="desc">${{desc}}</div>
@@ -279,6 +303,7 @@ function render(){{
         <div class="foot">
           <a class="read" href="${{lnk[0]}}" target="_blank" rel="noopener">Baca →</a>
           <span class="acc a-${{lnk[1]}}">${{ACCLBL[lnk[1]]}}</span>
+          ${{sturl && sturl.slice(0,4)==='http'?`<a class="work" href="${{sturl}}" target="_blank" rel="noopener">kerjaan →</a>`:''}}
         </div>`;
       grid.appendChild(c);
     }});
